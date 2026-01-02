@@ -1,0 +1,27 @@
+BasedOnStyle: Microsoft
+
+Language:        Cpp
+IndentWidth:     4
+TabWidth:        4
+UseTab:          Never
+ContinuationIndentWidth: 4
+
+BreakBeforeBraces: Allman
+
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignOperands: true
+AlignTrailingComments: true
+
+DerivePointerAlignment: false
+
+ColumnLimit: 0
+AllowShortIfStatementsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+Cpp11BracedListStyle: true
+IndentCaseLabels: false

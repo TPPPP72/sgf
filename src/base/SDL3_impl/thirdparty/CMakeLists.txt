@@ -1,0 +1,4 @@
+add_subdirectory(SDL3 EXCLUDE_FROM_ALL)
+add_subdirectory(SDL3_image EXCLUDE_FROM_ALL)
+add_subdirectory(SDL3_ttf EXCLUDE_FROM_ALL)
+add_subdirectory(SDL3_mixer EXCLUDE_FROM_ALL)
