@@ -258,7 +258,6 @@ target_link_libraries(your_target PRIVATE sgf::sgf)
 
 - 🐛 [问题跟踪](https://github.com/TPPPP72/sgf/issues)
 - 💬 [讨论区](https://github.com/TPPPP72/sgf/discussions)
-- 📧 邮箱支持: support@example.com
 
 ## 致谢
 
