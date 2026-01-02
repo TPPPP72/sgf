@@ -198,7 +198,7 @@ struct rect {
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/sgf.git
+git clone https://github.com/TPPPP72/sgf.git
 cd sgf
 
 # 创建构建目录
@@ -257,7 +257,6 @@ target_link_libraries(your_target PRIVATE sgf::sgf)
 ## 支持
 
 - 🐛 [问题跟踪](https://github.com/TPPPP72/sgf/issues)
-- 💬 [讨论区](https://github.com/TPPPP72/sgf/discussions)
 
 ## 致谢
 
