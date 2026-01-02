@@ -13,7 +13,7 @@ int main()
 
     window   test_window{init_info};
     renderer test_renderer{test_window};
-    font     test_font{"misans.ttf", 24};
+    font     test_font{"C:/Windows/Fonts/msyh.ttc", 24};
 
     auto hello_world = texture{test_renderer, test_font, "Hello World!", {255, 255, 255, 255}};
 
