@@ -1,5 +1,5 @@
-#include "../../../include/base/renderer.hpp"
-#include "../../../include/base/texture.hpp"
+#include "../../../include/sgf/base/renderer.hpp"
+#include "../../../include/sgf/base/texture.hpp"
 #include "utils/convert.hpp"
 #include <SDL3/SDL_render.h>
 #include <stdexcept>

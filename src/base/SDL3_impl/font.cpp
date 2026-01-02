@@ -1,4 +1,4 @@
-#include "../../../include/base/font.hpp"
+#include "../../../include/sgf/base/font.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 using namespace sgf::base;

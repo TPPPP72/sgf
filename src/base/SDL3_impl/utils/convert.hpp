@@ -1,8 +1,8 @@
 #ifndef SDL3_UTILS_CONVERT_HPP
 #define SDL3_UTILS_CONVERT_HPP
 
-#include "../../../../include/type/color.hpp"
-#include "../../../../include/type/rect.hpp"
+#include "../../../../include/sgf/type/color.hpp"
+#include "../../../../include/sgf/type/rect.hpp"
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_rect.h>
 

@@ -1,6 +1,6 @@
-#include <base/renderer.hpp>
-#include <base/texture.hpp>
-#include <base/window/window.hpp>
+#include <sgf/base/renderer.hpp>
+#include <sgf/base/texture.hpp>
+#include <sgf/base/window/window.hpp>
 
 using namespace sgf::base;
 
