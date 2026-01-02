@@ -211,13 +211,13 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . --config Release
 ```
 
-<!-- ### 作为子模块使用
+### 作为子模块使用
 
 ```cmake
 # 在你的 CMakeLists.txt 中
 add_subdirectory(sgf)
 target_link_libraries(your_target PRIVATE sgf::sgf)
-``` -->
+```
 
 ## 开发计划
 
