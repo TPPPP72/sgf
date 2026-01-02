@@ -1,4 +1,4 @@
-add_executable(example WIN32)
+add_executable(example)
 
 target_compile_features(example PRIVATE cxx_std_17)
 

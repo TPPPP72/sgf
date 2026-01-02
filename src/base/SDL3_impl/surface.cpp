@@ -17,6 +17,9 @@ surface::surface(const font &f, const std::string &text, const type::color &colo
 
     SDL_Color c = to_color(color);
 
+    if (text.empty())
+        throw std::runtime_error("Can not create a surface from empty string");
+
     p_impl->surface = TTF_RenderText_Blended(sdl_font, text.c_str(), text.size(), c);
 
     if (p_impl->surface == nullptr)
