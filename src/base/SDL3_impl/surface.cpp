@@ -2,6 +2,7 @@
 #include "utils/convert.hpp"
 #include <SDL3/SDL_surface.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <cassert>
 
 using namespace sgf::base;
 
@@ -16,7 +17,7 @@ surface::surface(const font &f, const std::string &text, const type::color &colo
 
     SDL_Color c = to_color(color);
 
-    p_impl->surface = TTF_RenderText_Blended(sdl_font, text.c_str(), text.length(), c);
+    p_impl->surface = TTF_RenderText_Blended(sdl_font, text.c_str(), text.size(), c);
 
     if (p_impl->surface == nullptr)
         throw std::runtime_error(SDL_GetError());

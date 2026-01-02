@@ -16,7 +16,7 @@ texture::texture(const renderer &rend, std::uint32_t width, std::uint32_t height
 
     p_impl->texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
 
-    if (p_impl == nullptr)
+    if (p_impl->texture == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 
@@ -26,7 +26,7 @@ texture::texture(const renderer &rend, const std::filesystem::path &p) : p_impl(
 
     p_impl->texture = IMG_LoadTexture(sdl_renderer, p.string().c_str());
 
-    if (p_impl == nullptr)
+    if (p_impl->texture == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 
@@ -38,7 +38,7 @@ texture::texture(const renderer &rend, const surface &surf) : p_impl(std::make_u
 
     p_impl->texture = SDL_CreateTextureFromSurface(sdl_renderer, sdl_surface);
 
-    if (p_impl == nullptr)
+    if (p_impl->texture == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 
@@ -51,7 +51,7 @@ texture::texture(const renderer &rend, const font &f, const std::string &text, c
 
     p_impl->texture = SDL_CreateTextureFromSurface(sdl_renderer, sdl_surface);
 
-    if (p_impl == nullptr)
+    if (p_impl->texture == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 

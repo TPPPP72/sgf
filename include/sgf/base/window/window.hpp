@@ -1,6 +1,7 @@
 #ifndef SGF_BASE_WINDOW_HPP
 #define SGF_BASE_WINDOW_HPP
 
+#include "window_event.hpp"
 #include "window_info.hpp"
 #include <cstdint>
 #include <functional>
@@ -16,6 +17,7 @@ public:
     ~window();
     window_info                              init_info() const noexcept;
     window_info                              current_info() const;
+    window_event                             current_event() const;
     void                                     poll_event();
     void                                    *get() const noexcept;
     std::tuple<std::uint32_t, std::uint32_t> init_size() const noexcept;
@@ -28,6 +30,7 @@ private:
     struct impl;
     std::unique_ptr<impl> p_impl;
     window_info           p_info;
+    window_event          p_event;
     bool                  p_is_fullscreen{false};
     std::function<void()> p_on_exit{nullptr};
 };

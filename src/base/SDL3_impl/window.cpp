@@ -47,8 +47,14 @@ window_info window::current_info() const
     return inf;
 }
 
+window_event window::current_event() const
+{
+    return p_event;
+}
+
 void window::poll_event()
 {
+    p_event.current_events.clear();
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -59,6 +65,31 @@ void window::poll_event()
                 std::exit(0);
 
             p_on_exit();
+            break;
+
+        case SDL_EVENT_KEY_DOWN:
+            p_event.current_events[event_type::key_down]                    = true;
+            p_event.current_keys[static_cast<key_code>(event.key.scancode)] = true;
+            break;
+
+        case SDL_EVENT_KEY_UP:
+            p_event.current_events[event_type::key_up]                      = true;
+            p_event.current_keys[static_cast<key_code>(event.key.scancode)] = false;
+            break;
+
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
+            p_event.current_events[event_type::mouse_button_down]                        = true;
+            p_event.current_buttons[static_cast<mouse_button_code>(event.button.button)] = true;
+            break;
+
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+            p_event.current_events[event_type::mouse_button_up]                          = true;
+            p_event.current_buttons[static_cast<mouse_button_code>(event.button.button)] = false;
+            break;
+
+        case SDL_EVENT_MOUSE_MOTION:
+            p_event.current_pos.x = static_cast<double>(event.motion.x);
+            p_event.current_pos.y = static_cast<double>(event.motion.y);
             break;
         }
     }

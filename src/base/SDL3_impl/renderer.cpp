@@ -17,7 +17,7 @@ renderer::renderer(const window &win) : p_impl(std::make_unique<impl>())
 
     p_impl->renderer = SDL_CreateRenderer(sdl_window, nullptr);
 
-    if (p_impl == nullptr)
+    if (p_impl->renderer == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 
