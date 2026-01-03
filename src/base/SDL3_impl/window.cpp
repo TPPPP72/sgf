@@ -54,7 +54,7 @@ window_event window::current_event() const
 
 void window::poll_event()
 {
-    p_event.current_events.clear();
+    p_event.events.clear();
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -68,31 +68,32 @@ void window::poll_event()
             break;
 
         case SDL_EVENT_KEY_DOWN:
-            p_event.current_events[event_type::key_down]                    = true;
-            p_event.current_keys[static_cast<key_code>(event.key.scancode)] = true;
+            p_event.events[event_type::key_down]                    = true;
+            p_event.keys[static_cast<key_code>(event.key.scancode)] = true;
             break;
 
         case SDL_EVENT_KEY_UP:
-            p_event.current_events[event_type::key_up]                      = true;
-            p_event.current_keys[static_cast<key_code>(event.key.scancode)] = false;
+            p_event.events[event_type::key_up]                      = true;
+            p_event.keys[static_cast<key_code>(event.key.scancode)] = false;
             break;
 
         case SDL_EVENT_MOUSE_BUTTON_DOWN:
-            p_event.current_events[event_type::mouse_button_down]                        = true;
-            p_event.current_buttons[static_cast<mouse_button_code>(event.button.button)] = true;
+            p_event.events[event_type::mouse_button_down]                        = true;
+            p_event.buttons[static_cast<mouse_button_code>(event.button.button)] = true;
             break;
 
         case SDL_EVENT_MOUSE_BUTTON_UP:
-            p_event.current_events[event_type::mouse_button_up]                          = true;
-            p_event.current_buttons[static_cast<mouse_button_code>(event.button.button)] = false;
+            p_event.events[event_type::mouse_button_up]                          = true;
+            p_event.buttons[static_cast<mouse_button_code>(event.button.button)] = false;
             break;
 
         case SDL_EVENT_MOUSE_MOTION:
-            p_event.current_pos.x = static_cast<double>(event.motion.x);
-            p_event.current_pos.y = static_cast<double>(event.motion.y);
+            p_event.pos.x = static_cast<double>(event.motion.x);
+            p_event.pos.y = static_cast<double>(event.motion.y);
             break;
         }
     }
+    ++p_poll_event_count;
 }
 
 void *window::get() const noexcept
@@ -120,6 +121,11 @@ void window::set_fullscreen(bool is_enable)
         throw std::runtime_error(SDL_GetError());
 
     p_is_fullscreen = is_enable;
+}
+
+std::uint32_t window::poll_event_count() const noexcept
+{
+    return p_poll_event_count;
 }
 
 bool window::is_fullscreen() const noexcept

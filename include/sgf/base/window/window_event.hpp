@@ -108,10 +108,10 @@ struct mouse_position
 
 struct window_event
 {
-    std::unordered_map<event_type, bool>        current_events;
-    mouse_position                              current_pos;
-    std::unordered_map<key_code, bool>          current_keys;
-    std::unordered_map<mouse_button_code, bool> current_buttons;
+    std::unordered_map<event_type, bool>        events;
+    mouse_position                              pos;
+    std::unordered_map<key_code, bool>          keys;
+    std::unordered_map<mouse_button_code, bool> buttons;
 };
 
 }; // namespace sgf::base

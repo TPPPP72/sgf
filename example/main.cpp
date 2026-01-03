@@ -24,7 +24,7 @@ int main()
         std::string keys;
         for (int i = 1; i <= 26; ++i)
         {
-            if (event.current_keys.count(static_cast<key_code>(i + 3)) && event.current_keys.at(static_cast<key_code>(i + 3)))
+            if (event.keys.count(static_cast<key_code>(i + 3)) && event.keys.at(static_cast<key_code>(i + 3)))
                 keys += static_cast<char>('A' + i - 1);
         }
 

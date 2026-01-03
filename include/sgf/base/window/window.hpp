@@ -24,6 +24,7 @@ public:
     std::tuple<std::uint32_t, std::uint32_t> current_size() const;
     void                                     set_fullscreen(bool is_enable);
     bool                                     is_fullscreen() const noexcept;
+    std::uint32_t                            poll_event_count() const noexcept;
     void                                     on_exit(std::function<void()>);
 
 private:
@@ -32,6 +33,7 @@ private:
     window_info           p_info;
     window_event          p_event;
     bool                  p_is_fullscreen{false};
+    std::uint32_t         p_poll_event_count{0};
     std::function<void()> p_on_exit{nullptr};
 };
 

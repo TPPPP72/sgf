@@ -20,6 +20,7 @@ target_include_directories(sgf
 target_link_libraries(sgf
   INTERFACE
     framework_base
+    framework
 )
 
 if(SGF_BUILD_EXAMPLES)
