@@ -29,6 +29,7 @@ public:
     bool is_button_released(base::mouse_button_code) const;
 
     base::mouse_position get_mouse_position() const;
+    base::mouse_position get_logic_mouse_position() const;
 
 private:
     input_system()  = default;

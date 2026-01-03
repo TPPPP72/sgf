@@ -86,3 +86,15 @@ base::mouse_position input_system::get_mouse_position() const
         throw std::runtime_error("Can not use input_system before bind");
     return win->current_event().pos;
 }
+
+base::mouse_position input_system::get_logic_mouse_position() const
+{
+    if (win == nullptr)
+        throw std::runtime_error("Can not use input_system before bind");
+
+    auto [current_w, current_h] = win->current_size();
+    auto [init_w, init_h]       = win->init_size();
+    auto x                      = win->current_event().pos.x * (static_cast<double>(init_w) / current_w);
+    auto y                      = win->current_event().pos.y * (static_cast<double>(init_h) / current_h);
+    return {x, y};
+}
