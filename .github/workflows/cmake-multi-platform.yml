@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
       
     - name: Install dependencies
       run: |
@@ -72,6 +74,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Cache vcpkg binary cache
       uses: actions/cache@v3
@@ -101,6 +105,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
       
     - name: Install dependencies
       run: |
