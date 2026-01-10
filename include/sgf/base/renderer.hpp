@@ -22,6 +22,8 @@ public:
     void *get() const noexcept;
     void set_target(const texture &);
     void set_target();
+    bool is_vsync() const noexcept;
+    void set_vsync(bool is_enable);
     void set_draw_color(const sgf::type::color &);
     sgf::type::color draw_color() const noexcept;
     void render_texture(const texture &, const type::resource_rect &src, const type::view_rect &dst);
@@ -36,6 +38,7 @@ private:
     std::unique_ptr<impl> p_impl;
     sgf::type::color p_color;
     const viewport *p_viewport_ptr{nullptr};
+    bool p_is_vsync{false};
 };
 
 } // namespace sgf::base

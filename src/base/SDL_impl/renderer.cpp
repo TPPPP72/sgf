@@ -46,6 +46,19 @@ void renderer::set_target()
         throw std::runtime_error(SDL_GetError());
 }
 
+bool renderer::is_vsync() const noexcept
+{
+    return p_is_vsync;
+}
+
+void renderer::set_vsync(bool is_enable)
+{
+    if (!SDL_SetRenderVSync(p_impl->renderer, is_enable))
+        throw std::runtime_error(SDL_GetError());
+
+    p_is_vsync = is_enable;
+}
+
 void renderer::set_draw_color(const type::color &color)
 {
     if (!SDL_SetRenderDrawColor(p_impl->renderer, color.r, color.g, color.b, color.a))
