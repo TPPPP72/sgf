@@ -14,13 +14,17 @@
             "cacheVariables": {
                 "SGF_TEST_LOCAL": "True",
                 "SDLIMAGE_AVIF": "OFF",
-                "SDLIMAGE_AV1": "OFF"
+                "SDLIMAGE_AV1": "OFF",
+                "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
+                "CMAKE_WARN_DEPRECATED": "OFF"
             }
         },
         {
             "name": "local-nasm",
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "True"
+                "SGF_TEST_LOCAL": "True",
+                "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
+                "CMAKE_WARN_DEPRECATED": "OFF"
             }
         }
     ]
