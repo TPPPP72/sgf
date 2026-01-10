@@ -1,0 +1,27 @@
+{
+    "version": 4,
+    "configurePresets": [
+        {
+            "name": "github-ci",
+            "cacheVariables": {
+                "SGF_TEST_LOCAL": "False",
+                "SDLIMAGE_AVIF": "OFF",
+                "SDLIMAGE_AV1": "OFF"
+            }
+        },
+        {
+            "name": "local",
+            "cacheVariables": {
+                "SGF_TEST_LOCAL": "True",
+                "SDLIMAGE_AVIF": "OFF",
+                "SDLIMAGE_AV1": "OFF"
+            }
+        },
+        {
+            "name": "local-nasm",
+            "cacheVariables": {
+                "SGF_TEST_LOCAL": "True"
+            }
+        }
+    ]
+}
