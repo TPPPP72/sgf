@@ -15,9 +15,9 @@
 - 🖌️ **纹理系统**: 图像加载、文本纹理、动态纹理创建
 - 🌈 **颜色系统**: RGBA颜色支持
 - 📐 **几何图形**: 矩形绘制和操作
+- 🎮 **输入系统**: 支持捕获键盘与鼠标操作
 
 ### 🔄 计划中
-- 🎮 输入系统（键盘、鼠标、手柄）
 - 🔊 音频系统
 - ⚡ 物理引擎集成
 - 📦 资源管理器
@@ -29,13 +29,36 @@
 ### 环境要求
 - C++17 或更高
 - CMake 3.25+
-- Harfbuzz
 
 ### 安装依赖
 
-#### Windows (msys2)
-```bash
-pacman -S mingw-w64-ucrt-x86_64-harfbuzz
+#### Linux
+以下来自于 `SDL3` 官方文档
+
+对于 `Ubuntu 18.04`，你需要执行：
+```
+sudo apt-get install build-essential git make \
+pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev \
+libaudio-dev libfribidi-dev libjack-dev libsndio-dev libx11-dev libxext-dev \
+libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxtst-dev \
+libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
+libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev libharfbuzz-dev
+```
+对于 `Ubuntu 22.04+`，你需要额外执行：
+```
+sudo apt-get install libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
+```
+#### Windows
+如果你使用 `MSVC` 编译器，不需要进行任何额外的环境配置操作  
+如果你使用其他编译器，应至少编译安装 `harfbuzz` 库
+#### MacOS
+```
+brew install cmake harfbuzz freetype pkg-config
+```
+### 编译配置
+强制使用子模块源码构建，请开启
+```cmake
+-DSDLIMAGE_VENDORED=ON -DSDLTTF_VENDORED=ON -DSDLMIXER_VENDORED=ON
 ```
 
 ### 最小示例
