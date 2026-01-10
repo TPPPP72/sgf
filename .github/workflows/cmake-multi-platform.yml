@@ -56,7 +56,7 @@ jobs:
           libharfbuzz-dev
            
     - name: Configure
-      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release --preset github-ci
+      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release --preset github-ci-linux
       
     - name: Build
       run: cmake --build build --parallel
@@ -78,7 +78,7 @@ jobs:
         submodules: recursive
         
     - name: Configure
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release --preset github-ci
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release --preset github-ci-win
       
     - name: Build
       run: cmake --build build --config Release --parallel
@@ -100,7 +100,7 @@ jobs:
         brew install cmake harfbuzz freetype pkg-config
         
     - name: Configure
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release --preset github-ci
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release --preset github-ci-mac
       
     - name: Build
       run: cmake --build build --parallel
