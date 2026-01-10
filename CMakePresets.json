@@ -16,7 +16,8 @@
                 "SDLIMAGE_AVIF": "OFF",
                 "SDLIMAGE_AV1": "OFF",
                 "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
-                "CMAKE_WARN_DEPRECATED": "OFF"
+                "CMAKE_WARN_DEPRECATED": "OFF",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
@@ -24,7 +25,8 @@
             "cacheVariables": {
                 "SGF_TEST_LOCAL": "True",
                 "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
-                "CMAKE_WARN_DEPRECATED": "OFF"
+                "CMAKE_WARN_DEPRECATED": "OFF",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         }
     ]
