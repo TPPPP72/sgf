@@ -2,32 +2,198 @@
     "version": 6,
     "configurePresets": [
         {
-            "name": "github-ci",
+            "name": "GCC-base",
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "False",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "MSVC-base",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            }
+        },
+        {
+            "name": "Clang-base",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "Debug-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "Release-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "disable-nasm-base",
+            "cacheVariables": {
                 "SDLIMAGE_AVIF": "OFF",
                 "SDLIMAGE_AV1": "OFF"
             }
         },
         {
-            "name": "local",
+            "name": "disable-cmake-warnings-base",
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "True",
-                "SDLIMAGE_AVIF": "OFF",
-                "SDLIMAGE_AV1": "OFF",
                 "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
-                "CMAKE_WARN_DEPRECATED": "OFF",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                "CMAKE_WARN_DEPRECATED": "OFF"
             }
         },
         {
-            "name": "local-nasm",
+            "name": "github-ci-linux",
+            "binaryDir": "${sourceDir}/build",
+            "inherits": [
+                "GCC-base",
+                "Release-base",
+                "disable-nasm-base"
+            ],
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "True",
-                "CMAKE_SUPPRESS_DEVELOPER_WARNINGS": "ON",
-                "CMAKE_WARN_DEPRECATED": "OFF",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                "SGF_TEST_LOCAL": "False"
             }
+        },
+        {
+            "name": "github-ci-win",
+            "binaryDir": "${sourceDir}/build",
+            "inherits": [
+                "MSVC-base",
+                "Release-base",
+                "disable-nasm-base"
+            ],
+            "cacheVariables": {
+                "SGF_TEST_LOCAL": "False"
+            }
+        },
+        {
+            "name": "github-ci-mac",
+            "binaryDir": "${sourceDir}/build",
+            "inherits": [
+                "Clang-base",
+                "Release-base",
+                "disable-nasm-base"
+            ],
+            "cacheVariables": {
+                "SGF_TEST_LOCAL": "False"
+            }
+        },
+        {
+            "name": "linux-debug",
+            "binaryDir": "${sourceDir}/build/linux-debug",
+            "inherits": [
+                "GCC-base",
+                "Debug-base",
+                "disable-nasm-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "linux-release",
+            "binaryDir": "${sourceDir}/build/linux-release",
+            "inherits": [
+                "GCC-base",
+                "Release-base",
+                "disable-nasm-base"
+            ]
+        },
+        {
+            "name": "linux-nasm-debug",
+            "binaryDir": "${sourceDir}/build/linux-nasm-debug",
+            "inherits": [
+                "GCC-base",
+                "Debug-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "linux-nasm-release",
+            "binaryDir": "${sourceDir}/build/linux-nasm-release",
+            "inherits": [
+                "GCC-base",
+                "Release-base"
+            ]
+        },
+        {
+            "name": "win-debug",
+            "binaryDir": "${sourceDir}/build/win-debug",
+            "inherits": [
+                "MSVC-base",
+                "Debug-base",
+                "disable-nasm-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "win-release",
+            "binaryDir": "${sourceDir}/build/win-release",
+            "inherits": [
+                "MSVC-base",
+                "Release-base",
+                "disable-nasm-base"
+            ]
+        },
+        {
+            "name": "win-nasm-debug",
+            "binaryDir": "${sourceDir}/build/win-nasm-debug",
+            "inherits": [
+                "MSVC-base",
+                "Debug-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "win-nasm-release",
+            "binaryDir": "${sourceDir}/build/win-nasm-release",
+            "inherits": [
+                "MSVC-base",
+                "Release-base"
+            ]
+        },
+        {
+            "name": "mac-debug",
+            "binaryDir": "${sourceDir}/build/mac-debug",
+            "inherits": [
+                "Clang-base",
+                "Debug-base",
+                "disable-nasm-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "mac-release",
+            "binaryDir": "${sourceDir}/build/mac-release",
+            "inherits": [
+                "Clang-base",
+                "Release-base",
+                "disable-nasm-base"
+            ]
+        },
+        {
+            "name": "mac-nasm-debug",
+            "binaryDir": "${sourceDir}/build/mac-nasm-debug",
+            "inherits": [
+                "Clang-base",
+                "Debug-base",
+                "disable-cmake-warnings-base"
+            ]
+        },
+        {
+            "name": "mac-nasm-release",
+            "binaryDir": "${sourceDir}/build/mac-nasm-release",
+            "inherits": [
+                "Clang-base",
+                "Release-base"
+            ]
         }
     ]
 }
