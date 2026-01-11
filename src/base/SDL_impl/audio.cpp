@@ -27,7 +27,7 @@ audio::audio(const std::filesystem::path &p) : p_impl(std::make_unique<impl>())
     SDL_DestroyProperties(props);
 
     p_impl->audio = MIX_LoadAudio(nullptr, p.string().c_str(), predecode);
-    if (p_impl->audio)
+    if (p_impl->audio == nullptr)
         throw std::runtime_error(SDL_GetError());
 }
 
