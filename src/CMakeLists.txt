@@ -16,4 +16,5 @@ target_sources(sgf_core
   PRIVATE
     input_system.cpp
     resources/atlas.cpp
+    animation/player.cpp
 )
