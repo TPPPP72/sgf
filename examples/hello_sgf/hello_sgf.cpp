@@ -22,17 +22,23 @@ int main()
                               test_viewport.update();
                           });
 
+    auto English = texture{test_renderer, test_font, "Hello sgf", color::white};
+    auto Chinese = texture{test_renderer, test_font, "你好sgf", color::blue};
+    auto Korean  = texture{test_renderer, test_font, "こんにちはsgf", color::red};
+    auto French  = texture{test_renderer, test_font, "Bonjour sgf", color::green};
+    auto Spanish = texture{test_renderer, test_font, "Hola sgf", color{0, 255, 255, 255}};
+
     while (true)
     {
         test_renderer.begin_frame(test_viewport);
         test_renderer.clear();
         test_window.poll_event();
 
-        test_renderer.render_texture(texture{test_renderer, test_font, "Hello sgf", color::white}, view_position{190, 140});
-        test_renderer.render_texture(texture{test_renderer, test_font, "你好sgf", color::blue}, view_position{200, 180});
-        test_renderer.render_texture(texture{test_renderer, test_font, "こんにちはsgf", color::red}, view_position{160, 220});
-        test_renderer.render_texture(texture{test_renderer, test_font, "Bonjour sgf", color::green}, view_position{180, 260});
-        test_renderer.render_texture(texture{test_renderer, test_font, "Hola sgf", color{0, 255, 255, 255}}, view_position{195, 300});
+        test_renderer.render_texture(English, view_position{190, 140});
+        test_renderer.render_texture(Chinese, view_position{200, 180});
+        test_renderer.render_texture(Korean, view_position{160, 220});
+        test_renderer.render_texture(French, view_position{180, 260});
+        test_renderer.render_texture(Spanish, view_position{195, 300});
 
         test_renderer.present();
         test_renderer.end_frame();
