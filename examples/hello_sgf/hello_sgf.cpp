@@ -10,8 +10,8 @@ int main()
 {
     window_info init_info;
     init_info.title  = "hello_sgf";
-    init_info.width  = 500;
-    init_info.height = 500;
+    init_info.size.w = 500;
+    init_info.size.h = 500;
 
     window test_window{init_info};
     renderer test_renderer{test_window};

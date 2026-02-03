@@ -1,7 +1,7 @@
 #ifndef SGF_BASE_WINDOW_INFO_HPP
 #define SGF_BASE_WINDOW_INFO_HPP
 
-#include <cstdint>
+#include "../../type/size.hpp"
 #include <string>
 
 namespace sgf::base
@@ -10,8 +10,7 @@ namespace sgf::base
 struct window_info
 {
     std::string title;
-    std::uint32_t width;
-    std::uint32_t height;
+    type::window_size size;
 };
 
 } // namespace sgf::base

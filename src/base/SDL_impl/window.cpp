@@ -12,7 +12,7 @@ struct window::impl
 
 window::window(const window_info &inf) : p_impl(std::make_unique<impl>())
 {
-    p_impl->window = SDL_CreateWindow(inf.title.c_str(), inf.width, inf.height, SDL_WINDOW_RESIZABLE);
+    p_impl->window = SDL_CreateWindow(inf.title.c_str(), inf.size.w, inf.size.h, SDL_WINDOW_RESIZABLE);
 
     if (p_impl->window == nullptr)
         throw std::runtime_error(SDL_GetError());
@@ -38,8 +38,8 @@ window_info window::current_info() const
     std::int32_t actual_width, actual_height;
     if (!SDL_GetWindowSize(p_impl->window, &actual_width, &actual_height))
         throw std::runtime_error(SDL_GetError());
-    inf.width  = actual_width;
-    inf.height = actual_height;
+    inf.size.w = actual_width;
+    inf.size.h = actual_height;
 
     return inf;
 }
@@ -106,7 +106,7 @@ void *window::get() const noexcept
 
 sgf::type::window_size window::init_size() const noexcept
 {
-    return {p_info.width, p_info.height};
+    return {p_info.size.w, p_info.size.h};
 }
 
 sgf::type::window_size window::current_size() const
