@@ -6,7 +6,7 @@ namespace sgf::base::guard
 class font_system
 {
 public:
-    font_system();
+    explicit font_system();
     ~font_system();
     font_system(const font_system &)            = delete;
     font_system &operator=(const font_system &) = delete;

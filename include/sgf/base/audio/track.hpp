@@ -19,7 +19,7 @@ public:
     };
 
 public:
-    track(const mixer &);
+    explicit track(const mixer &);
     ~track();
     void *get() const noexcept;
     void bind_audio(const audio &);

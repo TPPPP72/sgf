@@ -6,7 +6,7 @@ namespace sgf::base::guard
 class audio_system
 {
 public:
-    audio_system();
+    explicit audio_system();
     ~audio_system();
     audio_system(const audio_system &)            = delete;
     audio_system &operator=(const audio_system &) = delete;

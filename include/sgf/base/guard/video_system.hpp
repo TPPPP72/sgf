@@ -6,7 +6,7 @@ namespace sgf::base::guard
 class video_system
 {
 public:
-    video_system();
+    explicit video_system();
     ~video_system();
     video_system(const video_system &)            = delete;
     video_system &operator=(const video_system &) = delete;
