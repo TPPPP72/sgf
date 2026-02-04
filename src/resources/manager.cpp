@@ -33,18 +33,18 @@ const font &manager::load_font(const std::filesystem::path &p, std::uint32_t siz
     return get_or_load<font>(p_fonts, p.string(), p, size);
 }
 
-const texture &manager::load_texture(const std::filesystem::path &p, const renderer &rend)
+const texture &manager::load_texture(const std::filesystem::path &p)
 {
-    return get_or_load<texture>(p_textures, p.string(), rend, p);
+    return get_or_load<texture>(p_textures, p.string(), p_renderer, p);
 }
 
-const sprite &manager::load_sprite(const std::filesystem::path &p, const renderer &rend)
+const sprite &manager::load_sprite(const std::filesystem::path &p)
 {
-    auto &tex   = load_texture(p, rend);
+    auto &tex   = load_texture(p);
     auto [w, h] = tex.size();
 
-    return get_or_load<sprite>(p_sprites, p.string(), tex,
-                               type::resource_rect{0, 0, static_cast<double>(w), static_cast<double>(h)},
+    return get_or_load<sprite>(p_sprites, p.string(), &tex,
+                               type::resource_rect{0.0, 0.0, static_cast<double>(w), static_cast<double>(h)},
                                type::vec2{0.5, 0.5});
 }
 
