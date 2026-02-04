@@ -2,9 +2,7 @@
 #include <sgf/graphics/sprite.hpp>
 #include <sgf/type/position.hpp>
 
-using namespace sgf::graphics;
-
-void render(sgf::base::renderer &rd, const sgf::resources::sprite &s, const sgf::type::view_rect &dst)
+void sgf::graphics::render(sgf::base::renderer &rd, const sgf::resources::sprite &s, const sgf::type::view_rect &dst)
 {
     if (!s.texture_ptr)
         return;
@@ -12,7 +10,7 @@ void render(sgf::base::renderer &rd, const sgf::resources::sprite &s, const sgf:
     rd.render_texture(*s.texture_ptr, s.rect, dst);
 }
 
-void render(sgf::base::renderer &rd, const sgf::resources::sprite &s, const sgf::type::view_position &dst)
+void sgf::graphics::render(sgf::base::renderer &rd, const sgf::resources::sprite &s, const sgf::type::view_position &dst)
 {
     if (!s.texture_ptr)
         return;
