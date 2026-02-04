@@ -1,5 +1,6 @@
 #include <sgf/base/audio/audio.hpp>
 #include <sgf/base/texture.hpp>
+#include <sgf/resources/atlas.hpp>
 #include <sgf/resources/manager.hpp>
 #include <sgf/resources/sprite.hpp>
 #include <sgf/type/vec2.hpp>
@@ -7,58 +8,54 @@
 using namespace sgf::resources;
 using namespace sgf::base;
 
+template <typename T, typename Container, typename... Args>
+const T &get_or_load(Container &cache, const std::string &key, Args &&...args)
+{
+    auto it = cache.find(key);
+    if (it == cache.end())
+    {
+        auto [new_it, success] = cache.emplace(
+            std::piecewise_construct,
+            std::forward_as_tuple(key),
+            std::forward_as_tuple(std::forward<Args>(args)...));
+        return new_it->second;
+    }
+    return it->second;
+}
+
 const audio &manager::load_audio(const std::filesystem::path &p)
 {
-    auto key = p.string();
-
-    auto it = p_audios.find(key);
-
-    if (it != p_audios.end())
-        return it->second;
-
-    auto [pos, inserted] = p_audios.try_emplace(key, p);
-    return pos->second;
+    return get_or_load<audio>(p_audios, p.string(), p);
 }
 
-const font &manager::load_font(const std::filesystem::path &p)
+const font &manager::load_font(const std::filesystem::path &p, std::uint32_t size)
 {
-    auto key = p.string();
-
-    auto it = p_fonts.find(key);
-
-    if (it != p_fonts.end())
-        return it->second;
-
-    auto [pos, inserted] = p_fonts.try_emplace(key, p);
-    return pos->second;
+    return get_or_load<font>(p_fonts, p.string(), p, size);
 }
 
-const texture &manager::load_texture(const std::filesystem::path &p)
+const texture &manager::load_texture(const std::filesystem::path &p, const renderer &rend)
 {
-    auto key = p.string();
-
-    auto it = p_textures.find(key);
-
-    if (it != p_textures.end())
-        return it->second;
-
-    auto [pos, inserted] = p_textures.try_emplace(key, p);
-    return pos->second;
+    return get_or_load<texture>(p_textures, p.string(), rend, p);
 }
 
-const sprite &manager::load_sprite(const std::filesystem::path &p)
+const sprite &manager::load_sprite(const std::filesystem::path &p, const renderer &rend)
 {
-    auto key = p.string();
+    auto &tex   = load_texture(p, rend);
+    auto [w, h] = tex.size();
 
-    auto it = p_sprites.find(key);
+    return get_or_load<sprite>(p_sprites, p.string(), tex,
+                               type::resource_rect{0, 0, static_cast<double>(w), static_cast<double>(h)},
+                               type::vec2{0.5, 0.5});
+}
 
-    if (it != p_sprites.end())
-        return it->second;
+const atlas &manager::load_atlas_from_directory(const atlas_directory_info &info)
+{
+    return get_or_load<atlas>(p_atlases, info.root_path,
+                              atlas_loader{}.load_from_directory(*this, info));
+}
 
-    auto &texture = this->load_texture(p);
-
-    auto [w, h] = texture.size();
-
-    auto [pos, inserted] = p_sprites.try_emplace(key, &texture, type::resource_rect{0, 0, static_cast<double>(w), static_cast<double>(h)}, type::vec2{0.5, 0.5});
-    return pos->second;
+const atlas &manager::load_atlas_from_sheet(const atlas_sheet_info &info)
+{
+    return get_or_load<atlas>(p_atlases, info.path.substr(0, info.path.rfind(".")),
+                              atlas_loader{}.load_from_sheet(*this, info));
 }
