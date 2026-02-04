@@ -15,6 +15,8 @@ target_include_directories(sgf_core
 target_sources(sgf_core
   PRIVATE
     input_system.cpp
+    graphics/sprite.cpp
     resources/atlas.cpp
+    resources/manager.cpp
     animation/player.cpp
 )
