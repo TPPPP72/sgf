@@ -1,46 +1,46 @@
 #include "../get_default_font.hpp"
-#include <sgf/base/renderer.hpp>
+#include <sgf/base/font.hpp>
 #include <sgf/base/texture.hpp>
-#include <sgf/base/window/window.hpp>
+#include <sgf/kernel.hpp>
+#include <sgf/type/color.hpp>
+#include <sgf/type/position.hpp>
 
-using namespace sgf::base;
-using namespace sgf::type;
+using namespace sgf;
+
+class hello_sgf : public kernel<hello_sgf>
+{
+public:
+    hello_sgf()
+        : kernel("hello_sgf", {500, 500}, 60),
+          p_font(get_default_font(), 24),
+          English(get_renderer(), p_font, "Hello sgf", type::color::white),
+          Chinese(get_renderer(), p_font, "你好sgf", type::color::blue),
+          Japanese(get_renderer(), p_font, "こんにちはsgf", type::color::red),
+          French(get_renderer(), p_font, "Bonjour sgf", type::color::green),
+          Spanish(get_renderer(), p_font, "Hola sgf", type::color{0, 255, 255, 255})
+    {
+    }
+
+    void on_update(kernel<hello_sgf> &k, std::chrono::nanoseconds dt) {}
+
+    void on_render(kernel<hello_sgf> &k)
+    {
+        auto &rd = k.get_renderer();
+
+        rd.render_texture(English, type::view_position{190, 140});
+        rd.render_texture(Chinese, type::view_position{200, 180});
+        rd.render_texture(Japanese, type::view_position{160, 220});
+        rd.render_texture(French, type::view_position{180, 260});
+        rd.render_texture(Spanish, type::view_position{195, 300});
+    }
+
+private:
+    base::font p_font;
+    base::texture English, Chinese, Japanese, French, Spanish;
+};
 
 int main()
 {
-    window_info init_info;
-    init_info.title  = "hello_sgf";
-    init_info.size.w = 500;
-    init_info.size.h = 500;
-
-    window test_window{init_info};
-    renderer test_renderer{test_window};
-    font test_font{get_default_font(), 24};
-    viewport test_viewport{test_window};
-    test_window.on_resize([&test_viewport]()
-                          {
-                              test_viewport.update();
-                          });
-
-    auto English = texture{test_renderer, test_font, "Hello sgf", color::white};
-    auto Chinese = texture{test_renderer, test_font, "你好sgf", color::blue};
-    auto Korean  = texture{test_renderer, test_font, "こんにちはsgf", color::red};
-    auto French  = texture{test_renderer, test_font, "Bonjour sgf", color::green};
-    auto Spanish = texture{test_renderer, test_font, "Hola sgf", color{0, 255, 255, 255}};
-
-    while (true)
-    {
-        test_renderer.begin_frame(test_viewport);
-        test_renderer.clear();
-        test_window.poll_event();
-
-        test_renderer.render_texture(English, view_position{190, 140});
-        test_renderer.render_texture(Chinese, view_position{200, 180});
-        test_renderer.render_texture(Korean, view_position{160, 220});
-        test_renderer.render_texture(French, view_position{180, 260});
-        test_renderer.render_texture(Spanish, view_position{195, 300});
-
-        test_renderer.present();
-        test_renderer.end_frame();
-    }
+    hello_sgf core;
+    core.run();
 }
