@@ -2,7 +2,7 @@
 #define SGF_GRAPHICS_SPRITE_HPP
 
 #include "../resources/sprite.hpp"
-#include "sgf/type/position.hpp"
+#include "../type/position.hpp"
 
 namespace sgf::graphics
 {
