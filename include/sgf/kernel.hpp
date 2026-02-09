@@ -76,25 +76,30 @@ public:
 
             render();
 
-            ++frame_count;
-            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - fps_last_time);
-
-            if (duration.count() >= 500)
-            {
-                p_current_fps = static_cast<double>(frame_count) / (duration.count() / 1000.0);
-                frame_count   = 0;
-                fps_last_time = now;
-            }
-
             if (p_max_fps > 0)
             {
                 ns target_frame{1'000'000'000 / p_max_fps};
 
-                auto frame_end = clock::now();
-                ns used        = std::chrono::duration_cast<ns>(frame_end - now);
+                while (std::chrono::duration_cast<ns>(clock::now() - now) < target_frame)
+                {
+                    ns remaining = target_frame - std::chrono::duration_cast<ns>(clock::now() - now);
 
-                if (used < target_frame)
-                    std::this_thread::sleep_for(target_frame - used);
+                    if (remaining > std::chrono::milliseconds(2))
+                        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                    else
+                        std::this_thread::yield();
+                }
+            }
+
+            ++frame_count;
+            auto current_loop_end = clock::now();
+            auto duration         = std::chrono::duration_cast<std::chrono::milliseconds>(current_loop_end - fps_last_time);
+
+            if (duration.count() >= 500)
+            {
+                p_current_fps = static_cast<std::uint32_t>(frame_count * 1000.0 / duration.count());
+                frame_count   = 0;
+                fps_last_time = current_loop_end;
             }
         }
     }
