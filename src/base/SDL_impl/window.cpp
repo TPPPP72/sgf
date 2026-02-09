@@ -104,6 +104,22 @@ void *window::get() const noexcept
     return p_impl->window;
 }
 
+std::string window::init_title() const noexcept
+{
+    return p_info.title;
+}
+
+std::string window::current_title() const noexcept
+{
+    return SDL_GetWindowTitle(p_impl->window);
+}
+
+void window::set_title(const std::string &title)
+{
+    if (!SDL_SetWindowTitle(p_impl->window, title.c_str()))
+        throw std::runtime_error(SDL_GetError());
+}
+
 sgf::type::window_size window::init_size() const noexcept
 {
     return {p_info.size.w, p_info.size.h};

@@ -24,6 +24,9 @@ public:
     void *get() const noexcept;
     type::window_size init_size() const noexcept;
     type::window_size current_size() const;
+    std::string init_title() const noexcept;
+    std::string current_title() const noexcept;
+    void set_title(const std::string &title);
     void set_fullscreen(bool is_enable);
     bool is_fullscreen() const noexcept;
     std::uint32_t poll_event_count() const noexcept;
