@@ -12,7 +12,7 @@ class hello_sgf : public kernel<hello_sgf>
 {
 public:
     hello_sgf()
-        : kernel("hello_sgf", {500, 500}, 60),
+        : kernel("hello sgf", {500, 500}, 60),
           p_font(get_default_font(), 24),
           English(get_renderer(), p_font, "Hello sgf", type::color::white),
           Chinese(get_renderer(), p_font, "你好sgf", type::color::blue),
@@ -22,13 +22,15 @@ public:
     {
     }
 
-    void on_update(kernel<hello_sgf> &k, std::chrono::nanoseconds dt) {}
+    void on_update(kernel<hello_sgf> &k, std::chrono::nanoseconds dt)
+    {
+        k.get_window().set_title(+"hello sgf | FPS : " + std::to_string(k.get_current_fps()));
+    }
 
     void on_render(kernel<hello_sgf> &k)
     {
         auto &rd = k.get_renderer();
 
-        rd.render_texture(base::texture{k.get_renderer(), p_font, "fps : " + std::to_string(k.get_current_fps()), type::color::white}, type::view_position{0, 0});
         rd.render_texture(English, type::view_position{190, 140});
         rd.render_texture(Chinese, type::view_position{200, 180});
         rd.render_texture(Japanese, type::view_position{160, 220});
