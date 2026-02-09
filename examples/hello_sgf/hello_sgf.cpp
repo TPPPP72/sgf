@@ -43,6 +43,5 @@ private:
 
 int main()
 {
-    hello_sgf core;
-    core.run();
+    hello_sgf{}.run();
 }
