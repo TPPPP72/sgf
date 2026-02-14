@@ -1,10 +1,13 @@
+#include <chrono>
 #include <sgf/animation/player.hpp>
 
 using namespace sgf::animation;
 
 void player::play(const clip *cl)
 {
-    p_clip = cl;
+    p_frame_index = 0;
+    p_elapsed     = std::chrono::nanoseconds::zero();
+    p_clip        = cl;
 }
 
 void player::update(std::chrono::nanoseconds dt)

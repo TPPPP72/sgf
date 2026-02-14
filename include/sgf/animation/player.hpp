@@ -18,7 +18,7 @@ public:
 private:
     const clip *p_clip = nullptr;
 
-    std::size_t p_frame_index = 0;
+    std::size_t p_frame_index{0};
     std::chrono::nanoseconds p_elapsed{0};
 };
 
