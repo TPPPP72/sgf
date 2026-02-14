@@ -15,7 +15,7 @@ public:
     {
         if (new_scene)
         {
-            new_scene->init();
+            new_scene->on_init();
             m_scenes.push_back(std::move(new_scene));
         }
     }
@@ -37,7 +37,7 @@ public:
         for (auto &s : m_scenes)
         {
             if (s->should_update)
-                s->update(dt);
+                s->on_update(dt);
         }
     }
 
@@ -46,7 +46,7 @@ public:
         for (auto &s : m_scenes)
         {
             if (s->should_render)
-                s->render(renderer);
+                s->on_render(renderer);
         }
     }
 
