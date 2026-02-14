@@ -9,6 +9,10 @@ if(SGF_BUILD_TESTS)
   option(SGF_TEST_LOCAL "Test on local environment" True)
 endif()
 
+if(MSVC)
+  add_compile_options(/utf-8)
+endif()
+
 add_subdirectory(third_party)
 
 add_subdirectory(src)

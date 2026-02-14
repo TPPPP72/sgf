@@ -19,4 +19,5 @@ target_sources(sgf_core
     resources/atlas.cpp
     resources/manager.cpp
     animation/player.cpp
+    game_object/game_object_pool.cpp
 )
