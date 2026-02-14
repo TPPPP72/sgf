@@ -24,17 +24,19 @@ public:
     {
         m_log_timer.update(dt);
         double elapsed_sec = std::chrono::duration<double>(dt).count();
-        m_player_pos += 100.0 * elapsed_sec;
+        m_player_pos += 100.0 * elapsed_sec * m_player_dir;
+        if (m_player_pos >= 450 || m_player_pos <= 0)
+            m_player_dir = -m_player_dir;
     }
 
     void render(sgf::base::renderer &rd) override
     {
-        float width  = 50.0f;
-        float height = 50.0f;
-        float y_pos  = 200.0f;
+        double width  = 50.0;
+        double height = 50.0;
+        double y_pos  = 200.0;
 
         sgf::type::view_rect player_rect{
-            static_cast<float>(m_player_pos),
+            m_player_pos,
             y_pos,
             width,
             height};
@@ -45,4 +47,5 @@ public:
 private:
     sgf::timer m_log_timer;
     double m_player_pos{0.0};
+    double m_player_dir{1};
 };
