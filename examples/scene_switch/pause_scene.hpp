@@ -7,11 +7,10 @@
 class pause_scene : public sgf::scene
 {
 public:
-    pause_scene(sgf::scene *background) : m_background(background)
+    pause_scene(std::uint32_t id, sgf::scene *background) : sgf::scene(id), m_background(background)
     {
         if (m_background)
             m_background->should_update = false;
-        id = "pause";
     }
 
     ~pause_scene() override
@@ -20,16 +19,16 @@ public:
             m_background->should_update = true;
     }
 
-    void init() override
+    void on_init() override
     {
         std::cout << "PauseScene: Logic suspended, rendering active.\n";
     }
 
-    void update(std::chrono::nanoseconds dt) override
+    void on_update(std::chrono::nanoseconds dt) override
     {
     }
 
-    void render(sgf::base::renderer &rd) override
+    void on_render(sgf::base::renderer &rd) const override
     {
         rd.render_rect({0, 0, 500, 500}, sgf::type::color{0, 0, 0, 150});
         rd.render_rect({150, 200, 200, 100}, sgf::type::color::white);

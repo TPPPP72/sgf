@@ -15,9 +15,9 @@ public:
     scene_switch()
         : kernel("scene switch", {500, 500}, 60)
     {
-        auto splash = std::make_unique<splash_scene>([this]()
+        auto splash = std::make_unique<splash_scene>(1, [this]()
                                                      {
-                                                         m_manager.change_scene(std::make_unique<game_scene>());
+                                                         m_manager.change_scene(std::make_unique<game_scene>(3));
                                                      });
 
         m_manager.change_scene(std::move(splash));
@@ -31,13 +31,13 @@ public:
         if (sgf::input_system::instance().is_key_down(sgf::base::key_code::p))
         {
             auto current = m_manager.get_current();
-            if (current && current->id != "pause")
-                m_manager.push_scene(std::make_unique<pause_scene>(current));
+            if (current && current->id() != 2)
+                m_manager.push_scene(std::make_unique<pause_scene>(2, current));
         }
 
         if (sgf::input_system::instance().is_key_down(sgf::base::key_code::space))
         {
-            if (m_manager.get_current()->id == "pause")
+            if (m_manager.get_current()->id() == 2)
                 m_manager.pop_scene();
         }
     }

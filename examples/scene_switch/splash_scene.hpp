@@ -10,15 +10,14 @@ using namespace std::chrono_literals;
 class splash_scene : public sgf::scene
 {
 public:
-    splash_scene(std::function<void()> on_finish) : m_on_finish(on_finish) {}
+    splash_scene(std::uint32_t id, std::function<void()> on_finish) : sgf::scene(id), m_on_finish(on_finish) {}
 
-    void init() override
+    void on_init() override
     {
         m_display_time = 0ns;
-        id             = "splash";
     }
 
-    void update(std::chrono::nanoseconds dt) override
+    void on_update(std::chrono::nanoseconds dt) override
     {
         m_display_time += dt;
 
@@ -26,7 +25,7 @@ public:
             m_on_finish();
     }
 
-    void render(sgf::base::renderer &rd) override
+    void on_render(sgf::base::renderer &rd) const override
     {
         rd.render_rect({0, 0, 500, 500}, sgf::type::color::black);
 

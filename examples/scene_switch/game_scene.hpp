@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sgf/type/color.hpp"
 #include <iostream>
 #include <sgf/base/renderer.hpp>
 #include <sgf/scene/scene.hpp>
@@ -8,7 +9,9 @@
 class game_scene : public sgf::scene
 {
 public:
-    void init() override
+    game_scene(std::uint32_t id) : sgf::scene(id) {}
+
+    void on_init() override
     {
         std::cout << "Game Scene Initialized.\n";
         m_log_timer.set_time(std::chrono::seconds(2));
@@ -17,10 +20,9 @@ public:
                                      std::cout << "[Game] 2 seconds passed in game world.\n";
                                  });
         m_log_timer.start();
-        id = "game";
     }
 
-    void update(std::chrono::nanoseconds dt) override
+    void on_update(std::chrono::nanoseconds dt) override
     {
         m_log_timer.update(dt);
         double elapsed_sec = std::chrono::duration<double>(dt).count();
@@ -29,7 +31,7 @@ public:
             m_player_dir = -m_player_dir;
     }
 
-    void render(sgf::base::renderer &rd) override
+    void on_render(sgf::base::renderer &rd) const override
     {
         double width  = 50.0;
         double height = 50.0;
@@ -41,6 +43,13 @@ public:
             width,
             height};
 
+        sgf::type::view_rect background_rect{
+            0,
+            0,
+            500,
+            500};
+
+        rd.render_rect(background_rect, sgf::type::color{209, 95, 238, 255});
         rd.render_rect(player_rect, sgf::type::color::green);
     }
 
