@@ -1,1 +1,2 @@
 add_subdirectory(hello_sgf)
+add_subdirectory(scene_switch)
