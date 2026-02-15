@@ -4,7 +4,7 @@
 #include "base/renderer.hpp"
 #include "base/viewport.hpp"
 #include "base/window/window.hpp"
-#include "sgf/input_system.hpp"
+#include "input_system.hpp"
 #include "type/size.hpp"
 #include <chrono>
 #include <cstdint>
@@ -18,12 +18,12 @@ class kernel
 {
 public:
     // Create window with no VSync
-    kernel(const std::string &title, const type::world_size &ws, std::uint32_t max_fps) : p_ws(ws), p_max_fps(max_fps), p_window({title, ws.w, ws.h}), p_renderer(p_window), p_viewport(p_window)
+    kernel(const std::string &title, const type::view_size &init_vs, const type::window_size &init_ws, std::uint32_t max_fps) : p_view_size(init_vs), p_max_fps(max_fps), p_window({title, init_ws}), p_renderer(p_window), p_viewport(p_window, init_vs)
     {
         init();
     }
     // Create window with VSync
-    kernel(const std::string &title, const type::world_size &ws) : kernel(title, ws, 0) {}
+    kernel(const std::string &title, const type::view_size &init_vs, const type::world_size &init_ws) : kernel(title, init_vs, init_ws, 0) {}
     base::window &get_window() noexcept
     {
         return p_window;
@@ -52,7 +52,7 @@ public:
         auto fps_last_time = clock::now();
         std::uint32_t frame_count{0};
 
-        while (true)
+        while (!p_exit)
         {
             auto now      = clock::now();
             ns frame_time = std::chrono::duration_cast<ns>(now - last_time);
@@ -113,6 +113,11 @@ private:
             p_renderer.set_vsync(false);
 
         input_system::instance().bind(&p_window);
+
+        p_window.on_exit([this]()
+                         {
+                             p_exit = true;
+                         });
         p_window.on_resize([this]()
                            {
                                p_viewport.update();
@@ -137,12 +142,13 @@ private:
     }
 
 private:
-    type::world_size p_ws{0, 0};
+    type::view_size p_view_size{0, 0};
     std::uint32_t p_max_fps{0};
     std::uint32_t p_current_fps{0};
     base::window p_window;
     base::renderer p_renderer;
     base::viewport p_viewport;
+    bool p_exit{false};
 };
 
 } // namespace sgf
