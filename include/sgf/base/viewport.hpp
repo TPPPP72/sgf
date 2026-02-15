@@ -17,11 +17,7 @@ public:
     ~viewport() = default;
     inline void update()
     {
-#ifdef SGF_TEST
-        auto window_size = test_window_size;
-#else
         auto window_size = p_window.current_size();
-#endif
 
         auto sx = static_cast<double>(window_size.w) / p_view_size.w;
         auto sy = static_cast<double>(window_size.h) / p_view_size.h;
@@ -61,22 +57,6 @@ private:
     type::view_size p_view_size;
     type::window_position p_offset;
     double p_scale{1.0};
-
-#ifdef SGF_TEST
-
-public:
-    viewport(type::window_size ws, type::view_size vs)
-        : test_window_size(ws), p_view_size(vs)
-    {
-    }
-    double get_scale() const { return p_scale; }
-    type::window_position get_offset() const { return p_offset; }
-    type::view_size get_view_size() const { return p_view_size; }
-
-private:
-    type::window_size test_window_size{0, 0};
-
-#endif
 };
 
 } // namespace sgf::base
