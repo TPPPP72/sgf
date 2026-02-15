@@ -14,6 +14,13 @@ class texture;
 class renderer
 {
 public:
+    enum class graphic_style
+    {
+        outlined,
+        filled
+    };
+
+public:
     explicit renderer(const window &);
     ~renderer();
     void begin_frame(const viewport &);
@@ -29,8 +36,8 @@ public:
     void render_texture(const texture &, const type::resource_rect &src, const type::view_rect &dst);
     void render_texture(const texture &, const type::view_rect &dst);
     void render_texture(const texture &tex, const type::view_position &dst);
-    void render_rect(const type::view_rect &, const sgf::type::color &);
-    void render_rect(const type::view_rect &);
+    void render_rect(const type::view_rect &, const sgf::type::color &, graphic_style = renderer::graphic_style::outlined);
+    void render_rect(const type::view_rect &, graphic_style = renderer::graphic_style::outlined);
     void present();
 
 private:
