@@ -1,4 +1,5 @@
 #include "SDL3/SDL_error.h"
+#include "sgf/type/rect.hpp"
 #include "utils/convert.hpp"
 #include <SDL3/SDL_render.h>
 #include <sgf/base/renderer.hpp>
@@ -41,7 +42,7 @@ void renderer::set_target(const texture &tex)
         throw std::runtime_error(SDL_GetError());
 }
 
-void renderer::set_target()
+void renderer::reset_target()
 {
     if (!SDL_SetRenderTarget(p_impl->renderer, nullptr))
         throw std::runtime_error(SDL_GetError());
@@ -58,6 +59,24 @@ void renderer::set_vsync(bool is_enable)
         throw std::runtime_error(SDL_GetError());
 
     p_is_vsync = is_enable;
+}
+
+void renderer::set_clip_rect(const type::view_rect &rect)
+{
+    SDL_Rect sdl_rect;
+    sdl_rect.x = static_cast<std::int32_t>(rect.x);
+    sdl_rect.y = static_cast<std::int32_t>(rect.y);
+    sdl_rect.w = static_cast<std::int32_t>(rect.w);
+    sdl_rect.h = static_cast<std::int32_t>(rect.h);
+
+    if (!SDL_SetRenderClipRect(p_impl->renderer, &sdl_rect))
+        throw std::runtime_error(SDL_GetError());
+}
+
+void renderer::clear_clip_rect()
+{
+    if (!SDL_SetRenderClipRect(p_impl->renderer, nullptr))
+        throw std::runtime_error(SDL_GetError());
 }
 
 bool renderer::is_draw_blend() const noexcept
@@ -184,6 +203,8 @@ void renderer::begin_frame(const viewport &vp)
 {
     if (p_viewport_ptr != nullptr)
         throw std::runtime_error("Please call end_frame after frame presented");
+
+    set_clip_rect(vp.get_view_rect());
     p_viewport_ptr = &vp;
 }
 

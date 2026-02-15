@@ -3,6 +3,7 @@
 
 #include "../type/color.hpp"
 #include "../type/rect.hpp"
+#include "sgf/type/rect.hpp"
 #include "viewport.hpp"
 #include "window/window.hpp"
 
@@ -28,13 +29,15 @@ public:
     void clear();
     void *get() const noexcept;
     void set_target(const texture &);
-    void set_target();
+    void reset_target();
+    void set_clip_rect(const type::view_rect &rect);
+    void clear_clip_rect();
     bool is_vsync() const noexcept;
     void set_vsync(bool is_enable);
     bool is_draw_blend() const noexcept;
     void set_draw_blend(bool is_enable);
-    void set_draw_color(const sgf::type::color &);
     sgf::type::color draw_color() const noexcept;
+    void set_draw_color(const sgf::type::color &);
     void render_texture(const texture &, const type::resource_rect &src, const type::view_rect &dst);
     void render_texture(const texture &, const type::view_rect &dst);
     void render_texture(const texture &tex, const type::view_position &dst);

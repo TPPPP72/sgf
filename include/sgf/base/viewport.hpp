@@ -30,6 +30,10 @@ public:
         p_offset.x = (window_size.w - real_w) / 2.0;
         p_offset.y = (window_size.h - real_h) / 2.0;
     }
+    type::view_rect get_view_rect() const noexcept
+    {
+        return {p_offset.x, p_offset.y, p_view_size.w * p_scale, p_view_size.h * p_scale};
+    }
     inline type::view_rect to_view_rect(const type::window_rect &wr) const noexcept
     {
         return {(wr.x - p_offset.x) / p_scale, (wr.y - p_offset.y) / p_scale, wr.w / p_scale, wr.h / p_scale};
