@@ -112,6 +112,8 @@ private:
         else
             p_renderer.set_vsync(false);
 
+        p_renderer.set_draw_blend(true);
+
         input_system::instance().bind(&p_window);
 
         p_window.on_exit([this]()
