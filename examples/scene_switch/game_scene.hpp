@@ -49,8 +49,8 @@ public:
             500,
             500};
 
-        rd.render_rect(background_rect, sgf::type::color{209, 95, 238, 255});
-        rd.render_rect(player_rect, sgf::type::color::green);
+        rd.render_rect(background_rect, sgf::type::color{209, 95, 238, 255}, sgf::base::renderer::graphic_style::filled);
+        rd.render_rect(player_rect, sgf::type::color::green, sgf::base::renderer::graphic_style::filled);
     }
 
 private:

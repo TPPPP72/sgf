@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sgf/base/renderer.hpp"
 #include <iostream>
 #include <sgf/scene/scene.hpp>
 #include <sgf/timer.hpp>
@@ -30,7 +31,7 @@ public:
 
     void on_render(sgf::base::renderer &rd) const override
     {
-        rd.render_rect({0, 0, 500, 500}, sgf::type::color{0, 0, 0, 150});
+        rd.render_rect({0, 0, 500, 500}, sgf::type::color{0, 0, 0, 150}, sgf::base::renderer::graphic_style::filled);
         rd.render_rect({150, 200, 200, 100}, sgf::type::color::white);
     }
 
