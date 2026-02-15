@@ -1,9 +1,8 @@
 #include "game_scene.hpp"
 #include "pause_scene.hpp"
-#include "sgf/base/window/window_event.hpp"
-#include "sgf/input_system.hpp"
 #include "splash_scene.hpp"
 #include <memory>
+#include <sgf/base/window/window_event.hpp>
 #include <sgf/input_system.hpp>
 #include <sgf/kernel.hpp>
 #include <sgf/scene/scene_manager.hpp>

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "sgf/type/color.hpp"
 #include <iostream>
 #include <sgf/base/renderer.hpp>
 #include <sgf/scene/scene.hpp>
 #include <sgf/timer.hpp>
+#include <sgf/type/color.hpp>
 
 class game_scene : public sgf::scene
 {
