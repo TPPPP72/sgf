@@ -31,6 +31,8 @@ public:
     void set_target();
     bool is_vsync() const noexcept;
     void set_vsync(bool is_enable);
+    bool is_draw_blend() const noexcept;
+    void set_draw_blend(bool is_enable);
     void set_draw_color(const sgf::type::color &);
     sgf::type::color draw_color() const noexcept;
     void render_texture(const texture &, const type::resource_rect &src, const type::view_rect &dst);
@@ -46,6 +48,7 @@ private:
     sgf::type::color p_color;
     const viewport *p_viewport_ptr{nullptr};
     bool p_is_vsync{false};
+    bool p_is_draw_blend{false};
 };
 
 } // namespace sgf::base

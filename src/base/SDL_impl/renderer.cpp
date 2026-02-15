@@ -1,3 +1,4 @@
+#include "SDL3/SDL_error.h"
 #include "utils/convert.hpp"
 #include <SDL3/SDL_render.h>
 #include <sgf/base/renderer.hpp>
@@ -57,6 +58,19 @@ void renderer::set_vsync(bool is_enable)
         throw std::runtime_error(SDL_GetError());
 
     p_is_vsync = is_enable;
+}
+
+bool renderer::is_draw_blend() const noexcept
+{
+    return p_is_draw_blend;
+}
+
+void renderer::set_draw_blend(bool is_enable)
+{
+    if (!SDL_SetRenderDrawBlendMode(p_impl->renderer, is_enable))
+        throw std::runtime_error(SDL_GetError());
+
+    p_is_draw_blend = is_enable;
 }
 
 void renderer::set_draw_color(const type::color &color)
