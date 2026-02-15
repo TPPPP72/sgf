@@ -24,7 +24,7 @@ public:
 
     void on_update(kernel<scene_switch> &k, std::chrono::nanoseconds dt)
     {
-        k.get_window().set_title(+"scene_switch | FPS : " + std::to_string(k.get_current_fps()));
+        k.get_window().set_title("scene_switch | FPS : " + std::to_string(k.get_current_fps()));
         m_manager.update(dt);
 
         if (sgf::input_system::instance().is_key_down(sgf::base::key_code::p))
