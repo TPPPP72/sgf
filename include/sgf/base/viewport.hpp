@@ -11,7 +11,7 @@ namespace sgf::base
 class viewport
 {
 public:
-    explicit viewport(const window &win) : p_window(&win), p_view_size({win.init_size().w, win.init_size().h})
+    explicit viewport(const window &win, const type::view_size &init_vs) : p_window(win), p_view_size(init_vs)
     {
     }
     ~viewport() = default;
@@ -20,7 +20,7 @@ public:
 #ifdef SGF_TEST
         auto window_size = test_window_size;
 #else
-        auto window_size = p_window->current_size();
+        auto window_size = p_window.current_size();
 #endif
 
         auto sx = static_cast<double>(window_size.w) / p_view_size.w;
@@ -50,9 +50,14 @@ public:
     {
         return {p_offset.x + vp.x * p_scale, p_offset.y + vp.y * p_scale};
     }
+    void set_view_size(const type::view_size &vs)
+    {
+        p_view_size = vs;
+        update();
+    }
 
 private:
-    const window *p_window{nullptr};
+    const window &p_window;
     type::view_size p_view_size;
     type::window_position p_offset;
     double p_scale{1.0};
