@@ -33,12 +33,12 @@ public:
 
     void on_render(sgf::base::renderer &rd) const override
     {
-        double width  = 50.0;
-        double height = 50.0;
-        double y_pos  = 200.0;
+        float width  = 50.0;
+        float height = 50.0;
+        float y_pos  = 200.0;
 
         sgf::type::view_rect player_rect{
-            m_player_pos,
+            static_cast<float>(m_player_pos),
             y_pos,
             width,
             height};
@@ -49,8 +49,8 @@ public:
             500,
             500};
 
-        rd.render_rect(background_rect, sgf::type::color{209, 95, 238, 255}, sgf::base::renderer::graphic_style::filled);
-        rd.render_rect(player_rect, sgf::type::color::green, sgf::base::renderer::graphic_style::filled);
+        rd.render_rect(background_rect, sgf::type::color{209, 95, 238, 255}, 1);
+        rd.render_rect(player_rect, sgf::type::color::green, 1);
     }
 
 private:

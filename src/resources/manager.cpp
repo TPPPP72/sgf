@@ -44,8 +44,8 @@ const sprite &manager::load_sprite(const std::filesystem::path &p)
     auto [w, h] = tex.size();
 
     return get_or_load<sprite>(p_sprites, p.string(), &tex,
-                               type::resource_rect{0.0, 0.0, static_cast<double>(w), static_cast<double>(h)},
-                               type::vec2{0.5, 0.5});
+                               type::resource_rect{0.0, 0.0, static_cast<float>(w), static_cast<float>(h)},
+                               type::vec2f{0.5, 0.5});
 }
 
 const atlas &manager::load_atlas_from_directory(const atlas_directory_info &info)

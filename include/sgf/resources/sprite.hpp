@@ -10,10 +10,10 @@ namespace sgf::resources
 
 struct sprite
 {
-    explicit sprite(const base::texture *ptr, const type::resource_rect &rt, const type::vec2 &vec) : texture_ptr(ptr), rect(rt), pivot(vec) {}
+    explicit sprite(const base::texture *ptr, const type::resource_rect &rt, const type::vec2f &vec) : texture_ptr(ptr), rect(rt), pivot(vec) {}
     const base::texture *texture_ptr{nullptr};
     type::resource_rect rect{0, 0, 0, 0};
-    type::vec2 pivot{0.5, 0.5};
+    type::vec2f pivot{0.5, 0.5};
 };
 
 } // namespace sgf::resources

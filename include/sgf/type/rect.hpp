@@ -6,17 +6,17 @@
 namespace sgf::type
 {
 
-template <typename tag>
+template <typename T, typename tag>
 struct rect
 {
-    double x, y;
-    double w, h;
+    T x, y;
+    T w, h;
 };
 
-using resource_rect = rect<base::resource_tag>;
-using window_rect   = rect<base::window_tag>;
-using view_rect     = rect<base::view_tag>;
-using world_rect    = rect<base::world_tag>;
+using resource_rect = rect<float, base::resource_tag>;
+using window_rect   = rect<float, base::window_tag>;
+using view_rect     = rect<float, base::view_tag>;
+using world_rect    = rect<double, base::world_tag>;
 
 } // namespace sgf::type
 

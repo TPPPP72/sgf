@@ -34,7 +34,7 @@ atlas atlas_loader::load_from_directory(manager &m, const atlas_directory_info &
         if (it != res.p_sprites.end())
             throw std::runtime_error("Atlas frame conflicted:" + key);
 
-        auto [pos, inserted] = res.p_sprites.try_emplace(key, &tex, type::resource_rect{0, 0, static_cast<double>(w), static_cast<double>(h)}, info.pivot);
+        auto [pos, inserted] = res.p_sprites.try_emplace(key, &tex, type::resource_rect{0, 0, static_cast<float>(w), static_cast<float>(h)}, info.pivot);
     }
 
     return res;
@@ -47,8 +47,8 @@ atlas atlas_loader::load_from_sheet(manager &m, const atlas_sheet_info &info)
     auto &tex     = m.load_texture(info.path);
     auto [rw, rh] = tex.size();
 
-    double ew = static_cast<double>(rw) / info.col;
-    double eh = static_cast<double>(rh) / info.row;
+    float ew = static_cast<float>(rw) / info.col;
+    float eh = static_cast<float>(rh) / info.row;
 
     std::uint32_t count = 0;
     for (std::uint32_t row = 0; row < info.row; ++row)

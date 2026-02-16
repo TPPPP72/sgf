@@ -60,7 +60,7 @@ private:
     const window &p_window;
     type::view_size p_view_size;
     type::window_position p_offset;
-    double p_scale{1.0};
+    float p_scale{1.0};
 };
 
 } // namespace sgf::base

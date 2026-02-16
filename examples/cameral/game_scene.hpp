@@ -40,7 +40,7 @@ public:
             sgf::type::world_rect line_rect{static_cast<double>(i), 0.0, 2.0, 600.0};
             rd.render_rect(m_camera.to_view_rect(line_rect),
                            sgf::type::color{100, 100, 100, 255},
-                           sgf::base::renderer::graphic_style::filled);
+                           1);
         }
 
         sgf::type::world_rect player_world_shape{
@@ -50,22 +50,22 @@ public:
 
         auto player_view_shape = m_camera.to_view_rect(player_world_shape);
 
-        rd.render_rect(player_view_shape, sgf::type::color::green, sgf::base::renderer::graphic_style::filled);
+        rd.render_rect(player_view_shape, sgf::type::color::green, 1);
 
         sgf::type::view_rect bar_bg{10, 10, 200, 20};
-        rd.render_rect(bar_bg, {50, 50, 50, 255}, sgf::base::renderer::graphic_style::filled);
+        rd.render_rect(bar_bg, {50, 50, 50, 255}, 1);
 
         double progress = m_player_world_pos.x / 2000.0;
 
         double indicator_x = bar_bg.x + (progress * (bar_bg.w - 10));
 
         sgf::type::view_rect indicator{
-            indicator_x,
+            static_cast<float>(indicator_x),
             bar_bg.y + 2,
             10.0,
             bar_bg.h - 4};
 
-        rd.render_rect(indicator, {255, 255, 0, 255}, sgf::base::renderer::graphic_style::filled);
+        rd.render_rect(indicator, {255, 255, 0, 255}, 1);
     }
 
 private:

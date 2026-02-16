@@ -5,20 +5,21 @@
 #include <SDL3/SDL_rect.h>
 #include <sgf/type/color.hpp>
 #include <sgf/type/rect.hpp>
+#include <type_traits>
 
 namespace sgf::base
 {
 
-static inline SDL_FRect to_frect(const sgf::type::resource_rect &r)
+template <typename T, typename tag>
+static inline SDL_FRect to_frect(const type::rect<T, tag> &r)
 {
-    return {static_cast<float>(r.x),
-            static_cast<float>(r.y),
-            static_cast<float>(r.w),
-            static_cast<float>(r.h)};
-}
-
-static inline SDL_FRect to_frect(const sgf::type::window_rect &r)
-{
+    if constexpr (std::is_same_v<T, float>)
+    {
+        return {r.x,
+                r.y,
+                r.w,
+                r.h};
+    }
     return {static_cast<float>(r.x),
             static_cast<float>(r.y),
             static_cast<float>(r.w),

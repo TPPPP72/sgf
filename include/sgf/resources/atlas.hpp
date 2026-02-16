@@ -26,7 +26,7 @@ struct atlas_directory_info
     std::string name;
     std::uint32_t number;
     std::string extension;
-    type::vec2 pivot{0.5, 0.5};
+    type::vec2f pivot{0.5, 0.5};
 };
 
 struct atlas_sheet_info
@@ -34,7 +34,7 @@ struct atlas_sheet_info
     std::string path;
     std::uint32_t row = 1;
     std::uint32_t col = 1;
-    type::vec2 pivot{0.5, 0.5};
+    type::vec2f pivot{0.5, 0.5};
 };
 
 class atlas_loader

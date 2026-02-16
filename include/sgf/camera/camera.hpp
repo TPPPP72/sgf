@@ -27,11 +27,15 @@ public:
     }
     type::view_position to_view_pos(const type::world_position pos) const noexcept
     {
-        return {pos.x - p_world_position.x, pos.y - p_world_position.y};
+        return {static_cast<float>(pos.x - p_world_position.x), static_cast<float>(pos.y - p_world_position.y)};
     }
     type::view_rect to_view_rect(const type::world_rect rect) const noexcept
     {
-        return {rect.x - p_world_position.x, rect.y - p_world_position.y, rect.w, rect.h};
+        return {
+            static_cast<float>(rect.x - p_world_position.x),
+            static_cast<float>(rect.y - p_world_position.y),
+            static_cast<float>(rect.w),
+            static_cast<float>(rect.h)};
     }
 
 private:
