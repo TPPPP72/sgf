@@ -42,13 +42,9 @@ public:
         using clock = std::chrono::steady_clock;
         using ns    = std::chrono::nanoseconds;
 
-        constexpr ns logic_step{16'666'666}; // 游戏逻辑使用固定 60 fps
-        constexpr ns max_frame_time{250'000'000};
-        constexpr int max_updates_per_frame = 5;
+        constexpr ns max_dt{50'000'000};
 
-        ns accumulator{0};
-        auto last_time = clock::now();
-
+        auto last_time     = clock::now();
         auto fps_last_time = clock::now();
         std::uint32_t frame_count{0};
 
@@ -58,36 +54,26 @@ public:
             ns frame_time = std::chrono::duration_cast<ns>(now - last_time);
             last_time     = now;
 
-            frame_time = std::min(frame_time, max_frame_time);
-            accumulator += frame_time;
+            ns dt = std::min(frame_time, max_dt);
 
             control();
 
-            std::int32_t updates = 0;
-            while (accumulator >= logic_step && updates < max_updates_per_frame)
-            {
-                update(logic_step);
-                accumulator -= logic_step;
-                ++updates;
-            }
-
-            if (updates == max_updates_per_frame)
-                accumulator = ns{0};
+            update(dt);
 
             render();
 
             if (p_max_fps > 0)
             {
                 ns target_frame{1'000'000'000 / p_max_fps};
-
-                while (std::chrono::duration_cast<ns>(clock::now() - now) < target_frame)
+                auto loop_now = clock::now();
+                while (std::chrono::duration_cast<ns>(loop_now - now) < target_frame)
                 {
-                    ns remaining = target_frame - std::chrono::duration_cast<ns>(clock::now() - now);
-
+                    ns remaining = target_frame - std::chrono::duration_cast<ns>(loop_now - now);
                     if (remaining > std::chrono::milliseconds(2))
                         std::this_thread::sleep_for(std::chrono::milliseconds(1));
                     else
                         std::this_thread::yield();
+                    loop_now = clock::now();
                 }
             }
 
