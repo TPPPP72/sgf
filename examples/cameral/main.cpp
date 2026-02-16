@@ -8,7 +8,7 @@ class cameral : public sgf::kernel<cameral>
 {
 public:
     cameral()
-        : kernel("cameral", {800, 600}, {800, 600}, 60)
+        : kernel("cameral", {800, 600}, {800, 600}, 0)
     {
         auto game = std::make_unique<game_scene>(1);
 

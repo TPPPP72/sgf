@@ -12,7 +12,7 @@ class hello_sgf : public kernel<hello_sgf>
 {
 public:
     hello_sgf()
-        : kernel("hello sgf", {500, 500}, {500, 500}, 60),
+        : kernel("hello sgf", {500, 500}, {500, 500}, 0),
           p_font(get_default_font(), 24),
           English(get_renderer(), p_font, "Hello sgf", type::color::white),
           Chinese(get_renderer(), p_font, "你好sgf", type::color::blue),

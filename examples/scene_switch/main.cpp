@@ -12,7 +12,7 @@ class scene_switch : public sgf::kernel<scene_switch>
 {
 public:
     scene_switch()
-        : kernel("scene switch", {500, 500}, {500, 500}, 60)
+        : kernel("scene switch", {500, 500}, {500, 500}, 0)
     {
         auto splash = std::make_unique<splash_scene>(1, [this]()
                                                      {
