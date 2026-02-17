@@ -151,37 +151,41 @@ void sgf::render_pipeline::execute(base::renderer &rd)
 
     for (const auto &cmd : p_commands)
     {
-        if (cmd.tex != current_tex)
+        if (cmd.tex != current_tex || cmd.style != 1)
         {
             flush();
             current_tex = cmd.tex;
         }
 
-        float fx = cmd.dst.x - (cmd.dst.w * cmd.pivot.x);
-        float fy = cmd.dst.y - (cmd.dst.h * cmd.pivot.y);
-        float fw = cmd.dst.w;
-        float fh = cmd.dst.h;
+        auto final_dst = rd.get_viewport_ptr()->to_window_rect(cmd.dst);
 
-        if (cmd.type == render_type::texture || cmd.type == render_type::sprite || cmd.type == render_type::rect)
+        float fx = final_dst.x - (final_dst.w * cmd.pivot.x);
+        float fy = final_dst.y - (final_dst.h * cmd.pivot.y);
+        float fw = final_dst.w;
+        float fh = final_dst.h;
+
+        if (cmd.style == 1 || cmd.type != render_type::rect)
         {
             auto base_idx = static_cast<std::int32_t>(vertex_buffer.size());
 
             float u0 = 0, v0 = 0, u1 = 0, v1 = 0;
             if (cmd.tex)
             {
-                float tw = static_cast<float>(cmd.tex->size().w);
-                float th = static_cast<float>(cmd.tex->size().h);
-                u0       = cmd.src.x / tw;
-                v0       = cmd.src.y / th;
-                u1       = (cmd.src.x + cmd.src.w) / tw;
-                v1       = (cmd.src.y + cmd.src.h) / th;
+                auto [tw, th] = cmd.tex->size();
+                float inv_w   = 1.0f / static_cast<float>(tw);
+                float inv_h   = 1.0f / static_cast<float>(th);
+                u0            = cmd.src.x * inv_w;
+                v0            = cmd.src.y * inv_h;
+                u1            = (cmd.src.x + cmd.src.w) * inv_w;
+                v1            = (cmd.src.y + cmd.src.h) * inv_h;
             }
 
             type::colorf col{cmd.color};
-            vertex_buffer.push_back({{fx, fy}, col, {u0, v0}});
-            vertex_buffer.push_back({{fx + fw, fy}, col, {u1, v0}});
-            vertex_buffer.push_back({{fx, fy + fh}, col, {u0, v1}});
-            vertex_buffer.push_back({{fx + fw, fy + fh}, col, {u1, v1}});
+
+            vertex_buffer.push_back({{fx, fy}, col, {u0, v0}});           // TL
+            vertex_buffer.push_back({{fx + fw, fy}, col, {u1, v0}});      // TR
+            vertex_buffer.push_back({{fx, fy + fh}, col, {u0, v1}});      // BL
+            vertex_buffer.push_back({{fx + fw, fy + fh}, col, {u1, v1}}); // BR
 
             index_buffer.emplace_back(base_idx + 0);
             index_buffer.emplace_back(base_idx + 1);
@@ -189,6 +193,10 @@ void sgf::render_pipeline::execute(base::renderer &rd)
             index_buffer.emplace_back(base_idx + 1);
             index_buffer.emplace_back(base_idx + 3);
             index_buffer.emplace_back(base_idx + 2);
+        }
+        else
+        {
+            rd.render_rect({fx, fy, fw, fh}, cmd.color, cmd.style);
         }
     }
 

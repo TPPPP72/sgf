@@ -21,6 +21,7 @@ public:
     void end_frame() noexcept;
     void clear();
     void *get() const noexcept;
+    const sgf::base::viewport *get_viewport_ptr() const noexcept;
     void set_target(const texture &);
     void reset_target();
     void set_clip_rect(const type::view_rect &rect);

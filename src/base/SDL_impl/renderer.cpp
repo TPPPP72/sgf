@@ -207,6 +207,11 @@ void *renderer::get() const noexcept
     return p_impl->renderer;
 }
 
+const sgf::base::viewport *renderer::get_viewport_ptr() const noexcept
+{
+    return p_viewport_ptr ? p_viewport_ptr : nullptr;
+}
+
 void renderer::begin_frame(const viewport &vp)
 {
     if (p_viewport_ptr != nullptr)
