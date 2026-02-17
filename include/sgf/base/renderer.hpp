@@ -3,7 +3,7 @@
 
 #include "../type/color.hpp"
 #include "../type/rect.hpp"
-#include "sgf/type/rect.hpp"
+#include "../type/vertex.hpp"
 #include "viewport.hpp"
 #include "window/window.hpp"
 
@@ -14,13 +14,6 @@ class texture;
 
 class renderer
 {
-public:
-    enum class graphic_style
-    {
-        outlined,
-        filled
-    };
-
 public:
     explicit renderer(const window &);
     ~renderer();
@@ -41,8 +34,9 @@ public:
     void render_texture(const texture &, const type::resource_rect &src, const type::view_rect &dst);
     void render_texture(const texture &, const type::view_rect &dst);
     void render_texture(const texture &tex, const type::view_position &dst);
-    void render_rect(const type::view_rect &, const sgf::type::color &, graphic_style = renderer::graphic_style::outlined);
-    void render_rect(const type::view_rect &, graphic_style = renderer::graphic_style::outlined);
+    void render_rect(const type::view_rect &, const sgf::type::color &, std::uint8_t style = 0);
+    void render_rect(const type::view_rect &, std::uint8_t style = 0);
+    void render_geometry(const texture *tex, const type::vertex *vertices, std::int32_t num_vertices, const std::int32_t *indices = nullptr, std::int32_t num_indices = 0);
     void present();
 
 private:

@@ -111,6 +111,14 @@ void renderer::present()
         throw std::runtime_error(SDL_GetError());
 }
 
+void renderer::render_geometry(const texture *tex, const type::vertex *vertices, std::int32_t num_vertices, const std::int32_t *indices, std::int32_t num_indices)
+{
+    SDL_Texture *sdl_tex = tex ? static_cast<SDL_Texture *>(tex->get()) : nullptr;
+
+    if (!SDL_RenderGeometry(p_impl->renderer, sdl_tex, reinterpret_cast<const SDL_Vertex *>(vertices), num_vertices, indices, num_indices))
+        throw std::runtime_error(SDL_GetError());
+}
+
 void renderer::render_texture(const texture &tex, const type::resource_rect &src, const type::view_rect &dst)
 {
     if (p_viewport_ptr == nullptr)
@@ -147,7 +155,7 @@ void renderer::render_texture(const texture &tex, const type::view_position &dst
 
     auto [w, h] = tex.size();
 
-    type::view_rect r{dst.x, dst.y, static_cast<double>(w), static_cast<double>(h)};
+    type::view_rect r{dst.x, dst.y, static_cast<float>(w), static_cast<float>(h)};
 
     auto fr{to_frect(p_viewport_ptr->to_window_rect(r))};
 
@@ -155,7 +163,7 @@ void renderer::render_texture(const texture &tex, const type::view_position &dst
         throw std::runtime_error(SDL_GetError());
 }
 
-void renderer::render_rect(const type::view_rect &dst, const type::color &color, graphic_style style)
+void renderer::render_rect(const type::view_rect &dst, const type::color &color, std::uint8_t style)
 {
     if (p_viewport_ptr == nullptr)
         throw std::runtime_error("Please call begin_frame before render");
@@ -165,13 +173,13 @@ void renderer::render_rect(const type::view_rect &dst, const type::color &color,
 
     auto fr{to_frect(p_viewport_ptr->to_window_rect(dst))};
 
-    if (style == graphic_style::outlined && !SDL_RenderRect(p_impl->renderer, &fr))
+    if (style == 0 && !SDL_RenderRect(p_impl->renderer, &fr))
     {
         this->set_draw_color(temp);
         throw std::runtime_error(SDL_GetError());
     }
 
-    if (style == graphic_style::filled && !SDL_RenderFillRect(p_impl->renderer, &fr))
+    if (style == 1 && !SDL_RenderFillRect(p_impl->renderer, &fr))
     {
         this->set_draw_color(temp);
         throw std::runtime_error(SDL_GetError());
@@ -180,17 +188,17 @@ void renderer::render_rect(const type::view_rect &dst, const type::color &color,
     this->set_draw_color(temp);
 }
 
-void renderer::render_rect(const type::view_rect &dst, graphic_style style)
+void renderer::render_rect(const type::view_rect &dst, std::uint8_t style)
 {
     if (p_viewport_ptr == nullptr)
         throw std::runtime_error("Please call begin_frame before render");
 
     auto fr{to_frect(p_viewport_ptr->to_window_rect(dst))};
 
-    if (style == graphic_style::outlined && !SDL_RenderRect(p_impl->renderer, &fr))
+    if (style == 0 && !SDL_RenderRect(p_impl->renderer, &fr))
         throw std::runtime_error(SDL_GetError());
 
-    if (style == graphic_style::filled && !SDL_RenderFillRect(p_impl->renderer, &fr))
+    if (style == 1 && !SDL_RenderFillRect(p_impl->renderer, &fr))
         throw std::runtime_error(SDL_GetError());
 }
 
