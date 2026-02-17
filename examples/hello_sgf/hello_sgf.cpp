@@ -24,7 +24,7 @@ public:
 
     void on_update(kernel<hello_sgf> &k, std::chrono::nanoseconds dt)
     {
-        k.get_window().set_title(+"hello sgf | FPS : " + std::to_string(k.get_current_fps()));
+        k.get_window().set_title("hello sgf | FPS : " + std::to_string(k.get_current_fps()));
     }
 
     void on_render(kernel<hello_sgf> &k)
