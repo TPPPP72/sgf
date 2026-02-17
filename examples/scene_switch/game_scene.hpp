@@ -31,7 +31,7 @@ public:
             m_player_dir = -m_player_dir;
     }
 
-    void on_render(sgf::base::renderer &rd) const override
+    void on_render(sgf::base::renderer &rd) override
     {
         float width  = 50.0;
         float height = 50.0;

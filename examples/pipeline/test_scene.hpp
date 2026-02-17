@@ -45,7 +45,7 @@ public:
         }
     }
 
-    void on_render(sgf::base::renderer &rd) const override
+    void on_render(sgf::base::renderer &rd) override
     {
         m_pipeline.submit({0, 0, 500, 500}, sgf::type::color{40, 44, 52, 255}, sgf::graphic_style::fill, sgf::render_layer::background);
 
@@ -64,5 +64,5 @@ private:
     std::vector<sgf::type::vec2f> m_velocities;
     std::vector<sgf::type::color> m_colors;
 
-    mutable sgf::render_pipeline m_pipeline;
+    sgf::render_pipeline m_pipeline;
 };

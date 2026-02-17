@@ -33,7 +33,7 @@ public:
         m_camera.set_position(m_player_world_pos);
     }
 
-    void on_render(sgf::base::renderer &rd) const override
+    void on_render(sgf::base::renderer &rd) override
     {
         for (int i = 0; i <= 2000; i += 100)
         {

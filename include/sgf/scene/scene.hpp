@@ -19,7 +19,7 @@ public:
 
     virtual void on_init()                              = 0;
     virtual void on_update(std::chrono::nanoseconds dt) = 0;
-    virtual void on_render(base::renderer &) const      = 0;
+    virtual void on_render(base::renderer &)            = 0;
 
     std::uint32_t id() const noexcept
     {

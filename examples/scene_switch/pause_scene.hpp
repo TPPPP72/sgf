@@ -29,7 +29,7 @@ public:
     {
     }
 
-    void on_render(sgf::base::renderer &rd) const override
+    void on_render(sgf::base::renderer &rd) override
     {
         rd.render_rect({0, 0, 500, 500}, sgf::type::color{0, 0, 0, 150}, 1);
         rd.render_rect({150, 200, 200, 100}, sgf::type::color::white);

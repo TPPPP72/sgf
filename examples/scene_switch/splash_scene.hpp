@@ -25,7 +25,7 @@ public:
             m_on_finish();
     }
 
-    void on_render(sgf::base::renderer &rd) const override
+    void on_render(sgf::base::renderer &rd) override
     {
         rd.render_rect({0, 0, 500, 500}, sgf::type::color::black);
 
