@@ -40,6 +40,18 @@ public:
             static_cast<float>(rect.w),
             static_cast<float>(rect.h)};
     }
+    type::world_position to_world_pos(const type::view_position pos) const noexcept
+    {
+        return {static_cast<double>(pos.x) + p_world_position.x,
+                static_cast<double>(pos.y) + p_world_position.y};
+    }
+    type::world_rect to_world_rect(const type::view_rect rect) const noexcept
+    {
+        return {static_cast<double>(rect.x) + p_world_position.x,
+                static_cast<double>(rect.y) + p_world_position.y,
+                static_cast<double>(rect.w),
+                static_cast<double>(rect.h)};
+    }
     std::string_view tag() const noexcept
     {
         return p_tag;
