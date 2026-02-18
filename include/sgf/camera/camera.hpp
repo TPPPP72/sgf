@@ -15,6 +15,7 @@ class camera
 {
 public:
     camera(const std::string &tag, const type::view_size vs, const type::world_size ws) : p_tag(tag), p_view_size(vs), p_world_size(ws), p_world_position(0, 0) {}
+    camera(const type::view_size vs, const type::world_size ws) : camera("main", vs, ws) {}
     type::world_position position() const noexcept
     {
         return p_world_position;
