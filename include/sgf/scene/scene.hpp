@@ -2,11 +2,19 @@
 #define SGF_SCENE_HPP
 
 #include "../base/renderer.hpp"
+#include "../camera/camera.hpp"
+#include "../render_pipeline/render_pipeline.hpp"
 #include <chrono>
 #include <cstdint>
 
 namespace sgf
 {
+
+struct scene_context
+{
+    std::vector<camera> cameras;
+    render_pipeline pipeline;
+};
 
 class scene
 {
