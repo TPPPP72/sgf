@@ -5,6 +5,8 @@
 #include "../type/rect.hpp"
 #include "../type/size.hpp"
 #include <algorithm>
+#include <string>
+#include <string_view>
 
 namespace sgf
 {
@@ -12,7 +14,7 @@ namespace sgf
 class camera
 {
 public:
-    camera(const type::view_size vs, const type::world_size ws) : p_view_size(vs), p_world_size(ws), p_world_position(0, 0) {}
+    camera(const std::string &tag, const type::view_size vs, const type::world_size ws) : p_tag(tag), p_view_size(vs), p_world_size(ws), p_world_position(0, 0) {}
     type::world_position position() const noexcept
     {
         return p_world_position;
@@ -37,8 +39,13 @@ public:
             static_cast<float>(rect.w),
             static_cast<float>(rect.h)};
     }
+    std::string_view tag() const noexcept
+    {
+        return p_tag;
+    }
 
 private:
+    std::string p_tag;
     type::view_size p_view_size;
     type::world_size p_world_size;
     type::world_position p_world_position;
