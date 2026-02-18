@@ -19,5 +19,9 @@ target_sources(sgf_core
     resources/manager.cpp
     animation/player.cpp
     game_object/game_object_pool.cpp
+    game_object/modules/camera_module.cpp
+    game_object/modules/keyboard_module.cpp
+    game_object/modules/mouse_module.cpp
+    game_object/modules/render_module.cpp
     render_pipeline/render_pipeline.cpp
 )
