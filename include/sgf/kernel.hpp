@@ -4,7 +4,7 @@
 #include "base/renderer.hpp"
 #include "base/viewport.hpp"
 #include "base/window/window.hpp"
-#include "input_system.hpp"
+#include "input/input_system.hpp"
 #include "type/size.hpp"
 #include <chrono>
 #include <cstdint>
@@ -100,7 +100,8 @@ private:
 
         p_renderer.set_draw_blend(true);
 
-        input_system::instance().bind(&p_window);
+        input_system::instance().bind_window(&p_window);
+        input_system::instance().bind_viewport(&p_viewport);
 
         p_window.on_exit([this]()
                          {
