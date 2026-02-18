@@ -1,7 +1,10 @@
 #ifndef SGF_INPUT_SYSTEM_HPP
 #define SGF_INPUT_SYSTEM_HPP
 
-#include "base/window/window.hpp"
+#include "../base/viewport.hpp"
+#include "../base/window/window.hpp"
+#include "sgf/base/viewport.hpp"
+#include "sgf/type/position.hpp"
 
 namespace sgf
 {
@@ -16,7 +19,9 @@ public:
 
     static input_system &instance() noexcept;
 
-    void bind(base::window *) noexcept;
+    void bind_window(base::window *) noexcept;
+
+    void bind_viewport(base::viewport *) noexcept;
 
     void update();
 
@@ -28,14 +33,15 @@ public:
     bool is_button_down(base::mouse_button_code) const;
     bool is_button_released(base::mouse_button_code) const;
 
-    type::window_position get_mouse_position() const;
+    type::window_position get_mouse_window_position() const;
+    type::view_position get_mouse_view_position() const;
 
 private:
     input_system()  = default;
     ~input_system() = default;
     base::window_event previous;
     base::window *win{nullptr};
-    bool has_call_update{false};
+    base::viewport *vp{nullptr};
 };
 
 } // namespace sgf
