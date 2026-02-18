@@ -1,12 +1,17 @@
 #ifndef SGF_GAME_OBJECT_HPP
 #define SGF_GAME_OBJECT_HPP
 
-#include "../base/renderer.hpp"
 #include "../type/position.hpp"
 #include "../type/size.hpp"
 #include "../type/vec2.hpp"
+#include "modules/base/input_module.hpp"
+#include "modules/base/service_module.hpp"
+#include "modules/render_module.hpp"
+#include "sgf/game_object/game_object_pool.hpp"
 #include <chrono>
 #include <cstdint>
+#include <memory>
+#include <vector>
 
 namespace sgf
 {
@@ -29,9 +34,9 @@ public:
     game_object(const game_object &)            = delete;
     game_object &operator=(const game_object &) = delete;
 
-    virtual void on_init() = 0;
+    virtual void on_init(scene_context &) = 0;
     virtual void on_update(std::chrono::nanoseconds dt) {};
-    virtual void on_render(base::renderer &) {};
+    virtual void on_render() {};
 
     std::uint32_t id() const noexcept
     {
@@ -108,6 +113,54 @@ public:
         should_remove = true;
     }
 
+    template <typename T, typename... Args,
+              typename = std::enable_if_t<std::is_base_of_v<module::base_service_module, T>>>
+    T *add_module(scene_context &ctx, Args &&...args)
+    {
+        auto mod = std::make_unique<T>(*this, ctx, std::forward<Args>(args)...);
+        T *ptr   = mod.get();
+
+        if constexpr (std::is_convertible_v<T *, module::render_module *>)
+            p_render_module = static_cast<module::render_module *>(ptr);
+
+        p_service_modules.emplace_back(std::move(mod));
+        return ptr;
+    }
+
+    template <typename T, typename... Args,
+              typename = std::enable_if_t<std::is_base_of_v<module::base_input_module, T>>>
+    T *add_module(Args &&...args)
+    {
+        auto mod = std::make_unique<T>(*this, std::forward<Args>(args)...);
+        T *ptr   = mod.get();
+        p_input_modules.emplace_back(std::move(mod));
+        return ptr;
+    }
+
+    template <typename T>
+    T *get_module() const noexcept
+    {
+        if constexpr (std::is_base_of_v<module::base_service_module, T>)
+        {
+            for (auto &mod : p_service_modules)
+            {
+                if (auto casted = dynamic_cast<T *>(mod.get()))
+                    return casted;
+            }
+        }
+        else if constexpr (std::is_base_of_v<module::base_input_module, T>)
+        {
+            for (auto &mod : p_input_modules)
+            {
+                if (auto casted = dynamic_cast<T *>(mod.get()))
+                    return casted;
+            }
+        }
+        return nullptr;
+    }
+
+    friend class game_object_pool;
+
 protected:
     bool active{true};
     bool should_remove{false};
@@ -115,6 +168,9 @@ protected:
 private:
     std::uint32_t p_id;
     struct transform p_tf;
+    std::vector<std::unique_ptr<module::base_input_module>> p_input_modules{};
+    std::vector<std::unique_ptr<module::base_service_module>> p_service_modules{};
+    module::render_module *p_render_module{nullptr};
 };
 
 }; // namespace sgf

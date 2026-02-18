@@ -8,13 +8,13 @@ sgf::camera *sgf::module::camera_module::get_by_tag(std::string_view tag) const
 
     auto it = std::find_if(cameras.begin(), cameras.end(), [tag](const auto &cam)
                            {
-                               if (cam.tag() == tag)
+                               if (cam->tag() == tag)
                                    return true;
                                return false;
                            });
 
     if (it != cameras.end())
-        return &(*it);
+        return *it;
 
     return nullptr;
 }

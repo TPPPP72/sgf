@@ -17,7 +17,7 @@ public:
     using base_service_module::base_service_module;
     virtual ~render_module() = default;
 
-    render_pipeline &pipeline() noexcept;
+    render_pipeline *pipeline() noexcept;
 };
 
 } // namespace module

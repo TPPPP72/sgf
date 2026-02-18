@@ -17,7 +17,7 @@ public:
     std::chrono::nanoseconds get_time(base::key_code key) const noexcept;
 
 private:
-    std::array<std::chrono::nanoseconds, 512> m_timers{};
+    std::array<std::chrono::nanoseconds, 231> m_timers{};
 };
 
 } // namespace sgf::module

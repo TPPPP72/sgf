@@ -12,8 +12,8 @@ namespace sgf
 
 struct scene_context
 {
-    std::vector<camera> cameras;
-    render_pipeline pipeline;
+    std::vector<camera *> cameras;
+    render_pipeline *pipeline;
 };
 
 class scene

@@ -39,7 +39,7 @@ sgf::game_object_handle sgf::game_object_pool::create(std::unique_ptr<sgf::game_
         target_ver = 1;
     }
 
-    p_objects[target_idx].obj->on_init();
+    p_objects[target_idx].obj->on_init(p_ctx);
 
     return {target_idx, target_ver};
 }
@@ -66,7 +66,13 @@ void sgf::game_object_pool::update(std::chrono::nanoseconds dt)
     for (std::size_t i = 0; i < p_objects.size(); ++i)
     {
         if (p_objects[i].obj && p_objects[i].obj->is_active())
+        {
+            auto &input_modules = p_objects[i].obj->p_input_modules;
+            for (auto &&module : input_modules)
+                module->update(dt);
+
             p_objects[i].obj->on_update(dt);
+        }
     }
 
     for (std::size_t i = 0; i < p_objects.size(); ++i)
@@ -79,11 +85,11 @@ void sgf::game_object_pool::update(std::chrono::nanoseconds dt)
     }
 }
 
-void sgf::game_object_pool::render(sgf::base::renderer &r)
+void sgf::game_object_pool::render()
 {
     for (const auto &entry : p_objects)
     {
-        if (entry.obj != nullptr && entry.obj->is_active())
-            entry.obj->on_render(r);
+        if (entry.obj && entry.obj->is_active() && entry.obj->p_render_module)
+            entry.obj->on_render();
     }
 }
