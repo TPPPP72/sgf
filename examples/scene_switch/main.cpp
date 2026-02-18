@@ -3,7 +3,7 @@
 #include "splash_scene.hpp"
 #include <memory>
 #include <sgf/base/window/window_event.hpp>
-#include <sgf/input_system.hpp>
+#include <sgf/input/input_system.hpp>
 #include <sgf/kernel.hpp>
 #include <sgf/scene/scene_manager.hpp>
 #include <string>
