@@ -163,7 +163,7 @@ void renderer::render_texture(const texture &tex, const type::view_position &dst
         throw std::runtime_error(SDL_GetError());
 }
 
-void renderer::render_rect(const type::view_rect &dst, const type::color &color, std::uint8_t style)
+void renderer::render_rect(const type::view_rect &dst, const type::color &color, std::uint8_t style, float rotation)
 {
     if (p_viewport_ptr == nullptr)
         throw std::runtime_error("Please call begin_frame before render");
@@ -171,35 +171,59 @@ void renderer::render_rect(const type::view_rect &dst, const type::color &color,
     auto temp = this->draw_color();
     this->set_draw_color(color);
 
-    auto fr{to_frect(p_viewport_ptr->to_window_rect(dst))};
+    auto final_dst = p_viewport_ptr->to_window_rect(dst);
 
-    if (style == 0 && !SDL_RenderRect(p_impl->renderer, &fr))
+    if (rotation == 0.0f)
     {
+        auto fr{to_frect(final_dst)};
+        bool success = (style == 0) ? SDL_RenderRect(p_impl->renderer, &fr) : SDL_RenderFillRect(p_impl->renderer, &fr);
         this->set_draw_color(temp);
-        throw std::runtime_error(SDL_GetError());
+        if (!success)
+            throw std::runtime_error(SDL_GetError());
+        return;
     }
 
-    if (style == 1 && !SDL_RenderFillRect(p_impl->renderer, &fr))
+    float cos_a = std::cos(rotation);
+    float sin_a = std::sin(rotation);
+    float hw    = static_cast<float>(final_dst.w) * 0.5f;
+    float hh    = static_cast<float>(final_dst.h) * 0.5f;
+
+    SDL_FPoint pts[5];
+    float local_x[4] = {-hw, hw, hw, -hw};
+    float local_y[4] = {-hh, -hh, hh, hh};
+
+    for (int i = 0; i < 4; ++i)
     {
-        this->set_draw_color(temp);
-        throw std::runtime_error(SDL_GetError());
+        pts[i].x = static_cast<float>(final_dst.x) + (local_x[i] * cos_a - local_y[i] * sin_a);
+        pts[i].y = static_cast<float>(final_dst.y) + (local_x[i] * sin_a + local_y[i] * cos_a);
+    }
+    pts[4] = pts[0];
+
+    bool success = true;
+    if (style == 0)
+    {
+        success = SDL_RenderLines(p_impl->renderer, pts, 5);
+    }
+    else
+    {
+        SDL_FColor col = {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f};
+        SDL_Vertex vertices[4];
+        for (int i = 0; i < 4; ++i)
+        {
+            vertices[i] = {{pts[i].x, pts[i].y}, col, {0.0f, 0.0f}};
+        }
+        int indices[6] = {0, 1, 2, 0, 2, 3};
+        success        = SDL_RenderGeometry(p_impl->renderer, nullptr, vertices, 4, indices, 6);
     }
 
     this->set_draw_color(temp);
+    if (!success)
+        throw std::runtime_error(SDL_GetError());
 }
 
-void renderer::render_rect(const type::view_rect &dst, std::uint8_t style)
+void renderer::render_rect(const type::view_rect &dst, std::uint8_t style, float rotation)
 {
-    if (p_viewport_ptr == nullptr)
-        throw std::runtime_error("Please call begin_frame before render");
-
-    auto fr{to_frect(p_viewport_ptr->to_window_rect(dst))};
-
-    if (style == 0 && !SDL_RenderRect(p_impl->renderer, &fr))
-        throw std::runtime_error(SDL_GetError());
-
-    if (style == 1 && !SDL_RenderFillRect(p_impl->renderer, &fr))
-        throw std::runtime_error(SDL_GetError());
+    this->render_rect(dst, this->draw_color(), style, rotation);
 }
 
 void *renderer::get() const noexcept

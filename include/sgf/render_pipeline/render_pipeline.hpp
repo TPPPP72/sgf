@@ -21,7 +21,8 @@ enum class render_type : std::uint8_t
 {
     texture,
     sprite,
-    rect
+    rect,
+    circle
 };
 
 enum render_layer : std::int16_t
@@ -39,10 +40,11 @@ struct render_command
 
     type::resource_rect src;
     type::view_rect dst;
-    type::vec2f pivot{0.5, 0.5};
+
+    float rotation{0.0f};
+    type::vec2f pivot{0.5f, 0.5f};
 
     std::uint32_t submission_id;
-
     std::int16_t z_index;
 
     render_type type;
@@ -63,8 +65,9 @@ public:
     void submit(const base::texture &, const type::view_position dst, std::int16_t z_index = entity);
     void submit(const resources::sprite &, const type::view_rect &dst, std::int16_t z_index = entity);
     void submit(const resources::sprite &, const type::view_position dst, std::int16_t z_index = entity);
-    void submit(const type::view_rect &, const sgf::type::color &, graphic_style, std::int16_t z_index = entity);
-    void submit(const type::view_rect &, graphic_style, std::int16_t z_index = entity);
+    void submit(const type::view_rect &, const sgf::type::color &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
+    void submit(const type::view_rect &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
+    void submit(const type::view_position &center, float radius, const type::color &color, graphic_style, std::int16_t z_index = entity);
     void execute(base::renderer &rd);
     void clear() noexcept;
 
