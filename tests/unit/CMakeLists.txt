@@ -12,4 +12,4 @@ foreach(src ${TEST_SOURCES})
     )
 endforeach()
 
-message(STATUS "✅ Unit tests configuration successed!")
+message(STATUS "[SGF] Unit tests configuration successed!")

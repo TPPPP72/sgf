@@ -8,4 +8,4 @@ sgf_add_test(
     sgf_smoke_test
     SOURCES ${TEST_SOURCES}
 )
-message(STATUS "✅ Smoke tests configuration successed!")
+message(STATUS "[SGF] Smoke tests configuration successed!")
