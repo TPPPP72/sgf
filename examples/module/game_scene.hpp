@@ -29,7 +29,7 @@ public:
 
     void on_render(sgf::base::renderer &rd) override
     {
-        m_pipeline.submit({150, 150, 300, 300}, sgf::type::color::white, sgf::graphic_style::fill, sgf::render_layer::background);
+        m_pipeline.submit({150, 150, 300, 300}, sgf::type::color::white, sgf::graphic_style::fill, 0.0f, sgf::render_layer::background);
         m_game_object_pool.render();
         m_pipeline.execute(rd);
     }
