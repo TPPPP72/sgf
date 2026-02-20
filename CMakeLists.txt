@@ -23,7 +23,7 @@ add_library(sgf::sgf ALIAS sgf)
 
 target_compile_features(sgf INTERFACE cxx_std_17)
 
-target_include_directories(sgf_core
+target_include_directories(sgf
   INTERFACE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
