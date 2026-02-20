@@ -3,7 +3,7 @@
 #include "sgf/base/renderer.hpp"
 #include <iostream>
 #include <sgf/scene/scene.hpp>
-#include <sgf/timer.hpp>
+#include <sgf/timer/timer.hpp>
 
 class pause_scene : public sgf::scene
 {

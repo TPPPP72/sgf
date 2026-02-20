@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <sgf/scene/scene.hpp>
-#include <sgf/timer.hpp>
+#include <sgf/timer/timer.hpp>
 
 using namespace std::chrono_literals;
 

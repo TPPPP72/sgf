@@ -4,7 +4,7 @@
 #include <sgf/base/renderer.hpp>
 #include <sgf/camera/camera.hpp>
 #include <sgf/scene/scene.hpp>
-#include <sgf/timer.hpp>
+#include <sgf/timer/timer.hpp>
 #include <sgf/type/color.hpp>
 
 class game_scene : public sgf::scene
