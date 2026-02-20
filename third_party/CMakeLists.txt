@@ -1,4 +1,4 @@
-if(SGF_BACKEND_IMPL STREQUAL "SDL")
+if(SGF_BACKEND_MEDIA STREQUAL "SDL")
   add_subdirectory(sdl/SDL EXCLUDE_FROM_ALL)
   add_subdirectory(sdl/SDL_image EXCLUDE_FROM_ALL)
   add_subdirectory(sdl/SDL_ttf EXCLUDE_FROM_ALL)

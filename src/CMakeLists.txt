@@ -1,27 +1,19 @@
-add_subdirectory(base)
+set(SGF_ALL_OBJECT_TARGETS "" CACHE INTERNAL "")
 
-add_library(sgf_core STATIC)
+add_subdirectory(core)
+add_subdirectory(backend)
 
-add_library(sgf::core ALIAS sgf_core)
+set(OBJ_FILES "")
+foreach(target ${SGF_ALL_OBJECT_TARGETS})
+    list(APPEND OBJ_FILES $<TARGET_OBJECTS:${target}>)
+endforeach()
 
-target_compile_features(sgf_core PRIVATE cxx_std_17)
+add_library(sgf_static STATIC ${OBJ_FILES})
+set_target_properties(sgf_static PROPERTIES OUTPUT_NAME "sgf")
 
-target_include_directories(sgf_core
-  PUBLIC
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
-
-target_sources(sgf_core
-  PRIVATE
-    input/input_system.cpp
-    resources/atlas.cpp
-    resources/manager.cpp
-    animation/player.cpp
-    game_object/game_object_pool.cpp
-    game_object/modules/camera_module.cpp
-    game_object/modules/keyboard_module.cpp
-    game_object/modules/mouse_module.cpp
-    game_object/modules/render_module.cpp
-    render_pipeline/render_pipeline.cpp
+target_link_libraries(sgf_static
+    PUBLIC
+      sgf_core
+    PRIVATE
+      ${SGF_ALL_OBJECT_TARGETS}
 )

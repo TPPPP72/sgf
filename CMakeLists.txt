@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(sgf)
 
-set(SGF_BACKEND_IMPL SDL)
+set(SGF_BACKEND_MEDIA "SDL" CACHE STRING "Media implementation (SDL3)")
 option(SGF_BUILD_EXAMPLES "Build sgf examples" ON)
 option(SGF_BUILD_TESTS "Build sgf tests" ON)
 
@@ -23,10 +23,15 @@ add_library(sgf::sgf ALIAS sgf)
 
 target_compile_features(sgf INTERFACE cxx_std_17)
 
+target_include_directories(sgf_core
+  INTERFACE
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 target_link_libraries(sgf
   INTERFACE
-    sgf::core
-    sgf::backend
+    sgf_static
 )
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
