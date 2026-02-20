@@ -47,14 +47,14 @@ public:
 
     void on_render(sgf::base::renderer &rd) override
     {
-        m_pipeline.submit({0, 0, 500, 500}, sgf::type::color{40, 44, 52, 255}, sgf::graphic_style::fill, sgf::render_layer::background);
+        m_pipeline.submit({0, 0, 500, 500}, sgf::type::color{40, 44, 52, 255}, sgf::graphic_style::fill, 0.0f, sgf::render_layer::background);
 
         for (size_t i = 0; i < m_positions.size(); ++i)
         {
             m_pipeline.submit({m_positions[i].x, m_positions[i].y, 10, 10}, m_colors[i], sgf::graphic_style::fill);
         }
 
-        m_pipeline.submit({20, 20, 150, 30}, sgf::type::color::white, sgf::graphic_style::fill, sgf::render_layer::ui);
+        m_pipeline.submit({20, 20, 150, 30}, sgf::type::color::white, sgf::graphic_style::fill, 0.0f, sgf::render_layer::ui);
 
         m_pipeline.execute(rd);
     }
