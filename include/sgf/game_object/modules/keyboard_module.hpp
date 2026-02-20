@@ -11,6 +11,7 @@ class keyboard_module : public base_input_module
 {
 public:
     using base_input_module::base_input_module;
+    virtual ~keyboard_module() = default;
 
     void update(std::chrono::nanoseconds dt) override;
 
