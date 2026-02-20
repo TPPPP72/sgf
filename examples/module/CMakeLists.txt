@@ -11,5 +11,3 @@ target_link_libraries(module
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(module)

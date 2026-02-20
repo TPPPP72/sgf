@@ -11,5 +11,3 @@ target_link_libraries(scene_switch
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(scene_switch)

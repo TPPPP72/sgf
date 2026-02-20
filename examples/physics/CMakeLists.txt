@@ -11,5 +11,3 @@ target_link_libraries(physics
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(physics)

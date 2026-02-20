@@ -11,5 +11,3 @@ target_link_libraries(cameral
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(cameral)

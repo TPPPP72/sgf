@@ -31,7 +31,4 @@ function(sgf_add_test target)
     NAME ${target}
     COMMAND ${target}
   )
-
-  include(sgf_runtime)
-  sgf_copy_runtime_deps(${target})
 endfunction()

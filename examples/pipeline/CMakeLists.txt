@@ -11,5 +11,3 @@ target_link_libraries(pipeline
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(pipeline)

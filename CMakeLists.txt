@@ -11,9 +11,7 @@ if(SGF_BUILD_TESTS)
   option(SGF_TEST_LOCAL "Test on local environment" True)
 endif()
 
-if(MSVC)
-  add_compile_options(/utf-8)
-endif()
+include(cmake/sgf_dependencies_helper.cmake)
 
 add_subdirectory(third_party)
 
@@ -37,7 +35,6 @@ target_link_libraries(sgf
 )
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-include(sgf_runtime)
 
 if(SGF_BUILD_EXAMPLES)
   add_subdirectory(examples)

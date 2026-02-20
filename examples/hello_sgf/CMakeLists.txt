@@ -11,5 +11,3 @@ target_link_libraries(hello_sgf
   PRIVATE
     sgf::sgf
 )
-
-sgf_copy_runtime_deps(hello_sgf)
