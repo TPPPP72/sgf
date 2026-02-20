@@ -18,10 +18,13 @@ namespace sgf
 
 struct transform
 {
+    // for physics and render
     type::world_position pos{0.0, 0.0};
     type::world_size size{0, 0};
-    type::vec2f pivot{0.5f, 0.5f};
     float rotation{0.0f};
+
+    // only for render
+    type::vec2f pivot{0.5f, 0.5f};
     float scale{1.0f};
 };
 
