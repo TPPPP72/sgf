@@ -14,3 +14,6 @@
 	path = third_party/sdl/SDL_mixer
 	url = https://github.com/libsdl-org/SDL_mixer.git
 	shallow = true
+[submodule "third_party/box2d"]
+	path = third_party/box2d
+	url = https://github.com/erincatto/box2d.git
