@@ -17,7 +17,7 @@ public:
     using base_service_module::base_service_module;
     virtual ~event_module() = default;
 
-    event_bus *event_bus() const;
+    event_bus *bus() const;
 };
 
 } // namespace module

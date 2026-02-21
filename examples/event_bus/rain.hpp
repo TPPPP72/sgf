@@ -43,30 +43,30 @@ public:
                 255};
         };
 
-        event_module->event_bus()->subscribe<sgf::event::collision_begin>([this, physic_module, random_color](auto &e)
-                                                                          {
-                                                                              uint32_t my_id = this->id();
+        event_module->bus()->subscribe<sgf::event::collision_begin>([this, physic_module, random_color](auto &e)
+                                                                    {
+                                                                        uint32_t my_id = this->id();
 
-                                                                              // 过滤无关事件
-                                                                              if (e.id_a != my_id && e.id_b != my_id)
-                                                                                  return;
+                                                                        // 过滤无关事件
+                                                                        if (e.id_a != my_id && e.id_b != my_id)
+                                                                            return;
 
-                                                                              uint32_t other_id = (e.id_a == my_id) ? e.id_b : e.id_a;
+                                                                        uint32_t other_id = (e.id_a == my_id) ? e.id_b : e.id_a;
 
-                                                                              this->m_color = random_color();
+                                                                        this->m_color = random_color();
 
-                                                                              // 传送重置 (撞到传感器 103)
-                                                                              if (other_id == 103)
-                                                                              {
-                                                                                  float rx = 250.0f + static_cast<float>(std::rand() % 300);
-                                                                                  float ry = -100.0f;
+                                                                        // 传送重置 (撞到传感器 103)
+                                                                        if (other_id == 103)
+                                                                        {
+                                                                            float rx = 250.0f + static_cast<float>(std::rand() % 300);
+                                                                            float ry = -100.0f;
 
-                                                                                  this->position() = {rx, ry};
+                                                                            this->position() = {rx, ry};
 
-                                                                                  physic_module->sync_to_physics();
-                                                                                  physic_module->set_linear_velocity({0, 0});
-                                                                              }
-                                                                          });
+                                                                            physic_module->sync_to_physics();
+                                                                            physic_module->set_linear_velocity({0, 0});
+                                                                        }
+                                                                    });
     }
 
     void on_render() override
