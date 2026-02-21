@@ -14,14 +14,12 @@ sgf::module::physics_module::~physics_module()
 
 void sgf::module::physics_module::apply_linear_impulse(const type::vec2d &impulse)
 {
-    // 我们需要在 physics_system 中增加这个接口，目前占个坑
-    // context().physics().apply_linear_impulse(owner().id(), impulse);
+    this->context().physics->apply_linear_impulse(owner().id(), impulse);
 }
 
 void sgf::module::physics_module::set_linear_velocity(const type::vec2d &velocity)
 {
-    // 同上，物理系统的职责是封装 Box2D 的 C API
-    // context().physics().set_linear_velocity(owner().id(), velocity);
+    this->context().physics->set_linear_velocity(owner().id(), velocity);
 }
 
 void sgf::module::physics_module::sync_to_physics()

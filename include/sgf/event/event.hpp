@@ -12,9 +12,6 @@ struct collision_begin
 {
     std::uint32_t id_a;
     std::uint32_t id_b;
-
-    // 碰撞强度
-    float manifold_normal_impulse;
 };
 
 // 碰撞结束

@@ -1,4 +1,7 @@
+#include "box2d/types.h"
 #include <box2d/box2d.h>
+#include <sgf/event/event.hpp>
+#include <sgf/event/event_bus.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/logger/logger.hpp>
 #include <sgf/physics/physics_system.hpp>
@@ -57,6 +60,7 @@ void sgf::physics_system::register_entity(sgf::game_object &owner, const sgf::ph
         shapeDef.isSensor = col.is_sensor;
 
         shapeDef.enableContactEvents = true;
+        shapeDef.enableSensorEvents  = true;
 
         if (col.is_circle)
         {
@@ -96,12 +100,56 @@ void sgf::physics_system::set_linear_velocity(uint32_t id, const sgf::type::vec2
     }
 }
 
-void sgf::physics_system::update(std::chrono::nanoseconds dt)
+void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
 {
     float time_step = std::chrono::duration<float>(dt).count();
 
     if (time_step > 0.0f)
         b2World_Step(p_impl->world_id, time_step, 4);
+
+    b2ContactEvents events      = b2World_GetContactEvents(p_impl->world_id);
+    b2SensorEvents sensorEvents = b2World_GetSensorEvents(p_impl->world_id);
+
+    for (int i = 0; i < events.beginCount; ++i)
+    {
+        b2ContactBeginTouchEvent event = events.beginEvents[i];
+        uint32_t idA                   = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdA))));
+        uint32_t idB                   = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdB))));
+
+        if (eb)
+            eb->enqueue(sgf::event::collision_begin{idA, idB});
+    }
+
+    for (int i = 0; i < sensorEvents.beginCount; ++i)
+    {
+        b2SensorBeginTouchEvent se = sensorEvents.beginEvents[i];
+        uint32_t sensorID          = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.sensorShapeId))));
+        uint32_t visitorID         = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.visitorShapeId))));
+
+        if (eb)
+            eb->enqueue(sgf::event::collision_begin{sensorID, visitorID});
+    }
+
+    for (int i = 0; i < events.endCount; ++i)
+    {
+        b2ContactEndTouchEvent event = events.endEvents[i];
+
+        uint32_t idA = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdA))));
+        uint32_t idB = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdB))));
+
+        if (eb)
+            eb->enqueue(sgf::event::collision_end{idA, idB});
+    }
+
+    for (int i = 0; i < sensorEvents.endCount; ++i)
+    {
+        b2SensorEndTouchEvent se = sensorEvents.endEvents[i];
+        uint32_t sensorID        = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.sensorShapeId))));
+        uint32_t visitorID       = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.visitorShapeId))));
+
+        if (eb)
+            eb->enqueue(sgf::event::collision_end{sensorID, visitorID});
+    }
 
     for (auto &[id, state] : p_impl->entities)
     {
