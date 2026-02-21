@@ -3,6 +3,7 @@
 
 #include "../base/renderer.hpp"
 #include "../camera/camera.hpp"
+#include "../event/event_bus.hpp"
 #include "../physics/physics_system.hpp"
 #include "../render_pipeline/render_pipeline.hpp"
 #include <chrono>
@@ -16,6 +17,7 @@ struct scene_context
     std::vector<camera *> cameras;
     render_pipeline *pipeline;
     physics_system *physics;
+    event_bus *eb;
 };
 
 class scene

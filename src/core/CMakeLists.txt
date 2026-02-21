@@ -20,5 +20,6 @@ target_sources(sgf_core
     game_object/modules/mouse_module.cpp
     game_object/modules/render_module.cpp
     game_object/modules/physics_module.cpp
+    game_object/modules/event_module.cpp
     render_pipeline/render_pipeline.cpp
 )
