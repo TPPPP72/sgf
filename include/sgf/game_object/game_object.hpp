@@ -1,20 +1,21 @@
 #ifndef SGF_GAME_OBJECT_HPP
 #define SGF_GAME_OBJECT_HPP
 
-#include "../type/position.hpp"
-#include "../type/size.hpp"
-#include "../type/vec2.hpp"
-#include "modules/base/input_module.hpp"
-#include "modules/base/service_module.hpp"
-#include "modules/render_module.hpp"
-#include "sgf/game_object/game_object_pool.hpp"
-#include <chrono>
 #include <cstdint>
 #include <memory>
+#include <sgf/game_object/modules/base/input_module.hpp>
+#include <sgf/game_object/modules/base/service_module.hpp>
+#include <sgf/game_object/modules/render_module.hpp>
+#include <sgf/type/position.hpp>
+#include <sgf/type/size.hpp>
+#include <sgf/type/vec2.hpp>
 #include <vector>
 
 namespace sgf
 {
+
+class input_event;
+class frame_context;
 
 struct transform
 {
@@ -38,7 +39,8 @@ public:
     game_object &operator=(const game_object &) = delete;
 
     virtual void on_init(scene_context &) = 0;
-    virtual void on_update(std::chrono::nanoseconds dt) {};
+    virtual void on_input(const sgf::input_event &) {};
+    virtual void on_update(const sgf::frame_context &) {};
     virtual void on_render() {};
 
     std::uint32_t id() const noexcept

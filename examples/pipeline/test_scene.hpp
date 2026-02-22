@@ -1,6 +1,8 @@
 #pragma once
 
 #include <random>
+#include <sgf/context/frame_context.hpp>
+#include <sgf/event/input_event.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/scene/scene.hpp>
 #include <sgf/type/color.hpp>
@@ -30,9 +32,13 @@ public:
         }
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_input(const sgf::input_event &e) override
     {
-        float sec = std::chrono::duration<float>(dt).count();
+    }
+
+    void on_update(const sgf::frame_context &ctx) override
+    {
+        float sec = std::chrono::duration<float>(ctx.dt).count();
         for (size_t i = 0; i < m_positions.size(); ++i)
         {
             m_positions[i].x += m_velocities[i].x * sec;

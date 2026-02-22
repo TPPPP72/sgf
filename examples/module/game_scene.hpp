@@ -4,6 +4,9 @@
 #include <memory>
 #include <sgf/base/renderer.hpp>
 #include <sgf/camera/camera.hpp>
+#include <sgf/context/frame_context.hpp>
+#include <sgf/context/scene_context.hpp>
+#include <sgf/event/input_event.hpp>
 #include <sgf/game_object/game_object_pool.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/scene/scene.hpp>
@@ -22,9 +25,14 @@ public:
         m_game_object_pool.create(std::make_unique<square>(1));
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_input(const sgf::input_event &e) override
     {
-        m_game_object_pool.update(dt);
+        m_game_object_pool.input(e);
+    }
+
+    void on_update(const sgf::frame_context &ctx) override
+    {
+        m_game_object_pool.update(ctx);
     }
 
     void on_render(sgf::base::renderer &rd) override

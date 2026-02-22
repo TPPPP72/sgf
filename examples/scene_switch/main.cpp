@@ -2,8 +2,6 @@
 #include "pause_scene.hpp"
 #include "splash_scene.hpp"
 #include <memory>
-#include <sgf/base/window/window_event.hpp>
-#include <sgf/input/input_system.hpp>
 #include <sgf/kernel.hpp>
 #include <sgf/scene/scene_manager.hpp>
 #include <string>
@@ -22,23 +20,25 @@ public:
         m_manager.change_scene(std::move(splash));
     }
 
-    void on_update(kernel<scene_switch> &k, std::chrono::nanoseconds dt)
+    void on_input(kernel<scene_switch> &k, const sgf::input_event &e)
     {
-        k.get_window().set_title("scene_switch | FPS : " + std::to_string(k.get_current_fps()));
-        m_manager.update(dt);
-
-        if (sgf::input_system::instance().is_key_down(sgf::base::key_code::p))
+        if (e.type == sgf::base::event_type::key_down && e.key == sgf::base::key_code::p)
         {
             auto current = m_manager.get_current();
             if (current && current->id() != 2)
                 m_manager.push_scene(std::make_unique<pause_scene>(2, current));
         }
-
-        if (sgf::input_system::instance().is_key_down(sgf::base::key_code::space))
+        if (e.type == sgf::base::event_type::key_down && e.key == sgf::base::key_code::space)
         {
             if (m_manager.get_current()->id() == 2)
                 m_manager.pop_scene();
         }
+    }
+
+    void on_update(kernel<scene_switch> &k, const sgf::frame_context &ctx)
+    {
+        k.get_window().set_title("scene_switch | FPS : " + std::to_string(k.get_current_fps()));
+        m_manager.update(ctx);
     }
 
     void on_render(kernel<scene_switch> &k)

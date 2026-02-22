@@ -1,11 +1,12 @@
 #pragma once
-#include "sgf/type/rect.hpp"
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/modules/camera_module.hpp>
 #include <sgf/game_object/modules/physics_module.hpp>
 #include <sgf/game_object/modules/render_module.hpp>
 #include <sgf/physics/physics_config.hpp>
+#include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/type/color.hpp>
+#include <sgf/type/rect.hpp>
 
 class ball : public sgf::game_object
 {

@@ -1,11 +1,11 @@
 #ifndef SGF_BASE_RENDERER_HPP
 #define SGF_BASE_RENDERER_HPP
 
-#include "../type/color.hpp"
-#include "../type/rect.hpp"
-#include "../type/vertex.hpp"
-#include "viewport.hpp"
-#include "window/window.hpp"
+#include <sgf/base/viewport.hpp>
+#include <sgf/base/window/window.hpp>
+#include <sgf/type/color.hpp>
+#include <sgf/type/rect.hpp>
+#include <sgf/type/vertex.hpp>
 
 namespace sgf::base
 {

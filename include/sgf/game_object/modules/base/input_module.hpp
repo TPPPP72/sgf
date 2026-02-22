@@ -1,12 +1,12 @@
 #ifndef SGF_GAME_OBJECT_MODULES_BASE_INPUT_MODULE_HPP
 #define SGF_GAME_OBJECT_MODULES_BASE_INPUT_MODULE_HPP
 
-#include <chrono>
-
 namespace sgf
 {
 
 class game_object;
+class input_event;
+class frame_context;
 
 namespace module
 {
@@ -20,7 +20,8 @@ public:
     base_input_module(const base_input_module &)            = delete;
     base_input_module &operator=(const base_input_module &) = delete;
 
-    virtual void update(std::chrono::nanoseconds dt) {}
+    virtual void input(const input_event &) {}
+    virtual void update(const frame_context &) {}
 
 protected:
     game_object &owner() const noexcept { return m_owner; }

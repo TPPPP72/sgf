@@ -1,10 +1,9 @@
 #ifndef SGF_BASE_TEXTURE_HPP
 #define SGF_BASE_TEXTURE_HPP
 
-#include "../type/size.hpp"
-#include "renderer.hpp"
-#include "surface.hpp"
 #include <filesystem>
+#include <sgf/base/renderer.hpp>
+#include <sgf/base/surface.hpp>
 
 namespace sgf::base
 {

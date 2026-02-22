@@ -15,10 +15,14 @@ public:
         m_manager.change_scene(std::move(game));
     }
 
-    void on_update(kernel<cameral> &k, std::chrono::nanoseconds dt)
+    void on_input(kernel<cameral> &k, const sgf::input_event &e)
+    {
+    }
+
+    void on_update(kernel<cameral> &k, const sgf::frame_context &ctx)
     {
         k.get_window().set_title("cameral | FPS : " + std::to_string(k.get_current_fps()));
-        m_manager.update(dt);
+        m_manager.update(ctx);
     }
 
     void on_render(kernel<cameral> &k)

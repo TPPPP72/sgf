@@ -2,7 +2,6 @@
 #define SGF_BASE_WINDOW_EVENT_HPP
 
 #include "../../type/position.hpp"
-#include <array>
 #include <cstdint>
 
 namespace sgf::base
@@ -10,16 +9,17 @@ namespace sgf::base
 
 enum class event_type : std::uint8_t
 {
+    none,
+    current,
     key_down,
     key_up,
     mouse_button_down,
-    mouse_button_up,
-    mouse_motion
+    mouse_button_up
 };
 
 enum class key_code : std::uint8_t
 {
-    unknown,
+    none,
     a = 4,
     b,
     c,
@@ -96,17 +96,18 @@ enum class key_code : std::uint8_t
 
 enum class mouse_button_code : std::uint8_t
 {
-    left = 1,
+    none,
+    left,
     middle,
     right
 };
 
 struct window_event
 {
-    std::array<bool, 5> events{false};
-    type::window_position pos;
-    std::array<bool, 231> keys{false};
-    std::array<bool, 4> buttons{false};
+    event_type type{event_type::none};
+    key_code key{key_code::none};
+    mouse_button_code mouse{mouse_button_code::none};
+    type::window_position pos{0.0f, 0.0f};
 };
 
 }; // namespace sgf::base

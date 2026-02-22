@@ -1,4 +1,6 @@
 #include "game_scene.hpp"
+#include "sgf/context/frame_context.hpp"
+#include "sgf/event/input_event.hpp"
 #include <memory>
 #include <sgf/kernel.hpp>
 #include <sgf/scene/scene_manager.hpp>
@@ -14,10 +16,15 @@ public:
         m_manager.change_scene(std::move(game));
     }
 
-    void on_update(kernel<module> &k, std::chrono::nanoseconds dt)
+    void on_input(kernel<module> &k, const sgf::input_event &e)
+    {
+        m_manager.input(e);
+    }
+
+    void on_update(kernel<module> &k, const sgf::frame_context &ctx)
     {
         k.get_window().set_title("module | FPS : " + std::to_string(k.get_current_fps()));
-        m_manager.update(dt);
+        m_manager.update(ctx);
     }
 
     void on_render(kernel<module> &k)

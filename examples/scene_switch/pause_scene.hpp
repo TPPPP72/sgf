@@ -1,7 +1,9 @@
 #pragma once
 
-#include "sgf/base/renderer.hpp"
 #include <iostream>
+#include <sgf/base/renderer.hpp>
+#include <sgf/context/frame_context.hpp>
+#include <sgf/event/input_event.hpp>
 #include <sgf/scene/scene.hpp>
 #include <sgf/timer/timer.hpp>
 
@@ -25,7 +27,11 @@ public:
         std::cout << "PauseScene: Logic suspended, rendering active.\n";
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_input(const sgf::input_event &e) override
+    {
+    }
+
+    void on_update(const sgf::frame_context &ctx) override
     {
     }
 

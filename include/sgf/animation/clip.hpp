@@ -1,7 +1,7 @@
 #ifndef SGF_ANIMATION_CLIP_HPP
 #define SGF_ANIMATION_CLIP_HPP
 
-#include "../resources/sprite.hpp"
+#include <sgf/resources/sprite.hpp>
 
 namespace sgf::animation
 {

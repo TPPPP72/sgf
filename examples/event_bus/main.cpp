@@ -13,10 +13,15 @@ public:
         m_manager.change_scene(std::move(game));
     }
 
-    void on_update(kernel<event_bus> &k, std::chrono::nanoseconds dt)
+    void on_input(kernel<event_bus> &k, const sgf::input_event &e)
+    {
+        m_manager.input(e);
+    }
+
+    void on_update(kernel<event_bus> &k, const sgf::frame_context &ctx)
     {
         k.get_window().set_title("event_bus | FPS : " + std::to_string(k.get_current_fps()));
-        m_manager.update(dt);
+        m_manager.update(ctx);
     }
 
     void on_render(kernel<event_bus> &k)

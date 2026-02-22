@@ -1,15 +1,13 @@
 #ifndef SGF_RESOURCES_MANAGER_HPP
 #define SGF_RESOURCES_MANAGER_HPP
 
-#include "../base/audio/audio.hpp"
-#include "../base/font.hpp"
-#include "../base/renderer.hpp"
-#include "../base/texture.hpp"
-#include "atlas.hpp"
-#include "sprite.hpp"
 #include <filesystem>
+#include <sgf/base/audio/audio.hpp>
+#include <sgf/base/font.hpp>
+#include <sgf/base/renderer.hpp>
+#include <sgf/resources/atlas.hpp>
+#include <sgf/resources/sprite.hpp>
 #include <unordered_map>
-
 
 namespace sgf::resources
 {

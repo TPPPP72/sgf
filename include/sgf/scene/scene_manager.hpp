@@ -1,9 +1,8 @@
 #ifndef SGF_SCENE_MANAGER_HPP
 #define SGF_SCENE_MANAGER_HPP
 
-#include "../base/renderer.hpp"
-#include "scene.hpp"
-#include <chrono>
+#include <sgf/base/renderer.hpp>
+#include <sgf/scene/scene.hpp>
 
 namespace sgf
 {
@@ -32,12 +31,21 @@ public:
         push_scene(std::move(new_scene));
     }
 
-    void update(std::chrono::nanoseconds dt)
+    void input(const input_event &e)
     {
         for (auto &s : m_scenes)
         {
             if (s->should_update)
-                s->on_update(dt);
+                s->on_input(e);
+        }
+    }
+
+    void update(const frame_context &ctx)
+    {
+        for (auto &s : m_scenes)
+        {
+            if (s->should_update)
+                s->on_update(ctx);
         }
     }
 

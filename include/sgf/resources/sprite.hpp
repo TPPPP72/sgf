@@ -1,9 +1,9 @@
 #ifndef SGF_RESOURCES_SPRITE_HPP
 #define SGF_RESOURCES_SPRITE_HPP
 
-#include "../base/texture.hpp"
-#include "../type/rect.hpp"
-#include "../type/vec2.hpp"
+#include <sgf/base/texture.hpp>
+#include <sgf/type/rect.hpp>
+#include <sgf/type/vec2.hpp>
 
 namespace sgf::resources
 {

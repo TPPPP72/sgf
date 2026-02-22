@@ -1,8 +1,8 @@
 #pragma once
-#include "../type/vec2.hpp"
-#include "physics_config.hpp"
 #include <chrono>
 #include <memory>
+#include <sgf/physics/physics_config.hpp>
+#include <sgf/type/vec2.hpp>
 
 namespace sgf
 {

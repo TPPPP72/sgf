@@ -1,10 +1,10 @@
 #ifndef SGF_BASE_FONT_HPP
 #define SGF_BASE_FONT_HPP
 
-#include "guard/font_system.hpp"
 #include <cstdint>
 #include <filesystem>
 #include <memory>
+#include <sgf/base/guard/font_system.hpp>
 
 namespace sgf::base
 {

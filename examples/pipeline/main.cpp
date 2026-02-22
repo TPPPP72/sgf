@@ -15,10 +15,12 @@ public:
         m_manager.change_scene(std::move(test));
     }
 
-    void on_update(kernel<pipeline> &k, std::chrono::nanoseconds dt)
+    void on_input(kernel<pipeline> &k, const sgf::input_event &e) {}
+
+    void on_update(kernel<pipeline> &k, const sgf::frame_context &ctx)
     {
         k.get_window().set_title("pipeline | FPS : " + std::to_string(k.get_current_fps()));
-        m_manager.update(dt);
+        m_manager.update(ctx);
     }
 
     void on_render(kernel<pipeline> &k)

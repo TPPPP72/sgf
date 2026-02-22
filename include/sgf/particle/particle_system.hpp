@@ -1,11 +1,11 @@
 #ifndef SGF_PARTICAL_SYSTEM_HPP
 #define SGF_PARTICAL_SYSTEM_HPP
 
-#include "../type/color.hpp"
-#include "../type/vec2.hpp"
 #include <array>
 #include <chrono>
 #include <optional>
+#include <sgf/type/color.hpp>
+#include <sgf/type/vec2.hpp>
 
 namespace sgf
 {

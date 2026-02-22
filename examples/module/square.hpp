@@ -2,6 +2,8 @@
 
 #include <chrono>
 #include <sgf/base/window/window_event.hpp>
+#include <sgf/camera/camera.hpp>
+#include <sgf/context/frame_context.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/modules/camera_module.hpp>
 #include <sgf/game_object/modules/keyboard_module.hpp>
@@ -30,26 +32,26 @@ public:
         add_module<sgf::module::camera_module>(ctx);
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_update(const sgf::frame_context &ctx) override
     {
         auto keyboard = get_module<sgf::module::keyboard_module>();
 
-        auto elapsed_sec = std::chrono::duration<double>(dt).count();
+        auto elapsed_sec = std::chrono::duration<double>(ctx.dt).count();
 
-        if (keyboard->get_time(sgf::base::key_code::a) > std::chrono::nanoseconds(0))
+        if (keyboard->is_down(sgf::base::key_code::a))
             this->position().x -= 100 * elapsed_sec;
-        if (keyboard->get_time(sgf::base::key_code::d) > std::chrono::nanoseconds(0))
+        if (keyboard->is_down(sgf::base::key_code::d))
             this->position().x += 100 * elapsed_sec;
-        if (keyboard->get_time(sgf::base::key_code::w) > std::chrono::nanoseconds(0))
+        if (keyboard->is_down(sgf::base::key_code::w))
             this->position().y -= 100 * elapsed_sec;
-        if (keyboard->get_time(sgf::base::key_code::s) > std::chrono::nanoseconds(0))
+        if (keyboard->is_down(sgf::base::key_code::s))
             this->position().y += 100 * elapsed_sec;
 
         auto mouse = get_module<sgf::module::mouse_module>();
 
         auto camera = get_module<sgf::module::camera_module>();
 
-        if (mouse->get_time(sgf::base::mouse_button_code::left) > std::chrono::nanoseconds(0))
+        if (mouse->is_down(sgf::base::mouse_button_code::left))
             this->position() = camera->get_main()->to_world_pos(mouse->position());
     }
 

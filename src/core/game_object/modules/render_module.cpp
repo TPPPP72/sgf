@@ -1,3 +1,4 @@
+#include <sgf/context/scene_context.hpp>
 #include <sgf/game_object/modules/render_module.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/scene/scene.hpp>

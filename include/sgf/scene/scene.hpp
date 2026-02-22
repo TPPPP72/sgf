@@ -1,24 +1,18 @@
 #ifndef SGF_SCENE_HPP
 #define SGF_SCENE_HPP
 
-#include "../base/renderer.hpp"
-#include "../camera/camera.hpp"
-#include "../event/event_bus.hpp"
-#include "../physics/physics_system.hpp"
-#include "../render_pipeline/render_pipeline.hpp"
-#include <chrono>
 #include <cstdint>
 
 namespace sgf
 {
 
-struct scene_context
+namespace base
 {
-    std::vector<camera *> cameras;
-    render_pipeline *pipeline;
-    physics_system *physics;
-    event_bus *eb;
-};
+class renderer;
+}
+
+class input_event;
+class frame_context;
 
 class scene
 {
@@ -29,9 +23,10 @@ public:
     scene(const scene &)            = delete;
     scene &operator=(const scene &) = delete;
 
-    virtual void on_init()                              = 0;
-    virtual void on_update(std::chrono::nanoseconds dt) = 0;
-    virtual void on_render(base::renderer &)            = 0;
+    virtual void on_init()                        = 0;
+    virtual void on_input(const input_event &)    = 0;
+    virtual void on_update(const frame_context &) = 0;
+    virtual void on_render(base::renderer &)      = 0;
 
     std::uint32_t id() const noexcept
     {

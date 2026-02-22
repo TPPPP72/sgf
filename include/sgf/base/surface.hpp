@@ -1,9 +1,9 @@
 #ifndef SGF_BASE_SURFACE_HPP
 #define SGF_BASE_SURFACE_HPP
 
-#include "../type/color.hpp"
-#include "font.hpp"
 #include <memory>
+#include <sgf/base/font.hpp>
+#include <sgf/type/color.hpp>
 #include <string>
 
 namespace sgf::base

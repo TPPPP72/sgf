@@ -1,7 +1,7 @@
 #ifndef SGF_ANIMATION_PLAYER_HPP
 #define SGF_ANIMATION_PLAYER_HPP
 
-#include "clip.hpp"
+#include <sgf/animation/clip.hpp>
 
 namespace sgf::animation
 {

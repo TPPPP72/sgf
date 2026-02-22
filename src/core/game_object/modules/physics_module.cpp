@@ -1,5 +1,7 @@
+#include <sgf/context/scene_context.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/modules/physics_module.hpp>
+#include <sgf/physics/physics_system.hpp>
 
 sgf::module::physics_module::physics_module(game_object &owner, scene_context &context, const physics_config &config)
     : base_service_module(owner, context)

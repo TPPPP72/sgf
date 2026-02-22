@@ -1,9 +1,8 @@
 #ifndef SGF_BASE_VIEWPORT_HPP
 #define SGF_BASE_VIEWPORT_HPP
 
-#include "../type/rect.hpp"
-#include "../type/size.hpp"
-#include "window/window.hpp"
+#include <sgf/base/window/window.hpp>
+#include <sgf/type/rect.hpp>
 
 namespace sgf::base
 {

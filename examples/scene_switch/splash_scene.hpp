@@ -2,6 +2,9 @@
 
 #include <algorithm>
 #include <chrono>
+#include <sgf/base/renderer.hpp>
+#include <sgf/context/frame_context.hpp>
+#include <sgf/event/input_event.hpp>
 #include <sgf/scene/scene.hpp>
 #include <sgf/timer/timer.hpp>
 
@@ -17,9 +20,13 @@ public:
         m_display_time = 0ns;
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_input(const sgf::input_event &e) override
     {
-        m_display_time += dt;
+    }
+
+    void on_update(const sgf::frame_context &ctx) override
+    {
+        m_display_time += ctx.dt;
 
         if (m_display_time >= 3s)
             m_on_finish();

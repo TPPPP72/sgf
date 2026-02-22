@@ -1,7 +1,7 @@
 #ifndef SGF_RESOURCES_ATLAS_HPP
 #define SGF_RESOURCES_ATLAS_HPP
 
-#include "sprite.hpp"
+#include <sgf/resources/sprite.hpp>
 #include <string>
 #include <unordered_map>
 

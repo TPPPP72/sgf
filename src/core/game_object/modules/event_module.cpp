@@ -1,3 +1,4 @@
+#include <sgf/context/scene_context.hpp>
 #include <sgf/game_object/modules/event_module.hpp>
 #include <sgf/scene/scene.hpp>
 

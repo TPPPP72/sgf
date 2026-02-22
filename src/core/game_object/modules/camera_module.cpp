@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <sgf/camera/camera.hpp>
+#include <sgf/context/scene_context.hpp>
 #include <sgf/game_object/modules/camera_module.hpp>
 #include <sgf/scene/scene.hpp>
 

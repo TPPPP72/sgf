@@ -1,7 +1,7 @@
 #ifndef SGF_GAME_OBJECT_MODULES_RENDER_MODULE_HPP
 #define SGF_GAME_OBJECT_MODULES_RENDER_MODULE_HPP
 
-#include "base/service_module.hpp"
+#include <sgf/game_object/modules/base/service_module.hpp>
 
 namespace sgf
 {

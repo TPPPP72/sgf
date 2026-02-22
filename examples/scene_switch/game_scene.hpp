@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <sgf/base/renderer.hpp>
+#include <sgf/context/frame_context.hpp>
+#include <sgf/event/input_event.hpp>
 #include <sgf/scene/scene.hpp>
 #include <sgf/timer/timer.hpp>
 #include <sgf/type/color.hpp>
@@ -22,10 +24,14 @@ public:
         m_log_timer.start();
     }
 
-    void on_update(std::chrono::nanoseconds dt) override
+    void on_input(const sgf::input_event &e) override
     {
-        m_log_timer.update(dt);
-        double elapsed_sec = std::chrono::duration<double>(dt).count();
+    }
+
+    void on_update(const sgf::frame_context &ctx) override
+    {
+        m_log_timer.update(ctx.dt);
+        double elapsed_sec = std::chrono::duration<double>(ctx.dt).count();
         m_player_pos += 100.0 * elapsed_sec * m_player_dir;
         if (m_player_pos >= 450 || m_player_pos <= 0)
             m_player_dir = -m_player_dir;

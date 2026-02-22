@@ -1,6 +1,7 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_video.h>
 #include <sgf/base/window/window.hpp>
+#include <sgf/base/window/window_event.hpp>
 #include <stdexcept>
 
 using namespace sgf::base;
@@ -17,7 +18,8 @@ window::window(const window_info &inf) : p_impl(std::make_unique<impl>())
     if (p_impl->window == nullptr)
         throw std::runtime_error(SDL_GetError());
 
-    p_info = inf;
+    p_info               = inf;
+    p_current_event.type = event_type::current;
 }
 
 window::~window()
@@ -44,17 +46,13 @@ window_info window::current_info() const
     return inf;
 }
 
-window_event window::current_event() const
+void window::poll_events()
 {
-    return p_event;
-}
-
-void window::poll_event()
-{
-    p_event.events.fill(false);
+    p_events.clear();
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        window_event e;
         switch (event.type)
         {
         case SDL_EVENT_QUIT:
@@ -71,32 +69,47 @@ void window::poll_event()
             break;
 
         case SDL_EVENT_KEY_DOWN:
-            p_event.events[static_cast<std::size_t>(event_type::key_down)] = true;
-            p_event.keys[static_cast<std::size_t>(event.key.scancode)]     = true;
+            e.type = event_type::key_down;
+            e.key  = static_cast<key_code>(event.key.scancode);
             break;
 
         case SDL_EVENT_KEY_UP:
-            p_event.events[static_cast<std::size_t>(event_type::key_up)] = true;
-            p_event.keys[static_cast<std::size_t>(event.key.scancode)]   = false;
+            e.type = event_type::key_up;
+            e.key  = static_cast<key_code>(event.key.scancode);
             break;
 
         case SDL_EVENT_MOUSE_BUTTON_DOWN:
-            p_event.events[static_cast<std::size_t>(event_type::mouse_button_down)] = true;
-            p_event.buttons[static_cast<std::size_t>(event.button.button)]          = true;
+            e.type  = event_type::mouse_button_down;
+            e.mouse = static_cast<mouse_button_code>(event.button.button);
+            e.pos.x = event.motion.x;
+            e.pos.y = event.motion.y;
             break;
 
         case SDL_EVENT_MOUSE_BUTTON_UP:
-            p_event.events[static_cast<std::size_t>(event_type::mouse_button_up)] = true;
-            p_event.buttons[static_cast<std::size_t>(event.button.button)]        = false;
+            e.type  = event_type::mouse_button_up;
+            e.mouse = static_cast<mouse_button_code>(event.button.button);
+            e.pos.x = event.motion.x;
+            e.pos.y = event.motion.y;
             break;
 
         case SDL_EVENT_MOUSE_MOTION:
-            p_event.pos.x = static_cast<double>(event.motion.x);
-            p_event.pos.y = static_cast<double>(event.motion.y);
+            p_current_event.pos.x = event.motion.x;
+            p_current_event.pos.y = event.motion.y;
             break;
         }
+        if (e.type != event_type::none)
+            p_events.emplace_back(e);
     }
-    ++p_poll_event_count;
+}
+
+window_event window::current_event() const noexcept
+{
+    return p_current_event;
+}
+
+std::vector<window_event> window::events() const noexcept
+{
+    return p_events;
 }
 
 void *window::get() const noexcept
@@ -140,11 +153,6 @@ void window::set_fullscreen(bool is_enable)
         throw std::runtime_error(SDL_GetError());
 
     p_is_fullscreen = is_enable;
-}
-
-std::uint32_t window::poll_event_count() const noexcept
-{
-    return p_poll_event_count;
 }
 
 bool window::is_fullscreen() const noexcept

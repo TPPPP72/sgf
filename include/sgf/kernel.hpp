@@ -1,13 +1,11 @@
 #ifndef SGF_KERNEL_HPP
 #define SGF_KERNEL_HPP
 
-#include "base/renderer.hpp"
-#include "base/viewport.hpp"
-#include "base/window/window.hpp"
-#include "input/input_system.hpp"
-#include "type/size.hpp"
 #include <chrono>
 #include <cstdint>
+#include <sgf/base/input_system.hpp>
+#include <sgf/base/renderer.hpp>
+#include <sgf/context/frame_context.hpp>
 #include <thread>
 
 namespace sgf
@@ -56,7 +54,7 @@ public:
 
             ns dt = std::min(frame_time, max_dt);
 
-            control();
+            input();
 
             update(dt);
 
@@ -100,8 +98,8 @@ private:
 
         p_renderer.set_draw_blend(true);
 
-        input_system::instance().bind_window(&p_window);
-        input_system::instance().bind_viewport(&p_viewport);
+        p_input_system.bind_window(&p_window);
+        p_input_system.bind_viewport(&p_viewport);
 
         p_window.on_exit([this]()
                          {
@@ -112,14 +110,17 @@ private:
                                p_viewport.update();
                            });
     }
-    void control()
+    void input()
     {
-        p_window.poll_event();
-        input_system::instance().update();
+        p_window.poll_events();
+        p_input_system.dispatch([this](const input_event &event)
+                                {
+                                    static_cast<game *>(this)->on_input(*this, event);
+                                });
     }
     void update(std::chrono::nanoseconds dt)
     {
-        static_cast<game *>(this)->on_update(*this, dt);
+        static_cast<game *>(this)->on_update(*this, frame_context{dt, p_input_system.get_mouse_view_position()});
     }
     void render()
     {
@@ -137,6 +138,7 @@ private:
     base::window p_window;
     base::renderer p_renderer;
     base::viewport p_viewport;
+    base::input_system p_input_system;
     bool p_exit{false};
 };
 

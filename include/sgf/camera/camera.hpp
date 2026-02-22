@@ -1,10 +1,10 @@
 #ifndef SGF_CAMERA_HPP
 #define SGF_CAMERA_HPP
 
-#include "../type/position.hpp"
-#include "../type/rect.hpp"
-#include "../type/size.hpp"
 #include <algorithm>
+#include <sgf/type/position.hpp>
+#include <sgf/type/rect.hpp>
+#include <sgf/type/size.hpp>
 #include <string>
 #include <string_view>
 

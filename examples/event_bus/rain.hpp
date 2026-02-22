@@ -1,14 +1,18 @@
 #pragma once
+#include "sgf/type/color.hpp"
 #include <cstdlib>
+#include <sgf/camera/camera.hpp>
 #include <sgf/event/event.hpp>
+#include <sgf/event/event_bus.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/modules/camera_module.hpp>
 #include <sgf/game_object/modules/event_module.hpp>
 #include <sgf/game_object/modules/physics_module.hpp>
 #include <sgf/game_object/modules/render_module.hpp>
 #include <sgf/physics/physics_config.hpp>
-#include <sgf/type/color.hpp>
+#include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/type/rect.hpp>
+#include <sgf/util/color.hpp>
 
 class rain : public sgf::game_object
 {
@@ -34,16 +38,7 @@ public:
         add_module<sgf::module::camera_module>(ctx);
         auto event_module = add_module<sgf::module::event_module>(ctx);
 
-        auto random_color = []()
-        {
-            return sgf::type::color{
-                static_cast<uint8_t>(std::rand() % 128 + 128),
-                static_cast<uint8_t>(std::rand() % 128 + 128),
-                static_cast<uint8_t>(std::rand() % 128 + 128),
-                255};
-        };
-
-        event_module->bus()->subscribe<sgf::event::collision_begin>([this, physic_module, random_color](auto &e)
+        event_module->bus()->subscribe<sgf::event::collision_begin>([this, physic_module](auto &e)
                                                                     {
                                                                         uint32_t my_id = this->id();
 
@@ -53,7 +48,7 @@ public:
 
                                                                         uint32_t other_id = (e.id_a == my_id) ? e.id_b : e.id_a;
 
-                                                                        this->m_color = random_color();
+                                                                        this->m_color = sgf::util::make_random_color<sgf::type::color>();
 
                                                                         // 传送重置 (撞到传感器 103)
                                                                         if (other_id == 103)

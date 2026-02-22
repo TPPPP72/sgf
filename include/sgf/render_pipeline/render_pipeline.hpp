@@ -1,13 +1,12 @@
 #ifndef SGF_RENDER_PIPELINE_HPP
 #define SGF_RENDER_PIPELINE_HPP
 
-#include "../base/renderer.hpp"
-#include "../base/texture.hpp"
-#include "../partical/partical_system.hpp"
-#include "../resources/sprite.hpp"
-#include "../type/color.hpp"
-#include "../type/position.hpp"
-#include "../type/rect.hpp"
+#include <sgf/base/renderer.hpp>
+#include <sgf/particle/particle_system.hpp>
+#include <sgf/resources/sprite.hpp>
+#include <sgf/type/color.hpp>
+#include <sgf/type/position.hpp>
+#include <sgf/type/rect.hpp>
 
 namespace sgf
 {
