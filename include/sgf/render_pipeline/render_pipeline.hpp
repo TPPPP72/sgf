@@ -3,6 +3,7 @@
 
 #include "../base/renderer.hpp"
 #include "../base/texture.hpp"
+#include "../partical/partical_system.hpp"
 #include "../resources/sprite.hpp"
 #include "../type/color.hpp"
 #include "../type/position.hpp"
@@ -57,7 +58,7 @@ class render_pipeline
 public:
     render_pipeline()
     {
-        p_commands.reserve(512);
+        p_commands.reserve(2048);
     }
     void submit(const base::texture &, const type::resource_rect &, const type::view_rect &dst, std::int16_t z_index = entity);
     void submit(const base::texture &, const type::view_rect &dst, std::int16_t z_index = entity);
@@ -68,6 +69,7 @@ public:
     void submit(const type::view_rect &, const sgf::type::color &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
     void submit(const type::view_rect &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
     void submit(const type::view_position &center, float radius, const type::color &color, graphic_style, std::int16_t z_index = entity);
+    void submit_particles(const std::array<particle, 1000> &pool, std::int16_t z_index);
     void execute(base::renderer &rd);
     void clear() noexcept;
 

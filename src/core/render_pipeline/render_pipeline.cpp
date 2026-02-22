@@ -137,6 +137,28 @@ void sgf::render_pipeline::submit(const type::view_position &center, float radiu
     p_commands.emplace_back(cmd);
 }
 
+void sgf::render_pipeline::submit_particles(const std::array<particle, 1000> &pool, std::int16_t z_index)
+{
+    for (const auto &p : pool)
+    {
+        if (!p.active)
+            continue;
+
+        render_command cmd{};
+        cmd.type = render_type::rect;
+        cmd.tex  = nullptr;
+
+        cmd.dst = {p.pos.x - 1.0f, p.pos.y - 1.0f, 2.0f, 2.0f};
+
+        cmd.color         = p.current_color;
+        cmd.style         = 1;
+        cmd.z_index       = z_index;
+        cmd.submission_id = p_next_id++;
+
+        p_commands.emplace_back(cmd);
+    }
+}
+
 void sgf::render_pipeline::execute(base::renderer &rd)
 {
     if (p_commands.empty())
@@ -250,9 +272,8 @@ void sgf::render_pipeline::execute(base::renderer &rd)
                 flush();
             }
         }
-        else // Outline 模式 (style == 0)
+        else
         {
-            // 直接调用原本的描边接口，不走顶点缓冲
             rd.render_rect({final_dst.x - (final_dst.w * cmd.pivot.x),
                             final_dst.y - (final_dst.h * cmd.pivot.y),
                             final_dst.w, final_dst.h},
