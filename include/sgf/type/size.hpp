@@ -1,8 +1,8 @@
 #ifndef SGF_TYPE_SIZE_HPP
 #define SGF_TYPE_SIZE_HPP
 
-#include "base/tags.hpp"
 #include <cstdint>
+#include <sgf/type/base/tags.hpp>
 
 namespace sgf::type
 {

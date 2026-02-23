@@ -4,8 +4,7 @@ target_compile_features(sgf_backend_physics_box2d PRIVATE cxx_std_20)
 
 target_include_directories(sgf_backend_physics_box2d
   PRIVATE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+    ${PROJECT_SOURCE_DIR}/include
 )
 
 target_sources(sgf_backend_physics_box2d

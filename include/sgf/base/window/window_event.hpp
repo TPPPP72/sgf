@@ -1,8 +1,8 @@
 #ifndef SGF_BASE_WINDOW_EVENT_HPP
 #define SGF_BASE_WINDOW_EVENT_HPP
 
-#include "../../type/position.hpp"
 #include <cstdint>
+#include <sgf/type/position.hpp>
 
 namespace sgf::base
 {

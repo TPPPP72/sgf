@@ -1,8 +1,8 @@
 #ifndef SGF_TYPE_VERTEX
 #define SGF_TYPE_VERTEX
 
-#include "color.hpp"
-#include "vec2.hpp"
+#include <sgf/type/color.hpp>
+#include <sgf/type/vec2.hpp>
 
 namespace sgf::type
 {

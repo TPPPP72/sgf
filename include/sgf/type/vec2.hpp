@@ -1,7 +1,7 @@
 #ifndef SGF_TYPE_VECTOR2_HPP
 #define SGF_TYPE_VECTOR2_HPP
 
-#include "base/vector2.hpp"
+#include <sgf/type/base/vector2.hpp>
 
 namespace sgf::type
 {

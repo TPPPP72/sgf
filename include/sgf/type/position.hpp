@@ -1,8 +1,8 @@
 #ifndef SGF_TYPE_POSITION_HPP
 #define SGF_TYPE_POSITION_HPP
 
-#include "base/tags.hpp"
-#include "vec2.hpp"
+#include <sgf/type/base/tags.hpp>
+#include <sgf/type/vec2.hpp>
 
 namespace sgf::type
 {

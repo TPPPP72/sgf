@@ -1,7 +1,7 @@
 #ifndef SGF_TYPE_RECT_HPP
 #define SGF_TYPE_RECT_HPP
 
-#include "base/tags.hpp"
+#include <sgf/type/base/tags.hpp>
 
 namespace sgf::type
 {

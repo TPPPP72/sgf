@@ -4,8 +4,7 @@ target_compile_features(sgf_core PRIVATE cxx_std_17)
 
 target_include_directories(sgf_core
   PRIVATE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+    ${PROJECT_SOURCE_DIR}/include
 )
 
 target_sources(sgf_core
