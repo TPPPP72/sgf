@@ -55,4 +55,6 @@
 #include <sgf/type/size.hpp>
 #include <sgf/type/vec2.hpp>
 #include <sgf/type/vertex.hpp>
+#include <sgf/ui/ui_manager.hpp>
+#include <sgf/ui/view.hpp>
 #include <sgf/util/color.hpp>

@@ -12,7 +12,16 @@ struct input_event
     base::key_code key{base::key_code::none};
     base::mouse_button_code mouse{base::mouse_button_code::none};
     type::view_position pos{0.0f, 0.0f};
-    mutable bool handled{false};
+
+    bool is_key_event() const noexcept
+    {
+        return type == base::event_type::key_up || type == base::event_type::key_down;
+    }
+
+    bool is_mouse_event() const noexcept
+    {
+        return type == base::event_type::mouse_button_up || type == base::event_type::mouse_button_down;
+    }
 };
 
 } // namespace sgf

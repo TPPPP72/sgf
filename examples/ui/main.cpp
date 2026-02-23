@@ -3,28 +3,28 @@
 #include <sgf/scene/scene_manager.hpp>
 #include <string>
 
-class particle : public sgf::kernel<particle>
+class ui : public sgf::kernel<ui>
 {
 public:
-    particle() : kernel("particle", {800, 600}, {800, 600}, 0)
+    ui() : kernel("ui", {800, 600}, {800, 600}, 0)
     {
         auto game = std::make_unique<game_scene>(1);
 
         m_manager.change_scene(std::move(game));
     }
 
-    void on_input(kernel<particle> &k, const sgf::input_event &e)
+    void on_input(kernel<ui> &k, const sgf::input_event &e)
     {
         m_manager.input(e);
     }
 
-    void on_update(kernel<particle> &k, const sgf::frame_context &ctx)
+    void on_update(kernel<ui> &k, const sgf::frame_context &ctx)
     {
-        k.get_window().set_title("particle | FPS : " + std::to_string(k.get_current_fps()));
+        k.get_window().set_title("ui | FPS : " + std::to_string(k.get_current_fps()));
         m_manager.update(ctx);
     }
 
-    void on_render(kernel<particle> &k)
+    void on_render(kernel<ui> &k)
     {
         auto &rd = k.get_renderer();
         m_manager.render(rd);
@@ -36,5 +36,5 @@ private:
 
 int main()
 {
-    particle{}.run();
+    ui{}.run();
 }
