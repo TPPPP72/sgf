@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.25)
 project(sgf)
 
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+
 set(SGF_BACKEND_MEDIA "SDL" CACHE STRING "Media implementation (SDL3)")
 set(SGF_BACKEND_PHYSICS "BOX2D" CACHE STRING "Physics implementation (BOX2D)")
 
@@ -11,7 +13,7 @@ if(SGF_BUILD_TESTS)
   option(SGF_TEST_LOCAL "Test on local environment" True)
 endif()
 
-include(cmake/sgf_dependencies_helper.cmake)
+include(sgf_dependencies_helper)
 
 # 如果开启了 CMAKE_EXPORT_COMPILE_COMMANDS，临时关闭，防止第三方库干扰
 # if CMAKE_EXPORT_COMPILE_COMMANDS = ON, temporarily close it to avoid third_party's inference 
@@ -33,8 +35,6 @@ target_link_libraries(sgf
     sgf_static
 )
 
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-
 if(SGF_BUILD_EXAMPLES)
   add_subdirectory(examples)
 endif()
@@ -43,3 +43,5 @@ if(SGF_BUILD_TESTS)
   enable_testing()
   add_subdirectory(tests)
 endif()
+
+include(sgf_environment)
