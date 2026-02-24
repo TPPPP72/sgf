@@ -22,6 +22,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS OFF CACHE BOOL "" FORCE)
 add_subdirectory(third_party)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ${OLD_EXPORT_STATUS} CACHE BOOL "" FORCE)
 
+include(sgf_create_all_in_one_header)
+
 add_subdirectory(src)
 
 add_library(sgf INTERFACE)
