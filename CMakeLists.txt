@@ -6,8 +6,8 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(SGF_BACKEND_MEDIA "SDL" CACHE STRING "Media implementation (SDL3)")
 set(SGF_BACKEND_PHYSICS "BOX2D" CACHE STRING "Physics implementation (BOX2D)")
 
-option(SGF_BUILD_EXAMPLES "Build sgf examples" ON)
-option(SGF_BUILD_TESTS "Build sgf tests" ON)
+option(SGF_BUILD_EXAMPLES "Build sgf examples" OFF)
+option(SGF_BUILD_TESTS "Build sgf tests" OFF)
 
 if(SGF_BUILD_TESTS)
   option(SGF_TEST_LOCAL "Test on local environment" True)

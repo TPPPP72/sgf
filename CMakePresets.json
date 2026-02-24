@@ -28,7 +28,9 @@
         {
             "name": "Debug-base",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "SGF_BUILD_EXAMPLES": "ON",
+                "SGF_BUILD_TESTS": "ON"
             }
         },
         {
@@ -52,7 +54,8 @@
                 "Release-base"
             ],
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "False"
+                "SGF_TEST_LOCAL": "False",
+                "SGF_BUILD_TESTS": "ON"
             }
         },
         {
@@ -63,7 +66,8 @@
                 "Release-base"
             ],
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "False"
+                "SGF_TEST_LOCAL": "False",
+                "SGF_BUILD_TESTS": "ON"
             }
         },
         {
@@ -74,7 +78,8 @@
                 "Release-base"
             ],
             "cacheVariables": {
-                "SGF_TEST_LOCAL": "False"
+                "SGF_TEST_LOCAL": "False",
+                "SGF_BUILD_TESTS": "ON"
             }
         },
         {
