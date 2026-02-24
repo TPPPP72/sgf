@@ -1,3 +1,4 @@
+#include <cstdarg>
 #include <cstdio>
 #include <sgf/logger/logger.hpp>
 #include <string>
