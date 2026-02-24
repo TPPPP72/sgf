@@ -13,7 +13,12 @@ endif()
 
 include(cmake/sgf_dependencies_helper.cmake)
 
+# 如果开启了 CMAKE_EXPORT_COMPILE_COMMANDS，临时关闭，防止第三方库干扰
+# if CMAKE_EXPORT_COMPILE_COMMANDS = ON, temporarily close it to avoid third_party's inference 
+set(OLD_EXPORT_STATUS ${CMAKE_EXPORT_COMPILE_COMMANDS})
+set(CMAKE_EXPORT_COMPILE_COMMANDS OFF CACHE BOOL "" FORCE)
 add_subdirectory(third_party)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ${OLD_EXPORT_STATUS} CACHE BOOL "" FORCE)
 
 add_subdirectory(src)
 
