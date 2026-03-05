@@ -48,6 +48,16 @@ public:
         return p_id;
     }
 
+    const std::uint32_t &tag() const noexcept
+    {
+        return p_tag;
+    }
+
+    std::uint32_t &tag() noexcept
+    {
+        return p_tag;
+    }
+
     struct transform &transform() noexcept
     {
         return p_tf;
@@ -172,6 +182,7 @@ protected:
 
 private:
     std::uint32_t p_id;
+    std::uint32_t p_tag;
     struct transform p_tf;
     std::vector<std::unique_ptr<module::base_input_module>> p_input_modules{};
     std::vector<std::unique_ptr<module::base_service_module>> p_service_modules{};

@@ -1,7 +1,7 @@
-#ifndef SGF_UTIL_COLOR_UTIL_HPP
-#define SGF_UTIL_COLOR_UTIL_HPP
+#ifndef SGF_UTIL_COLOR_HPP
+#define SGF_UTIL_COLOR_HPP
 
-#include <sgf/random/random.hpp>
+#include <sgf/util/random.hpp>
 #include <sgf/type/color.hpp>
 
 namespace sgf::util

@@ -1,9 +1,9 @@
-#ifndef SGF_RANDOM_HPP
-#define SGF_RANDOM_HPP
+#ifndef SGF_UTIL_RANDOM_HPP
+#define SGF_UTIL_RANDOM_HPP
 
 #include <random>
 
-namespace sgf
+namespace sgf::util
 {
 
 class random

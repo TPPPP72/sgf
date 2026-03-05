@@ -2,7 +2,10 @@
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/modules/camera_module.hpp>
 #include <sgf/game_object/modules/physics_module.hpp>
+#include <sgf/game_object/modules/render_module.hpp>
+#include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/type/rect.hpp>
+#include <sgf/literals/hash.hpp>
 
 class sensor : public sgf::game_object
 {
@@ -11,6 +14,9 @@ public:
 
     void on_init(sgf::scene_context &ctx) override
     {
+        using namespace sgf::literals;
+        tag() = "sensor"_hash;
+
         sgf::physics_config cfg;
         cfg.type = sgf::body_type::static_body;
 

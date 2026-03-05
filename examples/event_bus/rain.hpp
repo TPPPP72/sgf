@@ -1,5 +1,4 @@
 #pragma once
-#include "sgf/type/color.hpp"
 #include <cstdlib>
 #include <sgf/camera/camera.hpp>
 #include <sgf/event/event.hpp>
@@ -11,7 +10,9 @@
 #include <sgf/game_object/modules/render_module.hpp>
 #include <sgf/physics/physics_config.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
+#include <sgf/type/color.hpp>
 #include <sgf/type/rect.hpp>
+#include <sgf/literals/hash.hpp>
 #include <sgf/util/color.hpp>
 
 class rain : public sgf::game_object
@@ -21,6 +22,8 @@ public:
 
     void on_init(sgf::scene_context &ctx) override
     {
+        using namespace sgf::literals;
+        tag()   = "rain"_hash;
         m_color = sgf::type::color::white;
 
         sgf::physics_config cfg;
@@ -38,30 +41,31 @@ public:
         add_module<sgf::module::camera_module>(ctx);
         auto event_module = add_module<sgf::module::event_module>(ctx);
 
-        event_module->bus()->subscribe<sgf::event::collision_begin>([this, physic_module](auto &e)
-                                                                    {
-                                                                        uint32_t my_id = this->id();
+        event_module->bus()->subscribe<sgf::event::physics_collision_begin>([this, physic_module](auto &e)
+                                                                            {
+                                                                                auto my_id  = this->id();
+                                                                                auto my_tag = this->tag();
 
-                                                                        // 过滤无关事件
-                                                                        if (e.id_a != my_id && e.id_b != my_id)
-                                                                            return;
+                                                                                // 过滤无关事件
+                                                                                if (e.id_a != my_id && e.id_b != my_id)
+                                                                                    return;
 
-                                                                        uint32_t other_id = (e.id_a == my_id) ? e.id_b : e.id_a;
+                                                                                auto other_tag = (e.hashed_tag_a == my_tag) ? e.hashed_tag_b : e.hashed_tag_a;
 
-                                                                        this->m_color = sgf::util::make_random_color<sgf::type::color>();
+                                                                                this->m_color = sgf::util::make_random_color<sgf::type::color>();
 
-                                                                        // 传送重置 (撞到传感器 103)
-                                                                        if (other_id == 103)
-                                                                        {
-                                                                            float rx = 250.0f + static_cast<float>(std::rand() % 300);
-                                                                            float ry = -100.0f;
+                                                                                // 传送重置 (撞到传感器)
+                                                                                if (other_tag == "sensor"_hash)
+                                                                                {
+                                                                                    float rx = 250.0f + static_cast<float>(std::rand() % 300);
+                                                                                    float ry = -100.0f;
 
-                                                                            this->position() = {rx, ry};
+                                                                                    this->position() = {rx, ry};
 
-                                                                            physic_module->sync_to_physics();
-                                                                            physic_module->set_linear_velocity({0, 0});
-                                                                        }
-                                                                    });
+                                                                                    physic_module->sync_to_physics();
+                                                                                    physic_module->set_linear_velocity({0, 0});
+                                                                                }
+                                                                            });
     }
 
     void on_render() override

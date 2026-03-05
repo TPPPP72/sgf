@@ -2,43 +2,40 @@
 #define SGF_EVENT_HPP
 
 #include <cstdint>
-#include <string>
 
 namespace sgf::event
 {
 
-// 碰撞开始
-struct collision_begin
-{
-    std::uint32_t id_a;
-    std::uint32_t id_b;
-};
-
-// 碰撞结束
-struct collision_end
-{
-    std::uint32_t id_a;
-    std::uint32_t id_b;
-};
-
 // 对象创建
-struct entity_spawned
+struct game_object_spawned
 {
-    std::uint32_t entity_id;
-    std::string tag; // "enemy", "ball", etc.
+    std::uint32_t id;
+    std::uint32_t hashed_tag;
 };
 
 // 对象销毁
-struct entity_destroyed
+struct game_object_destroyed
 {
-    std::uint32_t entity_id;
+    std::uint32_t id;
+    std::uint32_t hashed_tag;
 };
 
-// 触发器
-struct trigger_entered
+// 物理碰撞开始
+struct physics_collision_begin
 {
-    uint32_t trigger_id;
-    uint32_t traveler_id;
+    std::uint32_t id_a;
+    std::uint32_t hashed_tag_a;
+    std::uint32_t id_b;
+    std::uint32_t hashed_tag_b;
+};
+
+// 物理碰撞结束
+struct physics_collision_end
+{
+    std::uint32_t id_a;
+    std::uint32_t hashed_tag_a;
+    std::uint32_t id_b;
+    std::uint32_t hashed_tag_b;
 };
 
 } // namespace sgf::event
