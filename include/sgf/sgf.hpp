@@ -35,11 +35,11 @@
 #include <sgf/game_object/modules/physics_module.hpp>
 #include <sgf/game_object/modules/render_module.hpp>
 #include <sgf/kernel.hpp>
+#include <sgf/literals/hash.hpp>
 #include <sgf/logger/logger.hpp>
 #include <sgf/particle/particle_system.hpp>
 #include <sgf/physics/physics_config.hpp>
 #include <sgf/physics/physics_system.hpp>
-#include <sgf/random/random.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/resources/atlas.hpp>
 #include <sgf/resources/manager.hpp>
@@ -59,3 +59,5 @@
 #include <sgf/ui/ui_manager.hpp>
 #include <sgf/ui/view.hpp>
 #include <sgf/util/color.hpp>
+#include <sgf/util/hash.hpp>
+#include <sgf/util/random.hpp>
