@@ -15,6 +15,10 @@ public:
     explicit surface(const std::filesystem::path &);
     explicit surface(const font &, const std::string &text, const sgf::type::color &);
     ~surface();
+    surface(const surface &)                = delete;
+    surface operator=(const surface &)      = delete;
+    surface(surface &&) noexcept;
+    surface &operator=(surface &&) noexcept;
     void *get() const noexcept;
 
 private:

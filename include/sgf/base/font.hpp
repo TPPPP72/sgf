@@ -14,6 +14,11 @@ class font
 public:
     explicit font(const std::filesystem::path &, std::uint32_t size);
     ~font();
+    font(const font &)                = delete;
+    font operator=(const font &)      = delete;
+    font(font &&) noexcept;
+    font &operator=(font &&) noexcept;
+
     void *get() const noexcept;
 
 private:

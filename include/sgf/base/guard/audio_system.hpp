@@ -8,10 +8,10 @@ class audio_system
 public:
     explicit audio_system();
     ~audio_system();
-    audio_system(const audio_system &)            = delete;
-    audio_system &operator=(const audio_system &) = delete;
-    audio_system(audio_system &&)                 = delete;
-    audio_system &operator=(audio_system &&)      = delete;
+    audio_system(const audio_system &)                = delete;
+    audio_system &operator=(const audio_system &)     = delete;
+    audio_system(audio_system &&) noexcept            = default;
+    audio_system &operator=(audio_system &&) noexcept = default;
 };
 }; // namespace sgf::base::guard
 

@@ -3,7 +3,7 @@
 
 #include <sgf/base/renderer.hpp>
 #include <sgf/particle/particle_system.hpp>
-#include <sgf/resources/sprite.hpp>
+#include <sgf/resource/data.hpp>
 #include <sgf/type/color.hpp>
 #include <sgf/type/position.hpp>
 #include <sgf/type/rect.hpp>
@@ -63,8 +63,8 @@ public:
     void submit(const base::texture &, const type::view_rect &dst, std::int16_t z_index = entity);
     void submit(const base::texture &, const type::resource_rect &, const type::view_position dst, std::int16_t z_index = entity);
     void submit(const base::texture &, const type::view_position dst, std::int16_t z_index = entity);
-    void submit(const resources::sprite &, const type::view_rect &dst, std::int16_t z_index = entity);
-    void submit(const resources::sprite &, const type::view_position dst, std::int16_t z_index = entity);
+    void submit(const resource::sprite &, const type::view_rect &dst, std::int16_t z_index = entity);
+    void submit(const resource::sprite &, const type::view_position dst, std::int16_t z_index = entity);
     void submit(const type::view_rect &, const sgf::type::color &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
     void submit(const type::view_rect &, graphic_style, float rotation = 0.0f, std::int16_t z_index = entity);
     void submit(const type::view_position &center, float radius, const type::color &color, graphic_style, std::int16_t z_index = entity);

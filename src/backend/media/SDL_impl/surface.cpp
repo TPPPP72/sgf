@@ -39,6 +39,10 @@ surface::~surface()
     SDL_DestroySurface(p_impl->surface);
 }
 
+surface::surface(surface &&) noexcept = default;
+
+surface &surface::operator=(surface &&) noexcept = default;
+
 void *surface::get() const noexcept
 {
     return p_impl->surface;

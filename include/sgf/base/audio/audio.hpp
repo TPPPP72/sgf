@@ -13,6 +13,10 @@ class audio
 public:
     explicit audio(const std::filesystem::path &);
     ~audio();
+    audio(const audio &)                = delete;
+    audio operator=(const audio &)      = delete;
+    audio(audio &&) noexcept;
+    audio &operator=(audio &&) noexcept;
     void *get() const noexcept;
 
 private:

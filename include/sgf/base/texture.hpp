@@ -16,6 +16,10 @@ public:
     explicit texture(const renderer &, const surface &);
     explicit texture(const renderer &, const font &, const std::string &text, const sgf::type::color &);
     ~texture();
+    texture(const texture &)                = delete;
+    texture operator=(const texture &)      = delete;
+    texture(texture &&) noexcept;
+    texture &operator=(texture &&) noexcept;
     void *get() const noexcept;
     type::resource_size size() const;
 

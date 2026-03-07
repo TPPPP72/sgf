@@ -21,6 +21,10 @@ font::~font()
     TTF_CloseFont(p_impl->font);
 }
 
+font::font(font &&) noexcept = default;
+
+font &font::operator=(font &&) noexcept = default;
+
 void *font::get() const noexcept
 {
     return p_impl->font;

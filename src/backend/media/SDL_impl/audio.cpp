@@ -36,6 +36,10 @@ audio::~audio()
     MIX_DestroyAudio(p_impl->audio);
 }
 
+audio::audio(audio &&) noexcept = default;
+
+audio &audio::operator=(audio &&) noexcept = default;
+
 void *audio::get() const noexcept
 {
     return p_impl->audio;

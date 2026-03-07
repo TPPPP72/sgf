@@ -60,6 +60,10 @@ texture::~texture()
     SDL_DestroyTexture(p_impl->texture);
 }
 
+texture::texture(texture &&) noexcept = default;
+
+texture &texture::operator=(texture &&) noexcept = default;
+
 void *texture::get() const noexcept
 {
     return p_impl->texture;

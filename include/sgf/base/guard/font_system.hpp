@@ -8,10 +8,10 @@ class font_system
 public:
     explicit font_system();
     ~font_system();
-    font_system(const font_system &)            = delete;
-    font_system &operator=(const font_system &) = delete;
-    font_system(font_system &&)                 = delete;
-    font_system &operator=(font_system &&)      = delete;
+    font_system(const font_system &)                = delete;
+    font_system &operator=(const font_system &)     = delete;
+    font_system(font_system &&) noexcept            = default;
+    font_system &operator=(font_system &&) noexcept = default;
 };
 }; // namespace sgf::base::guard
 
