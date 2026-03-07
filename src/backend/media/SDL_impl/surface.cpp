@@ -11,6 +11,14 @@ struct surface::impl
     SDL_Surface *surface = nullptr;
 };
 
+surface::surface(const std::filesystem::path &p) : p_impl(std::make_unique<impl>())
+{
+    p_impl->surface = SDL_LoadSurface(p.string().c_str());
+
+    if (p_impl->surface == nullptr)
+        throw std::runtime_error(SDL_GetError());
+}
+
 surface::surface(const font &f, const std::string &text, const type::color &color) : p_impl(std::make_unique<impl>())
 {
     auto sdl_font = static_cast<TTF_Font *>(f.get());

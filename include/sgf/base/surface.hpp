@@ -12,6 +12,7 @@ namespace sgf::base
 class surface
 {
 public:
+    explicit surface(const std::filesystem::path &);
     explicit surface(const font &, const std::string &text, const sgf::type::color &);
     ~surface();
     void *get() const noexcept;
