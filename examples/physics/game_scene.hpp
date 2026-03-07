@@ -59,7 +59,7 @@ public:
     void on_render(sgf::base::renderer &rd) override
     {
         m_game_object_pool.render();
-        m_pipeline.execute(rd);
+        m_pipeline.execute(rd, nullptr);
     }
 
 private:

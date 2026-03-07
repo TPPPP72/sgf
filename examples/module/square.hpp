@@ -1,18 +1,7 @@
 #pragma once
 
 #include <chrono>
-#include <sgf/base/window/window_event.hpp>
-#include <sgf/camera/camera.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/game_object/game_object.hpp>
-#include <sgf/game_object/modules/camera_module.hpp>
-#include <sgf/game_object/modules/keyboard_module.hpp>
-#include <sgf/game_object/modules/mouse_module.hpp>
-#include <sgf/game_object/modules/render_module.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/type/color.hpp>
-#include <sgf/type/rect.hpp>
+#include <sgf/sgf.hpp>
 
 class square : public sgf::game_object
 {
@@ -75,6 +64,6 @@ public:
         auto camera = get_module<sgf::module::camera_module>();
         auto main   = camera->get_main();
 
-        render->pipeline()->submit(main->to_view_rect(rect), sgf::type::color::green, sgf::graphic_style::fill);
+        render->pipeline()->submit_rect(main->to_view_rect(rect), sgf::type::color::green, sgf::graphic_style::fill, {0.5f, 0.5f}, rotation(), sgf::render_layer::entity);
     }
 };

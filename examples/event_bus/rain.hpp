@@ -8,12 +8,13 @@
 #include <sgf/game_object/modules/event_module.hpp>
 #include <sgf/game_object/modules/physics_module.hpp>
 #include <sgf/game_object/modules/render_module.hpp>
+#include <sgf/literals/hash.hpp>
 #include <sgf/physics/physics_config.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
 #include <sgf/type/color.hpp>
 #include <sgf/type/rect.hpp>
-#include <sgf/literals/hash.hpp>
 #include <sgf/util/color.hpp>
+
 
 class rain : public sgf::game_object
 {
@@ -77,11 +78,11 @@ public:
 
         auto view_pos = main_cam->to_view_pos(position());
 
-        render->pipeline()->submit(
+        render->pipeline()->submit_circle(
             view_pos,
             5.0f,    // 半径
             m_color, // 碰撞后改变的颜色
-            sgf::graphic_style::fill);
+            sgf::graphic_style::fill, sgf::entity);
     }
 
 private:

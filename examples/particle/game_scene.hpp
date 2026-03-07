@@ -53,7 +53,7 @@ public:
     void on_render(sgf::base::renderer &rd) override
     {
         m_pipeline.submit_particles(m_particle_system.get_particles(), sgf::render_layer::entity);
-        m_pipeline.execute(rd);
+        m_pipeline.execute(rd, nullptr);
     }
 
 private:

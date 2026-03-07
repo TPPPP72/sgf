@@ -1,94 +1,24 @@
+#include <sgf/base/texture.hpp>
 #include <sgf/render_pipeline/render_pipeline.hpp>
+#include <sgf/resource/manager.hpp>
 
-void sgf::render_pipeline::submit(const base::texture &tex, const type::resource_rect &rect, const type::view_rect &dst, std::int16_t z_index)
+void sgf::render_pipeline::submit(uint32_t tex_key, const type::resource_rect &src, const type::view_rect &dst, const type::vec2f &pivot, float rot, std::int16_t z)
 {
     render_command cmd{};
     cmd.type          = render_type::texture;
-    cmd.tex           = &tex;
-    cmd.src           = rect;
-    cmd.dst           = dst;
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const base::texture &tex, const type::view_rect &dst, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::texture;
-    cmd.tex           = &tex;
-    auto [w, h]       = tex.size();
-    cmd.src           = {0, 0, static_cast<float>(w), static_cast<float>(h)};
-    cmd.dst           = dst;
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const base::texture &tex, const type::resource_rect &src, const type::view_position dst, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::texture;
-    cmd.tex           = &tex;
+    cmd.texture_key   = tex_key;
     cmd.src           = src;
-    cmd.dst           = {dst.x, dst.y, src.w, src.h};
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const base::texture &tex, const type::view_position dst, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::texture;
-    cmd.tex           = &tex;
-    auto [w, h]       = tex.size();
-    cmd.src           = {0, 0, static_cast<float>(w), static_cast<float>(h)};
-    cmd.dst           = {dst.x, dst.y, static_cast<float>(w), static_cast<float>(h)};
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const resources::sprite &sprite, const type::view_rect &dst, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::sprite;
-    cmd.tex           = sprite.texture_ptr;
-    cmd.src           = sprite.rect;
+    cmd.pivot         = pivot;
     cmd.dst           = dst;
-    cmd.pivot         = sprite.pivot;
-    cmd.z_index       = z_index;
+    cmd.z_index       = z;
+    cmd.rotation      = rot;
     cmd.submission_id = p_next_id;
     ++p_next_id;
 
     p_commands.emplace_back(cmd);
 }
 
-void sgf::render_pipeline::submit(const resources::sprite &sprite, const type::view_position dst, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::sprite;
-    cmd.tex           = sprite.texture_ptr;
-    cmd.src           = sprite.rect;
-    cmd.dst           = {dst.x, dst.y, sprite.rect.w, sprite.rect.h};
-    cmd.pivot         = sprite.pivot;
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const type::view_rect &dst, const sgf::type::color &col, graphic_style style, float rotation, std::int16_t z_index)
+void sgf::render_pipeline::submit_rect(const type::view_rect &dst, const sgf::type::color &col, graphic_style style, const type::vec2f &pivot, float rotation, std::int16_t z_index)
 {
     render_command cmd{};
     cmd.type          = render_type::rect;
@@ -96,6 +26,7 @@ void sgf::render_pipeline::submit(const type::view_rect &dst, const sgf::type::c
     cmd.color         = col;
     cmd.style         = static_cast<std::uint8_t>(style);
     cmd.rotation      = rotation;
+    cmd.pivot         = pivot;
     cmd.z_index       = z_index;
     cmd.submission_id = p_next_id;
     ++p_next_id;
@@ -103,21 +34,7 @@ void sgf::render_pipeline::submit(const type::view_rect &dst, const sgf::type::c
     p_commands.emplace_back(cmd);
 }
 
-void sgf::render_pipeline::submit(const type::view_rect &dst, graphic_style style, float rotation, std::int16_t z_index)
-{
-    render_command cmd{};
-    cmd.type          = render_type::rect;
-    cmd.dst           = dst;
-    cmd.style         = static_cast<std::uint8_t>(style);
-    cmd.rotation      = rotation;
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
-    ++p_next_id;
-
-    p_commands.emplace_back(cmd);
-}
-
-void sgf::render_pipeline::submit(const type::view_position &center, float radius, const type::color &color, graphic_style style, std::int16_t z_index)
+void sgf::render_pipeline::submit_circle(const type::view_position &center, float radius, const type::color &color, graphic_style style, std::int16_t z_index)
 {
     render_command cmd{};
     cmd.type = render_type::circle;
@@ -146,9 +63,7 @@ void sgf::render_pipeline::submit_particles(const std::array<particle, 1000> &po
 
         render_command cmd{};
         cmd.type = render_type::rect;
-        cmd.tex  = nullptr;
-
-        cmd.dst = {p.pos.x - 1.0f, p.pos.y - 1.0f, 2.0f, 2.0f};
+        cmd.dst  = {p.pos.x - 1.0f, p.pos.y - 1.0f, 2.0f, 2.0f};
 
         cmd.color         = p.current_color;
         cmd.style         = 1;
@@ -159,17 +74,24 @@ void sgf::render_pipeline::submit_particles(const std::array<particle, 1000> &po
     }
 }
 
-void sgf::render_pipeline::execute(base::renderer &rd)
+void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const mgr)
 {
     if (p_commands.empty())
         return;
 
-    std::sort(p_commands.begin(), p_commands.end(), [](const render_command &a, const render_command &b)
+    std::sort(p_commands.begin(), p_commands.end(), [mgr](const render_command &a, const render_command &b)
               {
                   if (a.z_index != b.z_index)
                       return a.z_index < b.z_index;
-                  if (a.tex != b.tex)
-                      return a.tex < b.tex;
+
+                  if (mgr)
+                  {
+                      auto a_tex = mgr->get<base::texture>(a.texture_key);
+                      auto b_tex = mgr->get<base::texture>(b.texture_key);
+                      if (a_tex != b_tex)
+                          return a_tex < b_tex;
+                  }
+
                   return a.submission_id < b.submission_id;
               });
 
@@ -191,19 +113,20 @@ void sgf::render_pipeline::execute(base::renderer &rd)
 
     for (const auto &cmd : p_commands)
     {
-        if (cmd.tex != current_tex || cmd.style != 1)
+        base::texture *cmd_tex = mgr ? mgr->get<base::texture>(cmd.texture_key) : nullptr;
+        if (cmd_tex != current_tex || cmd.style != 1)
         {
             flush();
-            current_tex = cmd.tex;
+            current_tex = cmd_tex;
         }
 
         auto final_dst = rd.get_viewport_ptr()->to_window_rect(cmd.dst);
         type::colorf col{cmd.color};
 
         float u0 = 0, v0 = 0, u1 = 0, v1 = 0;
-        if (cmd.tex)
+        if (cmd_tex)
         {
-            auto [tw, th] = cmd.tex->size();
+            auto [tw, th] = cmd_tex->size();
             float inv_w   = 1.0f / tw;
             float inv_h   = 1.0f / th;
             u0            = cmd.src.x * inv_w;
@@ -237,7 +160,7 @@ void sgf::render_pipeline::execute(base::renderer &rd)
             else if (cmd.type == render_type::circle)
             {
                 flush();
-                current_tex = cmd.tex;
+                current_tex = cmd_tex;
 
                 auto center_idx = static_cast<std::int32_t>(vertex_buffer.size());
                 float radius    = final_dst.w * 0.5f;

@@ -1,8 +1,5 @@
 #include <functional>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/type/color.hpp>
-#include <sgf/ui/ui_manager.hpp>
-#include <sgf/ui/view.hpp>
+#include <sgf/sgf.hpp>
 
 class button : public sgf::view
 {
@@ -30,7 +27,7 @@ public:
 
     void on_render(sgf::render_pipeline &p) override
     {
-        p.submit(view_rect(), m_background_color, sgf::graphic_style::fill, 0, z_index);
+        p.submit_rect(view_rect(), m_background_color, sgf::graphic_style::fill, {0.0f, 0.0f}, 0, z_index);
     }
 
 private:

@@ -1,14 +1,7 @@
-#include "rain.hpp"
-#include "sensor.hpp"
+#include <sgf/sgf.hpp>
 #include "static_wall.hpp"
-#include <memory>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/context/scene_context.hpp>
-#include <sgf/event/event_bus.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/game_object/game_object_pool.hpp>
-#include <sgf/physics/physics_system.hpp>
-#include <sgf/scene/scene.hpp>
+#include "sensor.hpp"
+#include "rain.hpp"
 
 class game_scene : public sgf::scene
 {
@@ -49,7 +42,7 @@ public:
     void on_render(sgf::base::renderer &rd) override
     {
         m_game_object_pool.render();
-        m_pipeline.execute(rd);
+        m_pipeline.execute(rd, nullptr);
     }
 
 private:

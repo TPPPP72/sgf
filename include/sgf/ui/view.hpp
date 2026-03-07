@@ -50,11 +50,8 @@ protected:
 
     virtual bool is_inside(const type::view_position &pos) const
     {
-        float actual_left = m_view_rect.x - m_view_rect.w * 0.5f;
-        float actual_top  = m_view_rect.y - m_view_rect.h * 0.5f;
-
-        return pos.x >= actual_left && pos.x <= actual_left + m_view_rect.w &&
-               pos.y >= actual_top && pos.y <= actual_top + m_view_rect.h;
+        return pos.x >= m_view_rect.x && pos.x <= m_view_rect.x + m_view_rect.w &&
+               pos.y >= m_view_rect.y && pos.y <= m_view_rect.y + m_view_rect.h;
     }
 
     virtual bool on_input(const input_event &ev)

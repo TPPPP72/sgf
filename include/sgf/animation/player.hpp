@@ -1,27 +1,39 @@
 #ifndef SGF_ANIMATION_PLAYER_HPP
 #define SGF_ANIMATION_PLAYER_HPP
 
-#include <sgf/animation/clip.hpp>
+#include <chrono>
+#include <sgf/resource/data.hpp>
 
-namespace sgf::animation
+namespace sgf
+{
+
+namespace resource
+{
+class manager;
+}
+
+namespace animation
 {
 
 class player
 {
 public:
-    void play(const clip *);
+    void play(const sgf::resource::animation &);
 
     void update(std::chrono::nanoseconds dt);
 
-    const resources::sprite &current_sprite() const;
+    const sgf::resource::sprite *sprite(sgf::resource::manager &) const;
+    std::uint32_t hashed_sprite() const;
 
 private:
-    const clip *p_clip = nullptr;
+    sgf::resource::animation p_anim;
 
     std::size_t p_frame_index{0};
     std::chrono::nanoseconds p_elapsed{0};
 };
 
-} // namespace sgf::animation
+} // namespace animation
+
+} // namespace sgf
 
 #endif

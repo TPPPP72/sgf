@@ -1,8 +1,5 @@
 #pragma once
-#include <sgf/game_object/game_object.hpp>
-#include <sgf/game_object/modules/camera_module.hpp>
-#include <sgf/game_object/modules/physics_module.hpp>
-#include <sgf/type/rect.hpp>
+#include <sgf/sgf.hpp>
 
 class static_wall : public sgf::game_object
 {
@@ -36,10 +33,11 @@ public:
                                           static_cast<float>(size().w),
                                           static_cast<float>(size().h)};
 
-        render->pipeline()->submit(
+        render->pipeline()->submit_rect(
             view_rect,
             sgf::type::color::white,
             sgf::graphic_style::fill,
-            rotation());
+            {0.5f, 0.5f},
+            rotation(), sgf::entity);
     }
 };

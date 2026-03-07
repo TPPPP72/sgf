@@ -1,38 +1,37 @@
-#include <chrono>
 #include <sgf/animation/player.hpp>
+#include <sgf/resource/manager.hpp>
 
-using namespace sgf::animation;
-
-void player::play(const clip *cl)
+void sgf::animation::player::play(const sgf::resource::animation &anim)
 {
     p_frame_index = 0;
     p_elapsed     = std::chrono::nanoseconds::zero();
-    p_clip        = cl;
+    p_anim        = anim;
 }
 
-void player::update(std::chrono::nanoseconds dt)
+void sgf::animation::player::update(std::chrono::nanoseconds dt)
 {
-    if (!p_clip || p_clip->frames.empty())
+    if (p_anim.frames.empty())
         return;
 
     p_elapsed += dt;
+    auto p_elapsed_ms = std::chrono::duration<float, std::milli>(dt).count();
 
-    while (p_elapsed >= p_clip->frame_duration)
+    while (p_elapsed_ms >= p_anim.frames[p_frame_index].msec)
     {
-        p_elapsed -= p_clip->frame_duration;
+        p_elapsed_ms -= p_anim.frames[p_frame_index].msec;
         ++p_frame_index;
 
-        if (p_frame_index >= p_clip->frames.size())
-        {
-            if (p_clip->loop)
-                p_frame_index = 0;
-            else
-                p_frame_index = p_clip->frames.size() - 1;
-        }
+        if (p_frame_index >= p_anim.frames.size())
+            p_frame_index = 0;
     }
 }
 
-const sgf::resources::sprite &player::current_sprite() const
+const sgf::resource::sprite *sgf::animation::player::sprite(sgf::resource::manager &manager) const
 {
-    return *p_clip->frames[p_frame_index];
+    return manager.get<resource::sprite>(p_anim.frames[p_frame_index].sprite);
+}
+
+std::uint32_t sgf::animation::player::hashed_sprite() const
+{
+    return p_anim.frames[p_frame_index].sprite;
 }

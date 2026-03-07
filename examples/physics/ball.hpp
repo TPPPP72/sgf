@@ -1,12 +1,5 @@
 #pragma once
-#include <sgf/game_object/game_object.hpp>
-#include <sgf/game_object/modules/camera_module.hpp>
-#include <sgf/game_object/modules/physics_module.hpp>
-#include <sgf/game_object/modules/render_module.hpp>
-#include <sgf/physics/physics_config.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/type/color.hpp>
-#include <sgf/type/rect.hpp>
+#include <sgf/sgf.hpp>
 
 class ball : public sgf::game_object
 {
@@ -43,6 +36,6 @@ public:
                                           static_cast<float>(size().w),
                                           static_cast<float>(size().h)};
 
-        render->pipeline()->submit({static_cast<float>(x), static_cast<float>(y)}, 20.0f, sgf::type::color::red, sgf::graphic_style::fill);
+        render->pipeline()->submit_circle({static_cast<float>(x), static_cast<float>(y)}, 20.0f, sgf::type::color::red, sgf::graphic_style::fill, sgf::render_layer::entity);
     }
 };
