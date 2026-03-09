@@ -36,8 +36,8 @@ public:
         render->pipeline()->submit_rect(
             view_rect,
             sgf::type::color::white,
-            sgf::graphic_style::fill,
+            sgf::render::style::fill,
             {0.5f, 0.5f},
-            rotation(), sgf::entity);
+            rotation(), sgf::render::layer::entity);
     }
 };

@@ -1,10 +1,4 @@
 #include "game_scene.hpp"
-#include "sgf/context/frame_context.hpp"
-#include "sgf/event/input_event.hpp"
-#include <memory>
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class module : public sgf::kernel<module>
 {

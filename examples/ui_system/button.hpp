@@ -25,9 +25,9 @@ public:
         return false;
     }
 
-    void on_render(sgf::render_pipeline &p) override
+    void on_render(sgf::render::pipeline &p) override
     {
-        p.submit_rect(view_rect(), m_background_color, sgf::graphic_style::fill, {0.0f, 0.0f}, 0, z_index);
+        p.submit_rect(view_rect(), m_background_color, sgf::render::style::fill, {0.0f, 0.0f}, 0, z_index);
     }
 
 private:

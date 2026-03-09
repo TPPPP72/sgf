@@ -1,9 +1,9 @@
-#ifndef SGF_TYPE_HPP
-#define SGF_TYPE_HPP
+#ifndef SGF_INT_HPP
+#define SGF_INT_HPP
 
 #include <cstdint>
 
-namespace sgf
+namespace sgf::type
 {
 
 using int8   = std::int8_t;
@@ -15,6 +15,6 @@ using uint32 = std::uint32_t;
 using int64  = std::int64_t;
 using uint64 = std::uint64_t;
 
-} // namespace sgf
+} // namespace sgf::type
 
 #endif

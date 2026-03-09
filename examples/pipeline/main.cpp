@@ -1,8 +1,5 @@
 #include "test_scene.hpp"
 #include <memory>
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class pipeline : public sgf::kernel<pipeline>
 {

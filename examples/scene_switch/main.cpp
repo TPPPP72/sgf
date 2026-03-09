@@ -2,9 +2,6 @@
 #include "pause_scene.hpp"
 #include "splash_scene.hpp"
 #include <memory>
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class scene_switch : public sgf::kernel<scene_switch>
 {

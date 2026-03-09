@@ -1,13 +1,6 @@
 #pragma once
 
-#include <chrono>
-#include <sgf/base/window/window_event.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/particle/particle_system.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/util/color.hpp>
+#include <sgf/sgf.hpp>
 
 class game_scene : public sgf::scene
 {
@@ -39,7 +32,7 @@ public:
 
             auto life = 500ms + std::chrono::milliseconds(std::rand() % 700);
 
-            m_particle_system.emit(
+            m_particle_manager.emit(
                 ctx.mouse_view_pos,
                 vel,
                 m_begin_color,
@@ -47,18 +40,18 @@ public:
                 m_end_color);
         }
 
-        m_particle_system.update(ctx.dt);
+        m_particle_manager.update(ctx.dt);
     }
 
     void on_render(sgf::base::renderer &rd) override
     {
-        m_pipeline.submit_particles(m_particle_system.get_particles(), sgf::render_layer::entity);
+        m_pipeline.submit_particles(m_particle_manager.get_particles(), sgf::render::layer::entity);
         m_pipeline.execute(rd, nullptr);
     }
 
 private:
-    sgf::render_pipeline m_pipeline;
-    sgf::particle_system m_particle_system;
+    sgf::render::pipeline m_pipeline;
+    sgf::particle::manager m_particle_manager;
     sgf::type::color m_begin_color{0, 255, 255, 255};
     sgf::type::color m_end_color{150, 0, 255, 0};
 };

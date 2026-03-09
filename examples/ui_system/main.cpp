@@ -1,12 +1,9 @@
 #include "game_scene.hpp"
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class ui : public sgf::kernel<ui>
 {
 public:
-    ui() : kernel("ui", {800, 600}, {800, 600}, 0)
+    ui() : kernel("ui_system", {800, 600}, {800, 600}, 0)
     {
         auto game = std::make_unique<game_scene>(1);
 

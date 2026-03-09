@@ -79,7 +79,7 @@ inline constexpr color_t<T> color_t<T>::green{0, color_limits<T>::max(), 0, colo
 template <typename T>
 inline constexpr color_t<T> color_t<T>::blue{0, 0, color_limits<T>::max(), color_limits<T>::max()};
 
-using color  = color_t<std::uint8_t>;
+using color  = color_t<uint8_t>;
 using colorf = color_t<float>;
 
 } // namespace sgf::type

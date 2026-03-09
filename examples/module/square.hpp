@@ -64,6 +64,6 @@ public:
         auto camera = get_module<sgf::module::camera_module>();
         auto main   = camera->get_main();
 
-        render->pipeline()->submit_rect(main->to_view_rect(rect), sgf::type::color::green, sgf::graphic_style::fill, {0.5f, 0.5f}, rotation(), sgf::render_layer::entity);
+        render->pipeline()->submit_rect(main->to_view_rect(rect), sgf::type::color::green, sgf::render::style::fill, {0.5f, 0.5f}, rotation(), sgf::render::layer::entity);
     }
 };

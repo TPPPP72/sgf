@@ -7,16 +7,30 @@ namespace sgf
 {
 
 class camera;
-class render_pipeline;
 class physics_system;
-class event_bus;
+
+namespace event
+{
+class manager;
+}
+
+namespace render
+{
+class pipeline;
+}
+
+namespace resource
+{
+class manager;
+}
 
 struct scene_context
 {
     std::vector<camera *> cameras;
-    render_pipeline *pipeline;
+    render::pipeline *pipe;
     physics_system *physics;
-    event_bus *eb;
+    event::manager *event_mgr;
+    resource::manager *res_mgr;
 };
 
 } // namespace sgf

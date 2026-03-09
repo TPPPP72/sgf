@@ -1,5 +1,5 @@
-#ifndef SGF_EVENT_BUS_HPP
-#define SGF_EVENT_BUS_HPP
+#ifndef SGF_EVENT_MANAGER_HPP
+#define SGF_EVENT_MANAGER_HPP
 
 #include <functional>
 #include <type_traits>
@@ -7,10 +7,10 @@
 #include <unordered_map>
 #include <vector>
 
-namespace sgf
+namespace sgf::event
 {
 
-class event_bus
+class manager
 {
 public:
     template <typename Event>
@@ -66,6 +66,6 @@ private:
     std::vector<std::function<void()>> event_queue;
 };
 
-} // namespace sgf
+} // namespace sgf::event
 
 #endif

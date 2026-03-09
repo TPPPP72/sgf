@@ -1,9 +1,4 @@
-#include <sgf/base/font.hpp>
-#include <sgf/base/texture.hpp>
-#include <sgf/kernel.hpp>
-#include <sgf/type/color.hpp>
-#include <sgf/type/position.hpp>
-#include <string>
+#include <sgf/sgf.hpp>
 
 inline std::string get_default_font() noexcept
 {

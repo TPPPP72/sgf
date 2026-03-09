@@ -1,13 +1,16 @@
 #pragma once
 #include <sgf/sgf.hpp>
 
-class static_wall : public sgf::game_object
+class sensor : public sgf::game_object
 {
 public:
     using sgf::game_object::game_object;
 
     void on_init(sgf::scene_context &ctx) override
     {
+        using namespace sgf::literals;
+        tag() = "sensor"_hash;
+
         sgf::physics_config cfg;
         cfg.type = sgf::body_type::static_body;
 
@@ -15,8 +18,9 @@ public:
         col.is_circle   = false;
         col.w           = static_cast<float>(this->size().w);
         col.h           = static_cast<float>(this->size().h);
-        col.friction    = 0.5f;
-        col.restitution = 0.2f;
+        col.friction    = 0.0f;
+        col.restitution = 0.0f;
+        col.is_sensor   = true;
         cfg.colliders.push_back(col);
 
         add_module<sgf::module::physics_module>(ctx, cfg);
@@ -36,8 +40,8 @@ public:
         render->pipeline()->submit_rect(
             view_rect,
             sgf::type::color::white,
-            sgf::graphic_style::fill,
+            sgf::render::style::fill,
             {0.5f, 0.5f},
-            rotation(), sgf::render_layer::entity);
+            rotation(), sgf::render::layer::entity);
     }
 };

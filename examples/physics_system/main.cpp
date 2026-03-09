@@ -1,14 +1,9 @@
 #include "game_scene.hpp"
-#include <sgf/context/frame_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class physics : public sgf::kernel<physics>
 {
 public:
-    physics() : kernel("physics", {800, 600}, {800, 600}, 0)
+    physics() : kernel("physics_system", {800, 600}, {800, 600}, 0)
     {
         auto game = std::make_unique<game_scene>(1);
 

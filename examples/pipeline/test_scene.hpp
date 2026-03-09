@@ -1,13 +1,6 @@
 #pragma once
 
-#include <random>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/type/color.hpp>
-#include <sgf/type/vec2.hpp>
-#include <vector>
+#include <sgf/sgf.hpp>
 
 class test_scene : public sgf::scene
 {
@@ -25,10 +18,7 @@ public:
         {
             m_positions.push_back({pos_dist(gen), pos_dist(gen)});
             m_velocities.push_back({vel_dist(gen), vel_dist(gen)});
-            m_colors.push_back({static_cast<uint8_t>(rand() % 256),
-                                static_cast<uint8_t>(rand() % 256),
-                                static_cast<uint8_t>(rand() % 256),
-                                255});
+            m_colors.push_back(sgf::util::make_random_color<sgf::type::color>());
         }
     }
 
@@ -53,14 +43,29 @@ public:
 
     void on_render(sgf::base::renderer &rd) override
     {
-        m_pipeline.submit_rect({0, 0, 500, 500}, sgf::type::color{40, 44, 52, 255}, sgf::graphic_style::fill, {0.0f, 0.0f}, 0.0f, sgf::render_layer::background);
+        m_pipeline.submit_rect({0, 0, 500, 500},
+                               sgf::type::color{40, 44, 52, 255},
+                               sgf::render::style::fill,
+                               {0.0f, 0.0f},
+                               0.0f,
+                               sgf::render::layer::background);
 
         for (size_t i = 0; i < m_positions.size(); ++i)
         {
-            m_pipeline.submit_rect({m_positions[i].x, m_positions[i].y, 10, 10}, m_colors[i], sgf::graphic_style::fill, {0.0f, 0.0f}, 0.0f, sgf::render_layer::entity);
+            m_pipeline.submit_rect({m_positions[i].x, m_positions[i].y, 10, 10},
+                                   m_colors[i],
+                                   sgf::render::style::fill,
+                                   {0.0f, 0.0f},
+                                   0.0f,
+                                   sgf::render::layer::entity);
         }
 
-        m_pipeline.submit_rect({20, 20, 150, 30}, sgf::type::color::white, sgf::graphic_style::fill, {0.0f, 0.0f}, 0.0f, sgf::render_layer::ui);
+        m_pipeline.submit_rect({20, 20, 150, 30},
+                               sgf::type::color::white,
+                               sgf::render::style::fill,
+                               {0.0f, 0.0f},
+                               0.0f,
+                               sgf::render::layer::ui);
 
         m_pipeline.execute(rd, nullptr);
     }
@@ -70,5 +75,5 @@ private:
     std::vector<sgf::type::vec2f> m_velocities;
     std::vector<sgf::type::color> m_colors;
 
-    sgf::render_pipeline m_pipeline;
+    sgf::render::pipeline m_pipeline;
 };

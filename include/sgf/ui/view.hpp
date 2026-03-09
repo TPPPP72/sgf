@@ -11,8 +11,12 @@ namespace sgf
 
 class input_event;
 class frame_context;
-class render_pipeline;
 class ui_manager;
+
+namespace render
+{
+class pipeline;
+}
 
 class view : public std::enable_shared_from_this<view>
 {
@@ -63,7 +67,7 @@ protected:
     virtual void on_mouse_enter() {}
     virtual void on_mouse_leave() {}
     virtual void on_update(const frame_context &) {}
-    virtual void on_render(render_pipeline &) {}
+    virtual void on_render(render::pipeline &) {}
     ui_manager *p_manager = nullptr;
     friend class ui_manager;
 

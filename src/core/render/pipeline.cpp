@@ -1,43 +1,43 @@
 #include <sgf/base/texture.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
+#include <sgf/render/pipeline.hpp>
 #include <sgf/resource/manager.hpp>
 
-void sgf::render_pipeline::submit(uint32_t tex_key, const type::resource_rect &src, const type::view_rect &dst, const type::vec2f &pivot, float rot, std::int16_t z)
+void sgf::render::pipeline::submit(sgf::type::uint32 tex_key, const sgf::type::resource_rect &src, const sgf::type::view_rect &dst, const sgf::type::vec2f &pivot, float rot, sgf::type::int16 z)
 {
-    render_command cmd{};
-    cmd.type          = render_type::texture;
-    cmd.texture_key   = tex_key;
-    cmd.src           = src;
-    cmd.pivot         = pivot;
-    cmd.dst           = dst;
-    cmd.z_index       = z;
-    cmd.rotation      = rot;
-    cmd.submission_id = p_next_id;
+    render::command cmd{};
+    cmd.submission_type = render::type::texture;
+    cmd.texture_key     = tex_key;
+    cmd.src             = src;
+    cmd.pivot           = pivot;
+    cmd.dst             = dst;
+    cmd.z_index         = z;
+    cmd.rotation        = rot;
+    cmd.submission_id   = p_next_id;
     ++p_next_id;
 
     p_commands.emplace_back(cmd);
 }
 
-void sgf::render_pipeline::submit_rect(const type::view_rect &dst, const sgf::type::color &col, graphic_style style, const type::vec2f &pivot, float rotation, std::int16_t z_index)
+void sgf::render::pipeline::submit_rect(const sgf::type::view_rect &dst, const sgf::type::color &col, style st, const sgf::type::vec2f &pivot, float rotation, sgf::type::int16 z_index)
 {
-    render_command cmd{};
-    cmd.type          = render_type::rect;
-    cmd.dst           = dst;
-    cmd.color         = col;
-    cmd.style         = static_cast<std::uint8_t>(style);
-    cmd.rotation      = rotation;
-    cmd.pivot         = pivot;
-    cmd.z_index       = z_index;
-    cmd.submission_id = p_next_id;
+    render::command cmd{};
+    cmd.submission_type = render::type::rect;
+    cmd.dst             = dst;
+    cmd.color           = col;
+    cmd.style           = static_cast<std::uint8_t>(st);
+    cmd.rotation        = rotation;
+    cmd.pivot           = pivot;
+    cmd.z_index         = z_index;
+    cmd.submission_id   = p_next_id;
     ++p_next_id;
 
     p_commands.emplace_back(cmd);
 }
 
-void sgf::render_pipeline::submit_circle(const type::view_position &center, float radius, const type::color &color, graphic_style style, std::int16_t z_index)
+void sgf::render::pipeline::submit_circle(const sgf::type::view_position &center, float radius, const sgf::type::color &color, style st, sgf::type::int16 z_index)
 {
-    render_command cmd{};
-    cmd.type = render_type::circle;
+    render::command cmd{};
+    cmd.submission_type = render::type::circle;
 
     cmd.dst = {
         center.x,
@@ -46,7 +46,7 @@ void sgf::render_pipeline::submit_circle(const type::view_position &center, floa
         radius * 2.0f};
 
     cmd.color         = color;
-    cmd.style         = static_cast<std::uint8_t>(style);
+    cmd.style         = static_cast<std::uint8_t>(st);
     cmd.z_index       = z_index;
     cmd.submission_id = p_next_id;
     ++p_next_id;
@@ -54,16 +54,16 @@ void sgf::render_pipeline::submit_circle(const type::view_position &center, floa
     p_commands.emplace_back(cmd);
 }
 
-void sgf::render_pipeline::submit_particles(const std::array<particle, 1000> &pool, std::int16_t z_index)
+void sgf::render::pipeline::submit_particles(const std::array<particle::data, 1000> &pool, sgf::type::int16 z_index)
 {
     for (const auto &p : pool)
     {
         if (!p.active)
             continue;
 
-        render_command cmd{};
-        cmd.type = render_type::rect;
-        cmd.dst  = {p.pos.x - 1.0f, p.pos.y - 1.0f, 2.0f, 2.0f};
+        render::command cmd{};
+        cmd.submission_type = render::type::rect;
+        cmd.dst             = {p.pos.x - 1.0f, p.pos.y - 1.0f, 2.0f, 2.0f};
 
         cmd.color         = p.current_color;
         cmd.style         = 1;
@@ -74,12 +74,12 @@ void sgf::render_pipeline::submit_particles(const std::array<particle, 1000> &po
     }
 }
 
-void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const mgr)
+void sgf::render::pipeline::execute(base::renderer &rd, resource::manager *const mgr)
 {
     if (p_commands.empty())
         return;
 
-    std::sort(p_commands.begin(), p_commands.end(), [mgr](const render_command &a, const render_command &b)
+    std::sort(p_commands.begin(), p_commands.end(), [mgr](const render::command &a, const render::command &b)
               {
                   if (a.z_index != b.z_index)
                       return a.z_index < b.z_index;
@@ -95,8 +95,8 @@ void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const 
                   return a.submission_id < b.submission_id;
               });
 
-    std::vector<type::vertex> vertex_buffer;
-    std::vector<std::int32_t> index_buffer;
+    std::vector<sgf::type::vertex> vertex_buffer;
+    std::vector<sgf::type::int32> index_buffer;
     vertex_buffer.reserve(p_commands.size() * 4);
     index_buffer.reserve(p_commands.size() * 6);
 
@@ -121,7 +121,7 @@ void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const 
         }
 
         auto final_dst = rd.get_viewport_ptr()->to_window_rect(cmd.dst);
-        type::colorf col{cmd.color};
+        sgf::type::colorf col{cmd.color};
 
         float u0 = 0, v0 = 0, u1 = 0, v1 = 0;
         if (cmd_tex)
@@ -137,9 +137,9 @@ void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const 
 
         if (cmd.style == 1)
         {
-            if (cmd.type == render_type::rect)
+            if (cmd.submission_type == render::type::rect)
             {
-                auto base_idx = static_cast<std::int32_t>(vertex_buffer.size());
+                auto base_idx = static_cast<sgf::type::int32>(vertex_buffer.size());
                 float cos_a   = std::cos(cmd.rotation);
                 float sin_a   = std::sin(cmd.rotation);
 
@@ -157,12 +157,12 @@ void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const 
 
                 index_buffer.insert(index_buffer.end(), {base_idx + 0, base_idx + 1, base_idx + 2, base_idx + 1, base_idx + 3, base_idx + 2});
             }
-            else if (cmd.type == render_type::circle)
+            else if (cmd.submission_type == sgf::render::type::circle)
             {
                 flush();
                 current_tex = cmd_tex;
 
-                auto center_idx = static_cast<std::int32_t>(vertex_buffer.size());
+                auto center_idx = static_cast<sgf::type::int32>(vertex_buffer.size());
                 float radius    = final_dst.w * 0.5f;
                 int segments    = 32;
 
@@ -208,7 +208,7 @@ void sgf::render_pipeline::execute(base::renderer &rd, resource::manager *const 
     clear();
 }
 
-void sgf::render_pipeline::clear() noexcept
+void sgf::render::pipeline::clear() noexcept
 {
     p_commands.clear();
     p_next_id = 1;

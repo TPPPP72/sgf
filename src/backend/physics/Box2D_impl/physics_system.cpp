@@ -1,7 +1,7 @@
 #include <box2d/box2d.h>
 #include <box2d/types.h>
 #include <sgf/event/event.hpp>
-#include <sgf/event/event_bus.hpp>
+#include <sgf/event/manager.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/logger/logger.hpp>
 #include <sgf/physics/physics_system.hpp>
@@ -101,7 +101,7 @@ void sgf::physics_system::set_linear_velocity(uint32_t id, const sgf::type::vec2
     }
 }
 
-void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
+void sgf::physics_system::update(std::chrono::nanoseconds dt, event::manager *event_mgr)
 {
     float time_step = std::chrono::duration<float>(dt).count();
 
@@ -117,11 +117,11 @@ void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
         uint32_t idA                   = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdA))));
         uint32_t idB                   = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdB))));
 
-        if (eb)
+        if (event_mgr)
         {
             auto tagA = p_impl->entities[idA].hashed_tag;
             auto tagB = p_impl->entities[idB].hashed_tag;
-            eb->enqueue(sgf::event::physics_collision_begin{idA, tagA, idB, tagB});
+            event_mgr->enqueue(sgf::event::physics_collision_begin{idA, tagA, idB, tagB});
         }
     }
 
@@ -131,11 +131,11 @@ void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
         uint32_t sensorID          = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.sensorShapeId))));
         uint32_t visitorID         = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.visitorShapeId))));
 
-        if (eb)
+        if (event_mgr)
         {
             auto tagSensor  = p_impl->entities[sensorID].hashed_tag;
             auto tagVisitor = p_impl->entities[visitorID].hashed_tag;
-            eb->enqueue(sgf::event::physics_collision_begin{sensorID, tagSensor, visitorID, tagVisitor});
+            event_mgr->enqueue(sgf::event::physics_collision_begin{sensorID, tagSensor, visitorID, tagVisitor});
         }
     }
 
@@ -146,11 +146,11 @@ void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
         uint32_t idA = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdA))));
         uint32_t idB = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(event.shapeIdB))));
 
-        if (eb)
+        if (event_mgr)
         {
             auto tagA = p_impl->entities[idA].hashed_tag;
             auto tagB = p_impl->entities[idB].hashed_tag;
-            eb->enqueue(sgf::event::physics_collision_end{idA, tagA, idB, tagB});
+            event_mgr->enqueue(sgf::event::physics_collision_end{idA, tagA, idB, tagB});
         }
     }
 
@@ -160,11 +160,11 @@ void sgf::physics_system::update(std::chrono::nanoseconds dt, event_bus *eb)
         uint32_t sensorID        = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.sensorShapeId))));
         uint32_t visitorID       = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(b2Body_GetUserData(b2Shape_GetBody(se.visitorShapeId))));
 
-        if (eb)
+        if (event_mgr)
         {
             auto tagSensor  = p_impl->entities[sensorID].hashed_tag;
             auto tagVisitor = p_impl->entities[visitorID].hashed_tag;
-            eb->enqueue(sgf::event::physics_collision_end{sensorID, tagSensor, visitorID, tagVisitor});
+            event_mgr->enqueue(sgf::event::physics_collision_end{sensorID, tagSensor, visitorID, tagVisitor});
         }
     }
 

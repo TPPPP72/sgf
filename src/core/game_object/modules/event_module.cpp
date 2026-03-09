@@ -2,7 +2,7 @@
 #include <sgf/game_object/modules/event_module.hpp>
 #include <sgf/scene/scene.hpp>
 
-sgf::event_bus *sgf::module::event_module::bus() const
+sgf::event::manager *sgf::module::event_module::manager() const
 {
-    return this->context().eb;
+    return this->context().event_mgr;
 }

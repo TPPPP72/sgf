@@ -8,7 +8,11 @@ namespace sgf
 {
 
 class game_object;
-class event_bus;
+
+namespace event
+{
+class manager;
+}
 
 class physics_system
 {
@@ -16,7 +20,7 @@ public:
     physics_system();
     ~physics_system();
 
-    void update(std::chrono::nanoseconds dt, event_bus *eb = nullptr);
+    void update(std::chrono::nanoseconds dt, event::manager *eb = nullptr);
 
     void register_entity(game_object &owner, const physics_config &config);
     void unregister_entity(uint32_t id);

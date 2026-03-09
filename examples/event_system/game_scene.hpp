@@ -1,7 +1,6 @@
-#include <sgf/sgf.hpp>
-#include "static_wall.hpp"
-#include "sensor.hpp"
 #include "rain.hpp"
+#include "sensor.hpp"
+#include "static_wall.hpp"
 
 class game_scene : public sgf::scene
 {
@@ -10,7 +9,7 @@ public:
         : sgf::scene(id),
           m_camera({800, 600}, {800, 600}),
           m_physics_system(),
-          m_context({{&m_camera}, &m_pipeline, &m_physics_system, &m_event_bus}),
+          m_context({{&m_camera}, &m_pipeline, &m_physics_system, &m_event_manager}),
           m_game_object_pool(m_context)
     {
     }
@@ -34,8 +33,8 @@ public:
 
     void on_update(const sgf::frame_context &ctx) override
     {
-        m_physics_system.update(ctx.dt, &m_event_bus);
-        m_event_bus.dispatch_all();
+        m_physics_system.update(ctx.dt, &m_event_manager);
+        m_event_manager.dispatch_all();
         m_game_object_pool.update(ctx);
     }
 
@@ -77,10 +76,10 @@ private:
         m_game_object_pool.create(std::move(drop));
     }
 
-    sgf::render_pipeline m_pipeline;
+    sgf::render::pipeline m_pipeline;
     sgf::camera m_camera;
     sgf::physics_system m_physics_system;
-    sgf::event_bus m_event_bus;
+    sgf::event::manager m_event_manager;
 
     sgf::scene_context m_context;
     sgf::game_object_pool m_game_object_pool;

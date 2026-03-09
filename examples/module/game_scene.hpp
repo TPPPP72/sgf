@@ -2,15 +2,6 @@
 
 #include "square.hpp"
 #include <memory>
-#include <sgf/base/renderer.hpp>
-#include <sgf/camera/camera.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/context/scene_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/game_object/game_object_pool.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/type/color.hpp>
 
 class game_scene : public sgf::scene
 {
@@ -37,13 +28,13 @@ public:
 
     void on_render(sgf::base::renderer &rd) override
     {
-        m_pipeline.submit_rect({0, 0, 300, 300}, sgf::type::color::white, sgf::graphic_style::fill, {0.0f, 0.0f}, 0.0f, sgf::render_layer::background);
+        m_pipeline.submit_rect({0, 0, 300, 300}, sgf::type::color::white, sgf::render::style::fill, {0.0f, 0.0f}, 0.0f, sgf::render::layer::background);
         m_game_object_pool.render();
         m_pipeline.execute(rd, nullptr);
     }
 
 private:
-    sgf::render_pipeline m_pipeline;
+    sgf::render::pipeline m_pipeline;
     sgf::camera m_camera;
 
     sgf::scene_context m_context;

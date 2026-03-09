@@ -1,41 +1,48 @@
 #ifndef SGF_RESOURCE_DATA_HPP
 #define SGF_RESOURCE_DATA_HPP
 
-#include <cstdint>
+#include <sgf/type/int.hpp>
 #include <sgf/type/rect.hpp>
 #include <sgf/type/vec2.hpp>
-#include <vector>
 #include <string>
+#include <vector>
 
-namespace sgf::resource
+namespace sgf
 {
+
+class render_pipeline;
+
+namespace resource
+{
+
+class manager;
 
 struct asset
 {
-    std::uint32_t type;
+    sgf::type::uint32 type;
     std::string path;
-    std::uint32_t key;
+    sgf::type::uint32 key;
 };
 
 struct sprite
 {
-    std::uint32_t atlas;
-    std::uint32_t key;
+    sgf::type::uint32 atlas;
+    sgf::type::uint32 key;
     sgf::type::vec2f pivot;
     sgf::type::resource_rect src;
 };
 
 struct atlas
 {
-    std::uint32_t texture;
-    std::uint32_t key;
-    std::uint32_t number;
+    sgf::type::uint32 texture;
+    sgf::type::uint32 key;
+    sgf::type::uint32 number;
     std::vector<sprite> sprites;
 };
 
 struct frame
 {
-    std::uint32_t sprite;
+    sgf::type::uint32 sprite;
     sgf::type::vec2f offset;
     sgf::type::view_rect hurt_box;
     sgf::type::view_rect attack_box;
@@ -44,11 +51,13 @@ struct frame
 
 struct animation
 {
-    std::uint32_t key;
-    std::uint32_t number;
+    sgf::type::uint32 key;
+    sgf::type::uint32 number;
     std::vector<frame> frames;
 };
 
-} // namespace sgf::resource
+} // namespace resource
+
+} // namespace sgf
 
 #endif

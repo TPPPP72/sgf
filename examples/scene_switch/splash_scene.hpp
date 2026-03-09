@@ -2,11 +2,7 @@
 
 #include <algorithm>
 #include <chrono>
-#include <sgf/base/renderer.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/timer/timer.hpp>
+#include <sgf/sgf.hpp>
 
 using namespace std::chrono_literals;
 

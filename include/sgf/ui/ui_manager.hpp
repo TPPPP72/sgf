@@ -10,7 +10,10 @@
 namespace sgf
 {
 
-class render_pipeline;
+namespace render
+{
+class pipeline;
+}
 
 class ui_manager
 {
@@ -94,7 +97,7 @@ public:
         }
     }
 
-    void render(render_pipeline &p)
+    void render(render::pipeline &p)
     {
         for (auto &v : m_views)
         {

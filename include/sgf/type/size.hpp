@@ -2,7 +2,7 @@
 #define SGF_TYPE_SIZE_HPP
 
 #include <sgf/type/base/tags.hpp>
-#include <sgf/type/type.hpp>
+#include <sgf/type/int.hpp>
 
 namespace sgf::type
 {

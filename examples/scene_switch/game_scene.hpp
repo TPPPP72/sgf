@@ -1,12 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <sgf/base/renderer.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/scene/scene.hpp>
-#include <sgf/timer/timer.hpp>
-#include <sgf/type/color.hpp>
+#include <sgf/sgf.hpp>
 
 class game_scene : public sgf::scene
 {

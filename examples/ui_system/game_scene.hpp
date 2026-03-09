@@ -44,6 +44,6 @@ public:
     }
 
 private:
-    sgf::render_pipeline m_pipeline;
+    sgf::render::pipeline m_pipeline;
     sgf::ui_manager m_ui_manager;
 };

@@ -1,5 +1,5 @@
-#ifndef SGF_PARTICAL_SYSTEM_HPP
-#define SGF_PARTICAL_SYSTEM_HPP
+#ifndef SGF_PARTICAL_MANAGER_HPP
+#define SGF_PARTICAL_MANAGER_HPP
 
 #include <array>
 #include <chrono>
@@ -7,10 +7,10 @@
 #include <sgf/type/color.hpp>
 #include <sgf/type/vec2.hpp>
 
-namespace sgf
+namespace sgf::particle
 {
 
-struct particle
+struct data
 {
     sgf::type::vec2f pos;
     sgf::type::vec2f vel;
@@ -22,7 +22,7 @@ struct particle
     bool active                       = false;
 };
 
-class particle_system
+class manager
 {
 public:
     template <typename Rep, typename Period>
@@ -77,12 +77,12 @@ public:
         }
     }
 
-    const std::array<particle, 1000> &get_particles() const { return m_pool; }
+    const std::array<data, 1000> &get_particles() const { return m_pool; }
 
 private:
-    std::array<particle, 1000> m_pool;
+    std::array<data, 1000> m_pool;
 };
 
-} // namespace sgf
+} // namespace sgf::particle
 
 #endif

@@ -36,6 +36,6 @@ public:
                                           static_cast<float>(size().w),
                                           static_cast<float>(size().h)};
 
-        render->pipeline()->submit_circle({static_cast<float>(x), static_cast<float>(y)}, 20.0f, sgf::type::color::red, sgf::graphic_style::fill, sgf::render_layer::entity);
+        render->pipeline()->submit_circle({static_cast<float>(x), static_cast<float>(y)}, 20.0f, sgf::type::color::red, sgf::render::style::fill, sgf::render::layer::entity);
     }
 };

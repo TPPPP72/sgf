@@ -6,7 +6,10 @@
 namespace sgf
 {
 
-class event_bus;
+namespace event
+{
+class manager;
+}
 
 namespace module
 {
@@ -17,7 +20,7 @@ public:
     using base_service_module::base_service_module;
     virtual ~event_module() = default;
 
-    event_bus *bus() const;
+    event::manager *manager() const;
 };
 
 } // namespace module

@@ -1,12 +1,9 @@
 #include "game_scene.hpp"
-#include <sgf/kernel.hpp>
-#include <sgf/scene/scene_manager.hpp>
-#include <string>
 
 class particle : public sgf::kernel<particle>
 {
 public:
-    particle() : kernel("particle", {800, 600}, {800, 600}, 0)
+    particle() : kernel("particle_system", {800, 600}, {800, 600}, 0)
     {
         auto game = std::make_unique<game_scene>(1);
 

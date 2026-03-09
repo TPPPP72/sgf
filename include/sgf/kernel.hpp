@@ -2,7 +2,6 @@
 #define SGF_KERNEL_HPP
 
 #include <chrono>
-#include <cstdint>
 #include <sgf/base/input_system.hpp>
 #include <sgf/base/renderer.hpp>
 #include <sgf/context/frame_context.hpp>
@@ -16,7 +15,7 @@ class kernel
 {
 public:
     // Create window with no VSync
-    kernel(const std::string &title, const type::view_size &init_vs, const type::window_size &init_ws, std::uint32_t max_fps) : p_view_size(init_vs), p_max_fps(max_fps), p_window({title, init_ws}), p_renderer(p_window), p_viewport(p_window, init_vs)
+    kernel(const std::string &title, const type::view_size &init_vs, const type::window_size &init_ws, type::uint32 max_fps) : p_view_size(init_vs), p_max_fps(max_fps), p_window({title, init_ws}), p_renderer(p_window), p_viewport(p_window, init_vs)
     {
         init();
     }
@@ -30,7 +29,7 @@ public:
     {
         return p_renderer;
     }
-    std::uint32_t get_current_fps() const noexcept
+    type::uint32 get_current_fps() const noexcept
     {
         return p_current_fps;
     }
@@ -44,7 +43,7 @@ public:
 
         auto last_time     = clock::now();
         auto fps_last_time = clock::now();
-        std::uint32_t frame_count{0};
+        type::uint32 frame_count{0};
 
         while (!p_exit)
         {
@@ -81,7 +80,7 @@ public:
 
             if (duration.count() >= 500)
             {
-                p_current_fps = static_cast<std::uint32_t>(frame_count * 1000.0 / duration.count());
+                p_current_fps = static_cast<type::uint32>(frame_count * 1000.0 / duration.count());
                 frame_count   = 0;
                 fps_last_time = current_loop_end;
             }
@@ -133,8 +132,8 @@ private:
 
 private:
     type::view_size p_view_size{0, 0};
-    std::uint32_t p_max_fps{0};
-    std::uint32_t p_current_fps{0};
+    type::uint32 p_max_fps{0};
+    type::uint32 p_current_fps{0};
     base::window p_window;
     base::renderer p_renderer;
     base::viewport p_viewport;

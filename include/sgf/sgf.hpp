@@ -21,8 +21,8 @@
 #include <sgf/context/frame_context.hpp>
 #include <sgf/context/scene_context.hpp>
 #include <sgf/event/event.hpp>
-#include <sgf/event/event_bus.hpp>
 #include <sgf/event/input_event.hpp>
+#include <sgf/event/manager.hpp>
 #include <sgf/game_object/game_object.hpp>
 #include <sgf/game_object/game_object_pool.hpp>
 #include <sgf/game_object/modules/base/input_module.hpp>
@@ -36,10 +36,10 @@
 #include <sgf/kernel.hpp>
 #include <sgf/literals/hash.hpp>
 #include <sgf/logger/logger.hpp>
-#include <sgf/particle/particle_system.hpp>
+#include <sgf/particle/manager.hpp>
 #include <sgf/physics/physics_config.hpp>
 #include <sgf/physics/physics_system.hpp>
-#include <sgf/render_pipeline/render_pipeline.hpp>
+#include <sgf/render/pipeline.hpp>
 #include <sgf/resource/data.hpp>
 #include <sgf/resource/manager.hpp>
 #include <sgf/scene/scene.hpp>
@@ -49,6 +49,7 @@
 #include <sgf/type/base/tags.hpp>
 #include <sgf/type/base/vector2.hpp>
 #include <sgf/type/color.hpp>
+#include <sgf/type/int.hpp>
 #include <sgf/type/position.hpp>
 #include <sgf/type/rect.hpp>
 #include <sgf/type/size.hpp>

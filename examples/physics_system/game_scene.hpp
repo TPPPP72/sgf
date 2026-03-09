@@ -1,13 +1,6 @@
 #include "ball.hpp"
 #include "static_wall.hpp"
 #include <memory>
-#include <sgf/camera/camera.hpp>
-#include <sgf/context/frame_context.hpp>
-#include <sgf/context/scene_context.hpp>
-#include <sgf/event/input_event.hpp>
-#include <sgf/game_object/game_object_pool.hpp>
-#include <sgf/physics/physics_system.hpp>
-#include <sgf/scene/scene.hpp>
 
 class game_scene : public sgf::scene
 {
@@ -63,7 +56,7 @@ public:
     }
 
 private:
-    sgf::render_pipeline m_pipeline;
+    sgf::render::pipeline m_pipeline;
     sgf::camera m_camera;
     sgf::physics_system m_physics_system;
 
