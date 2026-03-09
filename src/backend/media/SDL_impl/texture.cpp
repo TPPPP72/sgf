@@ -57,7 +57,8 @@ texture::texture(const renderer &rend, const font &f, const std::string &text, c
 
 texture::~texture()
 {
-    SDL_DestroyTexture(p_impl->texture);
+    if (p_impl)
+        SDL_DestroyTexture(p_impl->texture);
 }
 
 texture::texture(texture &&) noexcept = default;

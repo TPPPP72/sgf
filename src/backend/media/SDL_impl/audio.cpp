@@ -33,7 +33,8 @@ audio::audio(const std::filesystem::path &p) : p_impl(std::make_unique<impl>())
 
 audio::~audio()
 {
-    MIX_DestroyAudio(p_impl->audio);
+    if (p_impl)
+        MIX_DestroyAudio(p_impl->audio);
 }
 
 audio::audio(audio &&) noexcept = default;

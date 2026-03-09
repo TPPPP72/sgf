@@ -18,7 +18,8 @@ font::font(const std::filesystem::path &p, std::uint32_t size) : p_impl(std::mak
 
 font::~font()
 {
-    TTF_CloseFont(p_impl->font);
+    if (p_impl)
+        TTF_CloseFont(p_impl->font);
 }
 
 font::font(font &&) noexcept = default;

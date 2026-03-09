@@ -75,6 +75,8 @@ public:
     }
     void upload_surface(const base::renderer &rend)
     {
+        if (upload_list.empty())
+            return;
         auto key = upload_list.front().key;
         load_texture(upload_list.front().surf, rend, key);
         upload_list.pop();

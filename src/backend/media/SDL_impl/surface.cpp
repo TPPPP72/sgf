@@ -36,7 +36,8 @@ surface::surface(const font &f, const std::string &text, const type::color &colo
 
 surface::~surface()
 {
-    SDL_DestroySurface(p_impl->surface);
+    if (p_impl)
+        SDL_DestroySurface(p_impl->surface);
 }
 
 surface::surface(surface &&) noexcept = default;
