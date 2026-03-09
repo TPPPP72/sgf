@@ -1,8 +1,8 @@
 #ifndef SGF_TYPE_SIZE_HPP
 #define SGF_TYPE_SIZE_HPP
 
-#include <cstdint>
 #include <sgf/type/base/tags.hpp>
+#include <sgf/type/type.hpp>
 
 namespace sgf::type
 {
@@ -10,7 +10,7 @@ namespace sgf::type
 template <typename tag>
 struct size
 {
-    std::uint32_t w, h;
+    uint32 w, h;
 };
 
 using resource_size = size<base::resource_tag>;
